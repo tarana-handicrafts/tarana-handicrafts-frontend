@@ -61,19 +61,22 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="min-h-screen py-8 px-4">
+    <div className="min-h-screen bg-[#F9F8F6] px-4 pb-16 pt-32">
       <div className="mx-auto max-w-7xl">
         {/* Page Header */}
-        <div className="mb-8 text-center">
-          <h1 className="mb-4 text-4xl font-bold">Our Collection</h1>
-          <p className="mx-auto max-w-2xl text-[var(--color-muted)]">
+        <div className="mb-12 text-center">
+          <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
+            Curated Collection
+          </span>
+          <h1 className="mb-4 font-serif text-4xl md:text-5xl">Our Collection</h1>
+          <p className="mx-auto max-w-2xl text-stone-500">
             Explore our curated collection of handcrafted masterpieces. Each
             piece is unique and made with love by skilled artisans.
           </p>
         </div>
 
         {/* Filters Bar */}
-        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-[var(--color-border)] bg-[var(--background)] p-4">
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-stone-200 bg-white p-4">
           {/* Search */}
           <div className="relative w-full sm:w-auto">
             <input
@@ -81,10 +84,11 @@ export default function ProductsPage() {
               placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-[var(--color-border)] bg-transparent px-4 py-2 pl-10 focus:border-[var(--color-primary)] focus:outline-none sm:w-64"
+              maxLength={100}
+              className="w-full rounded-lg border border-stone-200 bg-transparent px-4 py-2 pl-10 focus:border-[#C5A059] focus:outline-none sm:w-64"
             />
             <svg
-              className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--color-muted)]"
+              className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-stone-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -104,7 +108,7 @@ export default function ProductsPage() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="rounded-lg border border-[var(--color-border)] bg-transparent px-4 py-2 focus:border-[var(--color-primary)] focus:outline-none"
+              className="rounded-lg border border-stone-200 bg-white px-4 py-2 focus:border-[#C5A059] focus:outline-none"
             >
               {categories.map((cat) => (
                 <option key={cat} value={cat}>
@@ -117,7 +121,7 @@ export default function ProductsPage() {
             <select
               value={selectedMaterial}
               onChange={(e) => setSelectedMaterial(e.target.value)}
-              className="rounded-lg border border-[var(--color-border)] bg-transparent px-4 py-2 focus:border-[var(--color-primary)] focus:outline-none"
+              className="rounded-lg border border-stone-200 bg-white px-4 py-2 focus:border-[#C5A059] focus:outline-none"
             >
               {materials.map((mat) => (
                 <option key={mat} value={mat}>
@@ -130,7 +134,7 @@ export default function ProductsPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="rounded-lg border border-[var(--color-border)] bg-transparent px-4 py-2 focus:border-[var(--color-primary)] focus:outline-none"
+              className="rounded-lg border border-stone-200 bg-white px-4 py-2 focus:border-[#C5A059] focus:outline-none"
             >
               <option value="default">Sort by</option>
               <option value="price-low">Price: Low to High</option>
@@ -141,16 +145,16 @@ export default function ProductsPage() {
         </div>
 
         {/* Results Count */}
-        <p className="mb-6 text-[var(--color-muted)]">
+        <p className="mb-6 text-stone-500">
           Showing {filteredProducts.length} of {productsData.length} products
         </p>
 
         {/* Products Grid */}
         {filteredProducts.length === 0 ? (
           <div className="py-20 text-center">
-            <div className="mb-4 inline-flex h-20 w-20 items-center justify-center rounded-full bg-[var(--color-border)]">
+            <div className="mb-4 inline-flex h-20 w-20 items-center justify-center rounded-full bg-stone-200">
               <svg
-                className="h-10 w-10 text-[var(--color-muted)]"
+                className="h-10 w-10 text-stone-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -164,7 +168,7 @@ export default function ProductsPage() {
               </svg>
             </div>
             <h3 className="mb-2 text-xl font-semibold">No products found</h3>
-            <p className="text-[var(--color-muted)]">
+            <p className="text-stone-500">
               Try adjusting your filters or search query.
             </p>
           </div>
@@ -193,19 +197,18 @@ interface ProductCardProps {
 
 function ProductCard({ product, onAddToCart, isInCart }: ProductCardProps) {
   return (
-    <div className="group overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--background)] transition-all hover:shadow-xl">
-      {/* Product Tag */}
-      {product.tag && (
-        <span className="absolute left-3 top-3 z-10 rounded-full bg-[var(--color-primary)] px-3 py-1 text-xs font-medium text-white">
-          {product.tag}
-        </span>
-      )}
-
+    <div className="group relative overflow-hidden rounded-xl border border-stone-200 bg-white transition-all hover:shadow-xl">
       {/* Product Image */}
       <div className="relative aspect-square overflow-hidden">
+        {/* Product Tag */}
+        {product.tag && (
+          <span className="absolute left-3 top-3 z-10 rounded-full bg-[#C5A059] px-3 py-1 text-xs font-medium text-white">
+            {product.tag}
+          </span>
+        )}
         <Image
           src={product.image}
-          alt={product.name}
+          alt={product.name || "Product image"}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -218,7 +221,7 @@ function ProductCard({ product, onAddToCart, isInCart }: ProductCardProps) {
             className={`rounded-lg px-6 py-3 font-medium transition-transform hover:scale-105 ${
               isInCart
                 ? "bg-green-500 text-white"
-                : "bg-white text-[var(--color-primary)]"
+                : "bg-white text-[#C5A059]"
             }`}
           >
             {isInCart ? "✓ Added" : "Add to Cart"}
@@ -228,19 +231,19 @@ function ProductCard({ product, onAddToCart, isInCart }: ProductCardProps) {
 
       {/* Product Info */}
       <div className="p-4">
-        <p className="mb-1 text-xs uppercase tracking-wider text-[var(--color-muted)]">
+        <p className="mb-1 text-xs uppercase tracking-wider text-stone-500">
           {product.category} • {product.material}
         </p>
         <h3 className="mb-2 font-semibold line-clamp-1">{product.name}</h3>
         <div className="flex items-center justify-between">
-          <p className="text-lg font-bold text-[var(--color-primary)]">
+          <p className="text-lg font-bold text-[#C5A059]">
             {formatPrice(product.price)}
           </p>
           <button
             onClick={onAddToCart}
             disabled={isInCart}
-            className="rounded-lg bg-[var(--color-primary)]/10 p-2 text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary)] hover:text-white disabled:opacity-50"
-            aria-label="Add to cart"
+            className="rounded-lg bg-[#C5A059]/10 p-2 text-[#C5A059] transition-colors hover:bg-[#C5A059] hover:text-white disabled:opacity-50"
+            aria-label={`Add ${product.name} to cart`}
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path

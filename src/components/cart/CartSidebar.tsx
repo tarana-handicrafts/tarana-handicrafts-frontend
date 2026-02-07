@@ -28,12 +28,25 @@ export function CartSidebar() {
     };
   }, [isCartOpen, closeCart]);
 
+  /**
+   * Sanitize text for WhatsApp message to prevent injection
+   */
+  const sanitizeText = (text: string): string => {
+    if (typeof text !== "string") return "";
+    // Remove any potentially dangerous characters and limit length
+    return text
+      .replace(/[<>]/g, "")
+      .slice(0, 100)
+      .trim();
+  };
+
   // Generate WhatsApp message with order details
   const generateWhatsAppMessage = () => {
     const itemsList = cart
+      .slice(0, 20) // Limit items to prevent message overflow
       .map(
         (item, index) =>
-          `${index + 1}. ${item.name} (${item.material}) - ${formatPrice(item.price)}`
+          `${index + 1}. ${sanitizeText(item.name)} (${sanitizeText(item.material)}) - ${formatPrice(item.price)}`
       )
       .join("\n");
 
@@ -51,9 +64,13 @@ Please confirm availability and shipping timelines.`;
 
   // Handle checkout - redirect to WhatsApp
   const handleCheckout = () => {
+    if (cart.length === 0) return;
+
     const message = generateWhatsAppMessage();
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
-    window.open(whatsappUrl, "_blank");
+
+    // Use noopener and noreferrer for security
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
     closeCart();
   };
 
@@ -63,13 +80,13 @@ Please confirm availability and shipping timelines.`;
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 z-[150] bg-black/50 backdrop-blur-sm transition-opacity"
         onClick={closeCart}
         aria-hidden="true"
       />
 
       {/* Sidebar */}
-      <div className="fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col bg-[var(--background)] shadow-2xl">
+      <div className="fixed right-0 top-0 z-[150] flex h-full w-full max-w-md flex-col bg-[var(--background)] shadow-2xl">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[var(--color-border)] p-4">
           <h2 className="text-xl font-bold">Your Cart ({cart.length})</h2>

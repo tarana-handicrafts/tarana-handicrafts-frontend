@@ -61,17 +61,17 @@ const useCases = [
 
 export default function UseCasesPage() {
   return (
-    <div className="min-h-screen py-8 px-4">
+    <div className="min-h-screen bg-[#F9F8F6] px-4 pb-16 pt-32">
       <div className="mx-auto max-w-7xl">
         {/* Page Header */}
         <div className="mb-16 text-center">
-          <span className="mb-2 inline-block text-sm font-medium uppercase tracking-wider text-[var(--color-primary)]">
+          <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
             Inspiration Gallery
           </span>
-          <h1 className="mb-4 text-4xl font-bold sm:text-5xl">
+          <h1 className="mb-4 font-serif text-4xl sm:text-5xl">
             Transform Your Space
           </h1>
-          <p className="mx-auto max-w-2xl text-lg text-[var(--color-muted)]">
+          <p className="mx-auto max-w-2xl text-lg text-stone-500">
             Discover how our handcrafted pieces can elevate any space. From
             cozy homes to grand lobbies, our artisan creations bring warmth and
             character to every corner.
