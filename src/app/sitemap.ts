@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { productsData } from "@/lib/products";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com";
@@ -43,14 +44,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // TODO: Add dynamic product pages from your database/CMS
-  // const products = await getProducts();
-  // const productPages = products.map((product) => ({
-  //   url: `${baseUrl}/products/${product.slug}`,
-  //   lastModified: product.updatedAt,
-  //   changeFrequency: "weekly" as const,
-  //   priority: 0.7,
-  // }));
+  // Dynamic product pages
+  const productPages: MetadataRoute.Sitemap = productsData.map((product) => ({
+    url: `${baseUrl}/products/${product.id}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
 
-  return [...staticPages];
+  return [...staticPages, ...productPages];
 }

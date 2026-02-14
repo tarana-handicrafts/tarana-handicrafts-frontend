@@ -1,0 +1,21 @@
+{
+  "name": "Trunk Categories",
+  "description": "Categories based on the position and style of the elephant's trunk, reflecting cultural and artistic symbolism.",
+  "types": [
+    {
+      "id": 1,
+      "name": "Trunk Up",
+      "description": "Trunk raised upwards, symbolizing good luck and prosperity."
+    },
+    {
+      "id": 2,
+      "name": "Trunk Down",
+      "description": "Trunk hanging downwards, symbolizing strength and stability."
+    },
+    {
+      "id": 3,
+      "name": "Trunk Curled",
+      "description": "Trunk curled in various ways, adding a dynamic artistic element."
+    }
+  ]
+}

@@ -138,10 +138,10 @@ export function Hero() {
 
               <div className="relative aspect-[4/5] overflow-hidden bg-white shadow-2xl">
                 <Image
-                  src="https://media.istockphoto.com/id/484419274/photo/carved-thai-elephant.jpg?s=612x612&w=0&k=20&c=ZMkKBd4fMAkDtnXs-m82McQatg5eU7yIyWbaKWubvo8="
+                  src="/2.jpg"
                   alt="Featured Heritage Elephant - Royal Ambabari Hand-carved Sculpture"
                   fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                  className="object-cover object-bottom transition-transform duration-1000 group-hover:scale-110"
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   priority
                 />
@@ -152,9 +152,9 @@ export function Hero() {
                     Best Seller
                   </p>
                   <div className="flex items-center justify-between">
-                    <p className="font-serif text-lg italic">The Royal Ambabari</p>
+                    <p className="font-serif text-lg italic">The Jungle Carving</p>
                     <p className="font-bold tracking-tighter text-stone-900">
-                      ₹1,250
+                      ₹950
                     </p>
                   </div>
                 </div>

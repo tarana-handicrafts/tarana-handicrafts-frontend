@@ -48,36 +48,56 @@ export function TopSeller({ products }: TopSellerProps) {
               )}
 
               {/* Product Image */}
-              <div className="relative aspect-square overflow-hidden">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-                {/* Quick Add Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                  <button
-                    onClick={() => addToCart(product)}
-                    className="rounded-lg bg-white px-6 py-3 font-medium text-[var(--color-primary)] transition-transform hover:scale-105"
-                  >
-                    Add to Cart
-                  </button>
+              <Link href={`/products/${product.id}`} className="block">
+                <div className="relative aspect-square overflow-hidden">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                  {/* Quick Add Overlay */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        addToCart(product);
+                      }}
+                      className="rounded-lg bg-white px-6 py-3 font-medium text-[var(--color-primary)] transition-transform hover:scale-105"
+                    >
+                      Add to Cart
+                    </button>
+                    <span className="rounded-lg bg-white/80 px-4 py-2 text-sm font-medium text-stone-700">
+                      View Details
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </Link>
 
               {/* Product Info */}
               <div className="p-4">
                 <p className="mb-1 text-xs uppercase tracking-wider text-[var(--color-muted)]">
                   {product.category} • {product.material}
                 </p>
-                <h3 className="mb-2 font-semibold line-clamp-1">
-                  {product.name}
-                </h3>
-                <p className="text-lg font-bold text-[var(--color-primary)]">
-                  {formatPrice(product.price)}
-                </p>
+                <Link href={`/products/${product.id}`}>
+                  <h3 className="mb-2 font-semibold line-clamp-1 transition-colors hover:text-[var(--color-primary)]">
+                    {product.name}
+                  </h3>
+                </Link>
+                <div className="flex items-center justify-between">
+                  <p className="text-lg font-bold text-[var(--color-primary)]">
+                    {formatPrice(product.price)}
+                  </p>
+                  {product.rating && (
+                    <div className="flex items-center gap-1 text-sm">
+                      <svg className="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                      <span className="font-medium">{product.rating}</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           ))}

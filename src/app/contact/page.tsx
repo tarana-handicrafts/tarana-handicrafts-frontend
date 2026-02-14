@@ -16,6 +16,12 @@ const contactInfo = {
 // Nearby Landmarks
 const landmarks = [
   {
+    icon: "plane",
+    name: "Jaipur International Airport",
+    distance: "13 km",
+    type: "Nearest Airport",
+  },
+  {
     icon: "train",
     name: "Jaipur Junction",
     distance: "12 km",
@@ -32,13 +38,7 @@ const landmarks = [
     name: "Harmara Ghati Bus Stop",
     distance: "100 meters",
     type: "Nearest Bus Stop",
-  },
-  {
-    icon: "plane",
-    name: "Jaipur International Airport",
-    distance: "13 km",
-    type: "Nearest Airport",
-  },
+  }
 ];
 
 // Icon components
@@ -545,15 +545,15 @@ ${sanitizedData.message}`;
         {/* Google Maps Embed */}
         <div className="relative h-[500px] w-full">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3556.8!2d75.7847!3d26.9510!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396c4a3a0f8d7f0d%3A0x8b9b6c3d2e1f4a5b!2sHarmara%20Ghati%2C%20Sikar%20Road%2C%20Jaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1707307200000!5m2!1sen!2sin"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Tarana Handicrafts Location - Jaipur, Rajasthan"
-            className="grayscale transition-all duration-500 hover:grayscale-0"
+              src="https://www.google.com/maps?q=27.021606,75.767502&z=17&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Tarana Handicrafts Location - Jaipur, Rajasthan"
+              className="grayscale transition-all duration-500 hover:grayscale-0"
           />
 
           {/* Map Overlay Card */}
@@ -568,9 +568,8 @@ ${sanitizedData.message}`;
               </div>
             </div>
             <p className="mb-4 text-sm text-stone-600">{contactInfo.address}</p>
-            <a
-              href={`https://www.google.com/maps/dir/?api=1&destination=26.9510,75.7847`}
-              target="_blank"
+            <a href="https://www.google.com/maps/dir/?api=1&destination=27.021606, 75.767502"
+                target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-stone-900 px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-white transition-all hover:bg-[#C5A059]"
             >

@@ -11,51 +11,51 @@ export const metadata: Metadata = {
 const useCases = [
   {
     id: 1,
-    title: "Living Room Elegance",
+    title: "Executive Desk Branding",
     description:
-      "Transform your living space with our stunning wall art and sculptural pieces. Create a focal point that sparks conversation.",
-    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80",
-    products: ["Wall Art", "Sculptures", "Decorative Panels"],
+        "Transform a standard workspace into a position of power. Our utility elephants keep essential tools organized while serving as a constant reminder of your brand's strength.",
+    image: "https://your-image-link.com/executive-desk.jpg", // Suggested: The 'Pen Holder' or 'Acoustic Trumpet' in a high-end office
+    products: ["Pen Holder Elephants", "Acoustic Phone Amplifiers", "Business Card Stands"],
   },
   {
     id: 2,
-    title: "Bedroom Sanctuary",
+    title: "Corporate Milestone Gifts",
     description:
-      "Create a peaceful retreat with our carefully crafted wooden decor. Each piece adds warmth and character to your personal space.",
-    image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80",
-    products: ["Carved Mirrors", "Bedside Lamps", "Wall Hangings"],
+        "Celebrate promotions, retirements, or years of service with symbolic art. Use our 'Baby inside Mother' Jali work to represent protection and long-term legacy.",
+    image: "https://your-image-link.com/milestone-gift.jpg", // Suggested: The 'Jali' elephant on a dark walnut base with a brass nameplate
+    products: ["Hand-carved Jali Elephants", "Custom Engraved Bases", "Royal Butler Trays"],
   },
   {
     id: 3,
-    title: "Office & Study",
+    title: "Productivity & Focus",
     description:
-      "Inspire creativity and focus with artisan pieces that bring nature's beauty indoors. Perfect for home offices and study areas.",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
-    products: ["Desk Accessories", "Book Ends", "Decorative Sculptures"],
+        "A clutter-free desk leads to a clutter-free mind. Our functional sculptures manage sticky notes and paperclips, blending traditional craft with modern efficiency.",
+    image: "https://your-image-link.com/productivity.jpg", // Suggested: The 'Cargo' Sticky Note Holder or 'Magnetic' Paperclip holder
+    products: ["Sticky Note Dispensers", "Magnetic Paperclip Holders", "Perpetual Calendars"],
   },
   {
     id: 4,
-    title: "Entryway & Hallway",
+    title: "Tech-Forward Traditions",
     description:
-      "Make a lasting first impression with statement pieces that welcome guests into your home with style and grace.",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80",
-    products: ["Console Tables", "Wall Mirrors", "Decorative Figurines"],
+        "Modern utility meets ancient craft. Bridge the gap between nature and technology with handcrafted docking stations and smart acoustic amplifiers.",
+    image: "https://your-image-link.com/tech-utility.jpg", // Suggested: The 'Guardian' Wireless Charger or Cable Weight
+    products: ["Wireless Charging Docks", "Cable Management Weights", "Phone Amplifiers"],
   },
   {
     id: 5,
-    title: "Outdoor & Patio",
+    title: "Hospitality & Reception",
     description:
-      "Extend your living space outdoors with weather-resistant handcrafted pieces that blend seamlessly with nature.",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-    products: ["Garden Sculptures", "Outdoor Wall Art", "Planters"],
+        "Make a lasting first impression in your lobby or concierge desk. Our large-scale figurines and catch-all trays welcome guests with elegance and warmth.",
+    image: "https://your-image-link.com/hospitality.jpg", // Suggested: Large elephant figurines or the 'Royal Butler' Tray on a reception counter
+    products: ["Statement Figurines", "Royal Butler Trays", "Spectacle Holders"],
   },
   {
     id: 6,
-    title: "Corporate & Hospitality",
+    title: "Wellness & Eco-Workspaces",
     description:
-      "Elevate commercial spaces with custom handcrafted pieces that reflect your brand's commitment to quality and craftsmanship.",
-    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80",
-    products: ["Custom Installations", "Lobby Art", "Conference Room Decor"],
+        "Bring life to the office. Our planter series integrates greenery into the workspace, promoting mental well-being and a commitment to sustainable artisan craft.",
+    image: "https://your-image-link.com/wellness.jpg", // Suggested: The 'Green Growth' Succulent Planter near a window
+    products: ["Succulent Planters", "Aura Lanterns", "Eco-friendly Packaging"],
   },
 ];
 

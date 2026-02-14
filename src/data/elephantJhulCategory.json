@@ -1,0 +1,21 @@
+{
+  "name": "JHUL",
+  "description": "A decorative cloth draped over an elephant's back, often used in ceremonies and festivals. Made from materials like silk or velvet, jhuls feature embroidery and embellishments, with designs reflecting cultural traditions.",
+  "types": [
+    {
+      "id": 1,
+      "name": "No JHUL",
+      "description": "No decorative cloth or border on the elephant."
+    },
+    {
+      "id": 2,
+      "name": "Half JHUL",
+      "description": "Partial cloth with a border at the end of the elephant's stomach."
+    },
+    {
+      "id": 3,
+      "name": "Full JHUL",
+      "description": "Full cloth with a border, completely covering the elephant's back."
+    }
+  ]
+}
