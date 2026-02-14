@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Product, productsData } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/utils";
@@ -199,61 +200,93 @@ function ProductCard({ product, onAddToCart, isInCart }: ProductCardProps) {
   return (
     <div className="group relative overflow-hidden rounded-xl border border-stone-200 bg-white transition-all hover:shadow-xl">
       {/* Product Image */}
-      <div className="relative aspect-square overflow-hidden">
-        {/* Product Tag */}
-        {product.tag && (
-          <span className="absolute left-3 top-3 z-10 rounded-full bg-[#C5A059] px-3 py-1 text-xs font-medium text-white">
-            {product.tag}
-          </span>
-        )}
-        <Image
-          src={product.image}
-          alt={product.name || "Product image"}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-        />
-        {/* Quick Add Overlay */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-          <button
-            onClick={onAddToCart}
-            disabled={isInCart}
-            className={`rounded-lg px-6 py-3 font-medium transition-transform hover:scale-105 ${
-              isInCart
-                ? "bg-green-500 text-white"
-                : "bg-white text-[#C5A059]"
-            }`}
-          >
-            {isInCart ? "✓ Added" : "Add to Cart"}
-          </button>
+      <Link href={`/products/${product.id}`} className="block">
+        <div className="relative aspect-square overflow-hidden">
+          {/* Product Tag */}
+          {product.tag && (
+            <span className="absolute left-3 top-3 z-10 rounded-full bg-[#C5A059] px-3 py-1 text-xs font-medium text-white">
+              {product.tag}
+            </span>
+          )}
+          {product.originalPrice && (
+            <span className="absolute right-3 top-3 z-10 rounded-full bg-red-500 px-2 py-1 text-xs font-bold text-white">
+              -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+            </span>
+          )}
+          <Image
+            src={product.image}
+            alt={product.name || "Product image"}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          />
+          {/* Quick Add Overlay */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                onAddToCart();
+              }}
+              disabled={isInCart}
+              className={`rounded-lg px-6 py-3 font-medium transition-transform hover:scale-105 ${
+                isInCart
+                  ? "bg-green-500 text-white"
+                  : "bg-white text-[#C5A059]"
+              }`}
+            >
+              {isInCart ? "✓ Added" : "Add to Cart"}
+            </button>
+            <span className="rounded-lg bg-white/80 px-4 py-2 text-sm font-medium text-stone-700">
+              View Details
+            </span>
+          </div>
         </div>
-      </div>
+      </Link>
 
       {/* Product Info */}
       <div className="p-4">
         <p className="mb-1 text-xs uppercase tracking-wider text-stone-500">
           {product.category} • {product.material}
         </p>
-        <h3 className="mb-2 font-semibold line-clamp-1">{product.name}</h3>
+        <Link href={`/products/${product.id}`}>
+          <h3 className="mb-2 font-semibold line-clamp-1 transition-colors hover:text-[#C5A059]">{product.name}</h3>
+        </Link>
         <div className="flex items-center justify-between">
-          <p className="text-lg font-bold text-[#C5A059]">
-            {formatPrice(product.price)}
-          </p>
-          <button
-            onClick={onAddToCart}
-            disabled={isInCart}
-            className="rounded-lg bg-[#C5A059]/10 p-2 text-[#C5A059] transition-colors hover:bg-[#C5A059] hover:text-white disabled:opacity-50"
-            aria-label={`Add ${product.name} to cart`}
-          >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>
-          </button>
+          <div>
+            <p className="text-lg font-bold text-[#C5A059]">
+              {formatPrice(product.price)}
+            </p>
+            {product.originalPrice && (
+              <p className="text-sm text-stone-400 line-through">
+                {formatPrice(product.originalPrice)}
+              </p>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            {product.rating && (
+              <div className="flex items-center gap-1 text-sm">
+                <svg className="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                <span className="font-medium">{product.rating}</span>
+              </div>
+            )}
+            <button
+              onClick={onAddToCart}
+              disabled={isInCart}
+              className="rounded-lg bg-[#C5A059]/10 p-2 text-[#C5A059] transition-colors hover:bg-[#C5A059] hover:text-white disabled:opacity-50"
+              aria-label={`Add ${product.name} to cart`}
+            >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>

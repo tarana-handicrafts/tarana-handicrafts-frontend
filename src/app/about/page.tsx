@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const stats = [
   { value: "25+", label: "Years of Heritage" },
   { value: "12k+", label: "Happy Collectors" },
-  { value: "50+", label: "Countries Served" },
+  { value: "10+", label: "Countries Served" },
   { value: "100%", label: "Handcrafted" },
 ];
 
@@ -50,6 +50,14 @@ const values = [
 ];
 
 // Product categories
+// const categories = [
+//   { name: "Elephants", description: "Intricate traditional patterns" },
+//   { name: "Ganesh Statue", description: "Delicate lattice artwork" },
+//   { name: "Buddha Statue", description: "Vibrant Rajasthani colors" },
+//   { name: "Cow", description: "Royal luxury designs" },
+//   { name: "Peacock", description: "Deep-cut premium carving" },
+//   { name: "Lion", description: "Traditional storytelling art" },
+// ];
 const categories = [
   { name: "Carving Elephants", description: "Intricate traditional patterns" },
   { name: "Jali Elephants", description: "Delicate lattice artwork" },
@@ -144,11 +152,11 @@ export default function AboutPage() {
               <div className="absolute -inset-4 -z-10 translate-x-3 translate-y-3 border border-[#C5A059]/30" />
               <div className="relative aspect-[4/5] overflow-hidden bg-stone-200">
                 <Image
-                  src="https://images.unsplash.com/photo-1581850518616-bcb8186bc443?auto=format&fit=crop&q=80&w=800"
-                  alt="Master artisan crafting wooden elephant"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                    src="/1.png"
+                    alt="Master artisan crafting wooden elephant"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
               {/* Badge */}
