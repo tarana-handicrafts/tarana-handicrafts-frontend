@@ -27,7 +27,7 @@ export function formatPrice(
       maximumFractionDigits: 2,
     }).format(Math.max(0, safePrice));
   } catch {
-    // Fallback for invalid locale/currency
+    // Fallback for invalid
     return `₹${Math.max(0, safePrice).toLocaleString()}`;
   }
 }
