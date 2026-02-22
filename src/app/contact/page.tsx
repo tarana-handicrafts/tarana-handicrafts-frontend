@@ -101,7 +101,6 @@ export default function ContactPage() {
 
   // Sanitize input to prevent XSS
   const sanitizeInput = (input: string, maxLength: number = 500): string => {
-    if (typeof input !== "string") return "";
     return input
       .replace(/[<>]/g, "") // Remove HTML brackets
       .trim()
@@ -191,33 +190,35 @@ ${sanitizedData.message}`;
   };
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden bg-[#0A0A09] px-6 py-24 text-white">
-        <div className="relative z-10 mx-auto max-w-4xl text-center">
-          <span className="mb-4 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
-            Get in Touch
-          </span>
-          <h1 className="mb-6 font-serif text-4xl leading-tight md:text-6xl lg:text-7xl">
-            Let&apos;s Create{" "}
-            <span className="font-light italic text-stone-400">Together</span>
-          </h1>
-          <p className="mx-auto max-w-2xl text-lg font-light leading-relaxed text-stone-400">
-            Whether you&apos;re looking for a masterpiece for your home, a
-            custom order for your business, or bulk export — we&apos;re here to
-            help.
-          </p>
+    <div className="min-h-screen bg-[#F9F8F6]">
+      {/* Hero Section - Consistent with Products Page */}
+      <section className="px-4 pb-16 pt-32">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 text-center">
+            <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
+              Get in Touch
+            </span>
+            <h1 className="mb-4 font-serif text-4xl md:text-5xl">
+              Let&apos;s Create{" "}
+              <span className="font-light italic text-stone-400">Together</span>
+            </h1>
+            <p className="mx-auto max-w-2xl text-stone-500">
+              Whether you&apos;re looking for a masterpiece for your home, a
+              custom order for your business, or bulk export — we&apos;re here to
+              help.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Contact Cards Section */}
-      <section className="bg-[#F9F8F6] py-16 px-6">
-        <div className="mx-auto max-w-6xl">
+      <section className="px-4 pb-16">
+        <div className="mx-auto max-w-7xl">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {/* Phone Card */}
             <a
               href={`tel:${contactInfo.phone[0].replace(/\s/g, "")}`}
-              className="group flex flex-col items-center border border-stone-200 bg-white p-8 text-center transition-all hover:border-[#C5A059]/50 hover:shadow-xl"
+              className="group flex flex-col items-center rounded-xl border border-stone-200 bg-white p-8 text-center transition-all hover:border-[#C5A059]/50 hover:shadow-xl"
             >
               <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#C5A059]/10 text-[#C5A059] transition-all group-hover:bg-[#C5A059] group-hover:text-white">
                 {icons.phone}
@@ -245,7 +246,7 @@ ${sanitizedData.message}`;
             {/* Email Card */}
             <a
               href={`mailto:${contactInfo.email}`}
-              className="group flex flex-col items-center border border-stone-200 bg-white p-8 text-center transition-all hover:border-[#C5A059]/50 hover:shadow-xl"
+              className="group flex flex-col items-center rounded-xl border border-stone-200 bg-white p-8 text-center transition-all hover:border-[#C5A059]/50 hover:shadow-xl"
             >
               <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#C5A059]/10 text-[#C5A059] transition-all group-hover:bg-[#C5A059] group-hover:text-white">
                 {icons.email}
@@ -255,7 +256,7 @@ ${sanitizedData.message}`;
             </a>
 
             {/* Location Card */}
-            <div className="group flex flex-col items-center border border-stone-200 bg-white p-8 text-center transition-all hover:border-[#C5A059]/50 hover:shadow-xl">
+            <div className="group flex flex-col items-center rounded-xl border border-stone-200 bg-white p-8 text-center transition-all hover:border-[#C5A059]/50 hover:shadow-xl">
               <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#C5A059]/10 text-[#C5A059] transition-all group-hover:bg-[#C5A059] group-hover:text-white">
                 {icons.location}
               </div>
@@ -268,8 +269,8 @@ ${sanitizedData.message}`;
       </section>
 
       {/* Main Contact Section */}
-      <section className="bg-white py-24 px-6">
-        <div className="mx-auto max-w-6xl">
+      <section className="px-4 pb-16">
+        <div className="mx-auto max-w-7xl">
           <div className="grid gap-16 lg:grid-cols-2">
             {/* Contact Form */}
             <div>
@@ -415,7 +416,7 @@ ${sanitizedData.message}`;
                 <button
                   type="submit"
                   disabled={isSubmitting || isSubmitted}
-                  className={`flex w-full items-center justify-center gap-3 py-4 text-[10px] font-bold uppercase tracking-[0.3em] transition-all ${
+                  className={`flex w-full items-center justify-center gap-3 rounded-lg py-4 text-[10px] font-bold uppercase tracking-[0.3em] transition-all ${
                     isSubmitted
                       ? "bg-green-600 text-white"
                       : "bg-stone-900 text-white hover:bg-[#C5A059] hover:shadow-xl"
@@ -528,23 +529,24 @@ ${sanitizedData.message}`;
       </section>
 
       {/* Map Section */}
-      <section className="relative">
-        {/* Map Header */}
-        <div className="bg-[#0A0A09] py-12 px-6 text-center text-white">
-          <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
-            Our Location
-          </span>
-          <h2 className="font-serif text-3xl md:text-4xl">
-            Visit Our Workshop
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm text-stone-400">
-            {contactInfo.address}
-          </p>
-        </div>
+      <section className="px-4 pb-16">
+        <div className="mx-auto max-w-7xl">
+          {/* Map Header */}
+          <div className="mb-8 text-center">
+            <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
+              Our Location
+            </span>
+            <h2 className="mb-4 font-serif text-3xl md:text-4xl">
+              Visit Our Workshop
+            </h2>
+            <p className="mx-auto max-w-xl text-stone-500">
+              {contactInfo.address}
+            </p>
+          </div>
 
-        {/* Google Maps Embed */}
-        <div className="relative h-[500px] w-full">
-          <iframe
+          {/* Google Maps Embed */}
+          <div className="relative h-[500px] w-full overflow-hidden rounded-xl border border-stone-200">
+            <iframe
               src="https://www.google.com/maps?q=27.021606,75.767502&z=17&output=embed"
               width="100%"
               height="100%"
@@ -554,36 +556,38 @@ ${sanitizedData.message}`;
               referrerPolicy="no-referrer-when-downgrade"
               title="Tarana Handicrafts Location - Jaipur, Rajasthan"
               className="grayscale transition-all duration-500 hover:grayscale-0"
-          />
+            />
 
-          {/* Map Overlay Card */}
-          <div className="absolute bottom-8 left-8 z-10 hidden max-w-sm border border-stone-200 bg-white p-6 shadow-2xl md:block">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#C5A059] text-white">
-                {icons.location}
+            {/* Map Overlay Card */}
+            <div className="absolute bottom-8 left-8 z-10 hidden max-w-sm rounded-xl border border-stone-200 bg-white p-6 shadow-2xl md:block">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#C5A059] text-white">
+                  {icons.location}
+                </div>
+                <div>
+                  <h4 className="font-serif text-lg">{contactInfo.businessName}</h4>
+                  <p className="text-xs text-stone-500">Jaipur, Rajasthan</p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-serif text-lg">{contactInfo.businessName}</h4>
-                <p className="text-xs text-stone-500">Jaipur, Rajasthan</p>
-              </div>
-            </div>
-            <p className="mb-4 text-sm text-stone-600">{contactInfo.address}</p>
-            <a href="https://www.google.com/maps/dir/?api=1&destination=27.021606, 75.767502"
+              <p className="mb-4 text-sm text-stone-600">{contactInfo.address}</p>
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=27.021606,75.767502"
                 target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-stone-900 px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-white transition-all hover:bg-[#C5A059]"
-            >
-              Get Directions
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-stone-900 px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-white transition-all hover:bg-[#C5A059]"
+              >
+                Get Directions
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-[#C5A059] py-16 px-6 text-center text-white">
+      <section className="mx-4 mb-8 rounded-xl bg-[#C5A059] py-16 px-6 text-center text-white md:mx-auto md:max-w-7xl">
         <div className="mx-auto max-w-3xl">
           <h2 className="mb-4 font-serif text-3xl md:text-4xl">
             Ready to Start Your Order?
@@ -594,7 +598,7 @@ ${sanitizedData.message}`;
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/products"
-              className="bg-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#C5A059] transition-all hover:bg-stone-900 hover:text-white hover:shadow-xl"
+              className="rounded-lg bg-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#C5A059] transition-all hover:bg-stone-900 hover:text-white hover:shadow-xl"
             >
               Browse Products
             </Link>
@@ -602,7 +606,7 @@ ${sanitizedData.message}`;
               href={`https://wa.me/${contactInfo.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 border-2 border-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] transition-all hover:bg-white hover:text-[#C5A059]"
+              className="flex items-center gap-2 rounded-lg border-2 border-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] transition-all hover:bg-white hover:text-[#C5A059]"
             >
               {icons.whatsapp}
               Chat on WhatsApp

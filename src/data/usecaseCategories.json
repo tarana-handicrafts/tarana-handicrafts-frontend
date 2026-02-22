@@ -1,0 +1,46 @@
+{
+  "useCases": [
+    {
+      "id": 1,
+      "title": "Executive Desk Branding",
+      "description": "Transform a standard workspace into a position of power. Our utility elephants keep essential tools organized while serving as a constant reminder of your brand's strength.",
+      "image": "/usecase_1.png",
+      "products": ["Pen Holder Elephants", "Acoustic Phone Amplifiers", "Business Card Stands"]
+    },
+    {
+      "id": 2,
+      "title": "Corporate Milestone Gifts",
+      "description": "Celebrate promotions, retirements, or years of service with symbolic art. Use our 'Baby inside Mother' Jali work to represent protection and long-term legacy.",
+      "image": "/usecase_2_2.png",
+      "products": ["Hand-carved Jali Elephants", "Custom Engraved Bases", "Royal Butler Trays"]
+    },
+    {
+      "id": 3,
+      "title": "Productivity & Focus",
+      "description": "A clutter-free desk leads to a clutter-free mind. Our functional sculptures manage sticky notes and paperclips, blending traditional craft with modern efficiency.",
+      "image": "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=1200",
+      "products": ["Sticky Note Dispensers", "Magnetic Paperclip Holders", "Perpetual Calendars"]
+    },
+    {
+      "id": 4,
+      "title": "Tech-Forward Traditions",
+      "description": "Modern utility meets ancient craft. Bridge the gap between nature and technology with handcrafted docking stations and smart acoustic amplifiers.",
+      "image": "/usecase_4.png",
+      "products": ["Wireless Charging Docks", "Cable Management Weights", "Phone Amplifiers"]
+    },
+    {
+      "id": 5,
+      "title": "Hospitality & Reception",
+      "description": "Make a lasting first impression in your lobby or concierge desk. Our large-scale figurines and catch-all trays welcome guests with elegance and warmth.",
+      "image": "/usecase_5_2.png",
+      "products": ["Statement Figurines", "Royal Butler Trays", "Spectacle Holders"]
+    },
+    {
+      "id": 6,
+      "title": "Wellness & Eco-Workspaces",
+      "description": "Bring life to the office. Our planter series integrates greenery into the workspace, promoting mental well-being and a commitment to sustainable artisan craft.",
+      "image": "/usecase_6.png",
+      "products": ["Succulent Planters", "Aura Lanterns", "Eco-friendly Packaging"]
+    }
+  ]
+}

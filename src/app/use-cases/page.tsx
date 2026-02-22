@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import useCasesData from "@/data/usecaseCategories.json";
 
 export const metadata: Metadata = {
   title: "Use Cases - Interior Inspiration",
@@ -8,56 +9,17 @@ export const metadata: Metadata = {
     "Discover how our handcrafted pieces can transform your living spaces. Get inspiration for your home decor.",
 };
 
-const useCases = [
-  {
-    id: 1,
-    title: "Executive Desk Branding",
-    description:
-        "Transform a standard workspace into a position of power. Our utility elephants keep essential tools organized while serving as a constant reminder of your brand's strength.",
-    image: "https://your-image-link.com/executive-desk.jpg", // Suggested: The 'Pen Holder' or 'Acoustic Trumpet' in a high-end office
-    products: ["Pen Holder Elephants", "Acoustic Phone Amplifiers", "Business Card Stands"],
-  },
-  {
-    id: 2,
-    title: "Corporate Milestone Gifts",
-    description:
-        "Celebrate promotions, retirements, or years of service with symbolic art. Use our 'Baby inside Mother' Jali work to represent protection and long-term legacy.",
-    image: "https://your-image-link.com/milestone-gift.jpg", // Suggested: The 'Jali' elephant on a dark walnut base with a brass nameplate
-    products: ["Hand-carved Jali Elephants", "Custom Engraved Bases", "Royal Butler Trays"],
-  },
-  {
-    id: 3,
-    title: "Productivity & Focus",
-    description:
-        "A clutter-free desk leads to a clutter-free mind. Our functional sculptures manage sticky notes and paperclips, blending traditional craft with modern efficiency.",
-    image: "https://your-image-link.com/productivity.jpg", // Suggested: The 'Cargo' Sticky Note Holder or 'Magnetic' Paperclip holder
-    products: ["Sticky Note Dispensers", "Magnetic Paperclip Holders", "Perpetual Calendars"],
-  },
-  {
-    id: 4,
-    title: "Tech-Forward Traditions",
-    description:
-        "Modern utility meets ancient craft. Bridge the gap between nature and technology with handcrafted docking stations and smart acoustic amplifiers.",
-    image: "https://your-image-link.com/tech-utility.jpg", // Suggested: The 'Guardian' Wireless Charger or Cable Weight
-    products: ["Wireless Charging Docks", "Cable Management Weights", "Phone Amplifiers"],
-  },
-  {
-    id: 5,
-    title: "Hospitality & Reception",
-    description:
-        "Make a lasting first impression in your lobby or concierge desk. Our large-scale figurines and catch-all trays welcome guests with elegance and warmth.",
-    image: "https://your-image-link.com/hospitality.jpg", // Suggested: Large elephant figurines or the 'Royal Butler' Tray on a reception counter
-    products: ["Statement Figurines", "Royal Butler Trays", "Spectacle Holders"],
-  },
-  {
-    id: 6,
-    title: "Wellness & Eco-Workspaces",
-    description:
-        "Bring life to the office. Our planter series integrates greenery into the workspace, promoting mental well-being and a commitment to sustainable artisan craft.",
-    image: "https://your-image-link.com/wellness.jpg", // Suggested: The 'Green Growth' Succulent Planter near a window
-    products: ["Succulent Planters", "Aura Lanterns", "Eco-friendly Packaging"],
-  },
-];
+// Type definition for use cases
+interface UseCase {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  products: string[];
+}
+
+// Load use cases from JSON file
+const useCases: UseCase[] = useCasesData.useCases;
 
 export default function UseCasesPage() {
   return (
@@ -83,7 +45,7 @@ export default function UseCasesPage() {
           {useCases.map((useCase) => (
             <article
               key={useCase.id}
-              className="group overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--background)] transition-all hover:shadow-xl"
+              className="group overflow-hidden rounded-xl border border-stone-200 bg-white transition-all hover:shadow-xl"
             >
               {/* Image */}
               <div className="relative aspect-[4/3] overflow-hidden">
@@ -102,7 +64,7 @@ export default function UseCasesPage() {
 
               {/* Content */}
               <div className="p-6">
-                <p className="mb-4 text-[var(--color-muted)]">
+                <p className="mb-4 text-stone-500">
                   {useCase.description}
                 </p>
 
@@ -111,7 +73,7 @@ export default function UseCasesPage() {
                   {useCase.products.map((product) => (
                     <span
                       key={product}
-                      className="rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-xs font-medium text-[var(--color-primary)]"
+                      className="rounded-full bg-[#C5A059]/10 px-3 py-1 text-xs font-medium text-[#C5A059]"
                     >
                       {product}
                     </span>
@@ -120,7 +82,7 @@ export default function UseCasesPage() {
 
                 <Link
                   href="/products"
-                  className="inline-flex items-center gap-2 font-medium text-[var(--color-primary)] transition-colors hover:text-[var(--color-primary-dark)]"
+                  className="inline-flex items-center gap-2 font-medium text-[#C5A059] transition-colors hover:text-stone-900"
                 >
                   Shop This Look
                   <svg
@@ -143,8 +105,8 @@ export default function UseCasesPage() {
         </div>
 
         {/* CTA Section */}
-        <div className="mt-20 rounded-2xl bg-[var(--color-primary)] p-8 text-center text-white sm:p-12">
-          <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+        <div className="mt-20 rounded-xl bg-[#C5A059] p-8 text-center text-white sm:p-12">
+          <h2 className="mb-4 font-serif text-3xl sm:text-4xl">
             Need Custom Pieces for Your Project?
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-lg opacity-90">
@@ -153,7 +115,7 @@ export default function UseCasesPage() {
           </p>
           <Link
             href="/contact"
-            className="inline-block rounded-lg bg-white px-8 py-4 text-lg font-medium text-[var(--color-primary)] transition-all hover:bg-opacity-90 hover:shadow-lg"
+            className="inline-block rounded-lg bg-white px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#C5A059] transition-all hover:bg-stone-900 hover:text-white hover:shadow-xl"
           >
             Request Custom Quote
           </Link>

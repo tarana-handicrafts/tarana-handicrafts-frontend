@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Product, getProductById, getSimilarProducts, ProductImage, ProductReview } from "@/lib/products";
@@ -13,21 +13,20 @@ interface ProductDetailClientProps {
 
 export default function ProductDetailClient({ productId }: ProductDetailClientProps) {
   const numericId = Number(productId);
-  const [product, setProduct] = useState<Product | null>(null);
-  const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
+
+  // Derive product and similar products from productId using useMemo
+  const product = useMemo(() => getProductById(numericId), [numericId]);
+  const similarProducts = useMemo(
+    () => (product ? getSimilarProducts(product, 4) : []),
+    [product]
+  );
+
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<"description" | "specifications" | "reviews">("description");
   const [isZoomed, setIsZoomed] = useState(false);
   const { addToCart, cart } = useCart();
 
-  useEffect(() => {
-    const foundProduct = getProductById(numericId);
-    if (foundProduct) {
-      setProduct(foundProduct);
-      setSimilarProducts(getSimilarProducts(foundProduct, 4));
-    }
-  }, [numericId]);
 
   if (!product) {
     return (

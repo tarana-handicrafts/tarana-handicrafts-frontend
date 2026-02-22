@@ -93,59 +93,51 @@ const icons = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden bg-[#0A0A09] px-6 py-24 text-white">
-        {/* Background Pattern */}
-        <div className="pointer-events-none absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-[url('/pattern.svg')] bg-repeat" />
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-4xl text-center">
-          <span className="mb-4 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
-            Our Story
-          </span>
-          <h1 className="mb-6 font-serif text-4xl leading-tight md:text-6xl lg:text-7xl">
-            Preserving Rajasthan&apos;s{" "}
-            <span className="font-light italic text-stone-400">
-              Wooden Art Heritage
+    <div className="min-h-screen bg-[#F9F8F6]">
+      {/* Hero Section - Consistent with Products Page */}
+      <section className="px-4 pb-16 pt-32">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 text-center">
+            <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
+              Our Story
             </span>
-          </h1>
-          <p className="mx-auto max-w-2xl text-lg font-light leading-relaxed text-stone-400">
-            Tarana Handicrafts is a Jaipur-based wooden handicrafts brand
-            specializing in handcrafted wooden elephant art. Rooted in the rich
-            artistic traditions of Rajasthan, we create timeless wooden décor
-            pieces that reflect cultural heritage, craftsmanship, and elegance.
-          </p>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <svg className="h-6 w-6 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
+            <h1 className="mb-4 font-serif text-4xl md:text-5xl">
+              Preserving Rajasthan&apos;s{" "}
+              <span className="font-light italic text-stone-400">
+                Wooden Art Heritage
+              </span>
+            </h1>
+            <p className="mx-auto max-w-2xl text-stone-500">
+              Tarana Handicrafts is a Jaipur-based wooden handicrafts brand
+              specializing in handcrafted wooden elephant art. Rooted in the rich
+              artistic traditions of Rajasthan, we create timeless wooden décor
+              pieces that reflect cultural heritage, craftsmanship, and elegance.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="border-b border-stone-200 bg-white py-16">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-6 md:grid-cols-4">
-          {stats.map((stat, index) => (
-            <div key={index} className="text-center">
-              <p className="font-serif text-4xl text-[#C5A059] md:text-5xl">
-                {stat.value}
-              </p>
-              <p className="mt-2 text-[10px] font-bold uppercase tracking-widest text-stone-500">
-                {stat.label}
-              </p>
-            </div>
-          ))}
+      <section className="mx-auto max-w-7xl px-4 pb-16">
+        <div className="rounded-xl border border-stone-200 bg-white p-8">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center">
+                <p className="font-serif text-4xl text-[#C5A059] md:text-5xl">
+                  {stat.value}
+                </p>
+                <p className="mt-2 text-[10px] font-bold uppercase tracking-widest text-stone-500">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Mission & Vision Section */}
-      <section className="bg-[#F9F8F6] py-24 px-6">
-        <div className="mx-auto max-w-6xl">
+      <section className="py-16 px-4">
+        <div className="mx-auto max-w-7xl">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             {/* Image */}
             <div className="relative">
@@ -201,13 +193,13 @@ export default function AboutPage() {
               <div className="flex flex-wrap gap-4 pt-4">
                 <Link
                   href="/products"
-                  className="bg-stone-900 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-white transition-all hover:bg-[#C5A059] hover:shadow-xl"
+                  className="rounded-lg bg-stone-900 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-white transition-all hover:bg-[#C5A059] hover:shadow-xl"
                 >
                   Explore Collection
                 </Link>
                 <Link
                   href="/contact"
-                  className="border border-stone-300 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-900 transition-all hover:border-[#C5A059] hover:text-[#C5A059]"
+                  className="rounded-lg border border-stone-300 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-900 transition-all hover:border-[#C5A059] hover:text-[#C5A059]"
                 >
                   Get in Touch
                 </Link>
@@ -218,9 +210,9 @@ export default function AboutPage() {
       </section>
 
       {/* Why Wooden Elephants Section */}
-      <section className="bg-white py-24 px-6">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-16 text-center">
+      <section className="px-4 py-16">
+        <div className="mx-auto max-w-7xl rounded-xl border border-stone-200 bg-white p-8 md:p-12">
+          <div className="mb-12 text-center">
             <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
               Symbolic Meaning
             </span>
@@ -238,7 +230,7 @@ export default function AboutPage() {
               (meaning, index) => (
                 <div
                   key={index}
-                  className="group border border-stone-100 p-8 text-center transition-all hover:border-[#C5A059]/30 hover:shadow-xl"
+                  className="group rounded-xl border border-stone-100 p-8 text-center transition-all hover:border-[#C5A059]/30 hover:shadow-xl"
                 >
                   <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[#C5A059]/10 text-3xl transition-all group-hover:bg-[#C5A059] group-hover:text-white">
                     {["💪", "🧠", "✨", "☀️", "🍀"][index]}
@@ -252,26 +244,26 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="bg-[#0A0A09] py-24 px-6 text-white">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-16 text-center">
+      <section className="px-4 py-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 text-center">
             <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
               What Sets Us Apart
             </span>
             <h2 className="font-serif text-3xl md:text-5xl">Our Values</h2>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {values.map((value, index) => (
               <div
                 key={index}
-                className="group border border-white/10 p-8 transition-all hover:border-[#C5A059]/30 hover:bg-white/5"
+                className="group rounded-xl border border-stone-200 bg-white p-8 transition-all hover:border-[#C5A059]/30 hover:shadow-xl"
               >
                 <div className="mb-6 text-[#C5A059]">
                   {icons[value.icon as keyof typeof icons]}
                 </div>
                 <h3 className="mb-3 font-serif text-xl">{value.title}</h3>
-                <p className="text-sm font-light leading-relaxed text-stone-400">
+                <p className="text-sm font-light leading-relaxed text-stone-500">
                   {value.description}
                 </p>
               </div>
@@ -281,9 +273,9 @@ export default function AboutPage() {
       </section>
 
       {/* Product Categories Section */}
-      <section className="bg-[#F9F8F6] py-24 px-6">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-16 text-center">
+      <section className="px-4 py-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 text-center">
             <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
               Our Craft
             </span>
@@ -300,7 +292,7 @@ export default function AboutPage() {
             {categories.map((category, index) => (
               <div
                 key={index}
-                className="group flex items-center gap-4 border border-stone-200 bg-white p-6 transition-all hover:border-[#C5A059]/50 hover:shadow-lg"
+                className="group flex items-center gap-4 rounded-xl border border-stone-200 bg-white p-6 transition-all hover:border-[#C5A059]/50 hover:shadow-lg"
               >
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#C5A059]/10 font-mono text-sm font-bold text-[#C5A059] transition-all group-hover:bg-[#C5A059] group-hover:text-white">
                   {String(index + 1).padStart(2, "0")}
@@ -328,11 +320,11 @@ export default function AboutPage() {
       </section>
 
       {/* Customization & Export Section */}
-      <section className="bg-white py-24 px-6">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-12 lg:grid-cols-2">
+      <section className="px-4 py-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-8 lg:grid-cols-2">
             {/* Customization */}
-            <div className="border border-stone-200 p-10">
+            <div className="rounded-xl border border-stone-200 bg-white p-8 md:p-10">
               <span className="mb-4 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
                 Bespoke Service
               </span>
@@ -363,7 +355,7 @@ export default function AboutPage() {
             </div>
 
             {/* Export */}
-            <div className="border border-stone-200 p-10">
+            <div className="rounded-xl border border-stone-200 bg-white p-8 md:p-10">
               <span className="mb-4 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
                 Worldwide
               </span>
@@ -409,7 +401,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-[#C5A059] py-20 px-6 text-center text-white">
+      <section className="mx-4 mb-8 rounded-xl bg-[#C5A059] py-16 px-6 text-center text-white md:mx-auto md:max-w-7xl">
         <div className="mx-auto max-w-3xl">
           <h2 className="mb-4 font-serif text-3xl md:text-5xl">
             Ready to Own a Piece of Jaipur?
@@ -421,13 +413,13 @@ export default function AboutPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/products"
-              className="bg-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#C5A059] transition-all hover:bg-stone-900 hover:text-white hover:shadow-xl"
+              className="rounded-lg bg-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#C5A059] transition-all hover:bg-stone-900 hover:text-white hover:shadow-xl"
             >
               Shop Collection
             </Link>
             <Link
               href="/contact"
-              className="border-2 border-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] transition-all hover:bg-white hover:text-[#C5A059]"
+              className="rounded-lg border-2 border-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] transition-all hover:bg-white hover:text-[#C5A059]"
             >
               Contact Us
             </Link>
