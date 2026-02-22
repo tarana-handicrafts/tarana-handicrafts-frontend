@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 import { navLinks, siteConfig } from "@/lib/constants";
 import { useCart } from "@/context/CartContext";
 
-// Pages with dark hero sections
-const darkHeroPages = ["/about", "/contact"];
+// Pages with dark hero sections (none currently - all pages use light backgrounds)
+const darkHeroPages: string[] = [];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

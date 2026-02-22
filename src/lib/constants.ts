@@ -12,8 +12,8 @@ export const siteConfig = {
     twitter: "https://twitter.com/taranahandicrafts",
   },
   contact: {
-    email: "info@taranahandicrafts.com",
-    phone: "+91 XXXXXXXXXX",
+    email: "taranahandicrafts@gmail.com",
+    phone: "+91 9509669135",
   },
 };
 
