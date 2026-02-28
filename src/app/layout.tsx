@@ -35,6 +35,8 @@ export const metadata: Metadata = {
   },
   description:
     "Discover exquisite handcrafted art, home decor, and traditional handicrafts. Shop authentic artisan-made products with worldwide shipping.",
+  applicationName: "Tarana Handicrafts",
+  generator: "Next.js",
   keywords: [
     "handicrafts",
     "handmade",
@@ -44,6 +46,9 @@ export const metadata: Metadata = {
     "handcrafted",
     "Indian handicrafts",
     "ethnic decor",
+    "wooden elephant",
+    "Jaipur crafts",
+    "Rajasthani art",
   ],
   authors: [{ name: "Tarana Handicrafts" }],
   creator: "Tarana Handicrafts",
@@ -110,17 +115,50 @@ export const viewport: Viewport = {
 };
 
 // JSON-LD Structured Data for SEO
+// WebSite schema is first - this is what Google uses for site name in breadcrumbs
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com";
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/#organization`,
+      "@type": "WebSite",
+      "@id": `${baseUrl}/#website`,
+      url: baseUrl,
       name: "Tarana Handicrafts",
-      url: process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com",
+      alternateName: ["Tarana", "Tarana Handicrafts India", "Tarana Jaipur"],
+      description: "Authentic handcrafted wooden art, home decor, and traditional Rajasthani handicrafts from Jaipur artisans.",
+      publisher: {
+        "@id": `${baseUrl}/#organization`,
+      },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${baseUrl}/products?search={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+      inLanguage: "en-IN",
+    },
+    {
+      "@type": "Organization",
+      "@id": `${baseUrl}/#organization`,
+      name: "Tarana Handicrafts",
+      legalName: "Tarana Handicrafts",
+      url: baseUrl,
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/logo.png`,
+        "@id": `${baseUrl}/#logo`,
+        url: `${baseUrl}/logo.png`,
+        contentUrl: `${baseUrl}/logo.png`,
+        caption: "Tarana Handicrafts Logo",
+        inLanguage: "en-IN",
+        width: 512,
+        height: 512,
+      },
+      image: {
+        "@id": `${baseUrl}/#logo`,
       },
       description: "Authentic handcrafted art, home decor, and traditional handicrafts from Jaipur, Rajasthan.",
       sameAs: [
@@ -131,15 +169,24 @@ const jsonLd = {
         "@type": "ContactPoint",
         telephone: "+91-9509669135",
         contactType: "customer service",
+        areaServed: ["IN", "US", "GB", "AE", "AU"],
         availableLanguage: ["English", "Hindi"],
+      },
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "B81, North Avenue, Harmara Ghati, Sikar Road",
+        addressLocality: "Jaipur",
+        addressRegion: "Rajasthan",
+        postalCode: "302039",
+        addressCountry: "IN",
       },
     },
     {
       "@type": "LocalBusiness",
-      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/#localbusiness`,
+      "@id": `${baseUrl}/#localbusiness`,
       name: "Tarana Handicrafts",
-      image: `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/og-image.jpg`,
-      url: process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com",
+      image: `${baseUrl}/og-image.jpg`,
+      url: baseUrl,
       telephone: "+91-9509669135",
       email: "taranahandicrafts@gmail.com",
       priceRange: "₹₹",
@@ -164,23 +211,6 @@ const jsonLd = {
           closes: "19:00",
         },
       ],
-    },
-    {
-      "@type": "WebSite",
-      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/#website`,
-      url: process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com",
-      name: "Tarana Handicrafts",
-      publisher: {
-        "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/#organization`,
-      },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: {
-          "@type": "EntryPoint",
-          urlTemplate: `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/products?search={search_term_string}`,
-        },
-        "query-input": "required name=search_term_string",
-      },
     },
   ],
 };
