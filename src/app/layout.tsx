@@ -28,7 +28,7 @@ const playfair = Playfair_Display({
 
 // SEO Metadata Configuration
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://www.taranahandicrafts.com"),
   title: {
     default: "Tarana Handicrafts - Authentic Handcrafted Art & Decor",
     template: "%s | Tarana Handicrafts",
@@ -116,7 +116,7 @@ export const viewport: Viewport = {
 
 // JSON-LD Structured Data for SEO
 // WebSite schema is first - this is what Google uses for site name in breadcrumbs
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com";
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.taranahandicrafts.com";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -223,7 +223,19 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Structured Data for SEO */}
+        {/* Simple WebSite Schema for Google Site Name in Breadcrumbs */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Tarana Handicrafts",
+              "url": "https://www.taranahandicrafts.com/"
+            })
+          }}
+        />
+        {/* Full Structured Data for SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
