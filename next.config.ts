@@ -13,9 +13,19 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "i.pravatar.cc",
+      },
+      {
+        protocol: "https",
+        hostname: "media.istockphoto.com",
       },
     ],
+    // Enable image optimization for better LCP
+    unoptimized: false,
   },
 
   // Enable compression

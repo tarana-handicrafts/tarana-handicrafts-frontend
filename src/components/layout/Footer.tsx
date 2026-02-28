@@ -85,7 +85,7 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="text-stone-300">Explore</li>
               {footerLinks.shop.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-stone-900 transition-colors hover:text-[#C5A059]"
@@ -98,7 +98,7 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="text-stone-300">Company</li>
               {footerLinks.company.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-stone-900 transition-colors hover:text-[#C5A059]"

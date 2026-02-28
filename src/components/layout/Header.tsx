@@ -121,15 +121,15 @@ export function Header() {
 
           {/* User/Account Button */}
           <Link
-            href="/account"
+            href="/coming-soon"
             className={`hidden p-2.5 transition-colors md:block ${
-              pathname === "/account"
+              pathname === "/coming-soon"
                 ? "text-[#C5A059]"
                 : useLightText
                 ? "text-white hover:text-[#C5A059]"
                 : "text-stone-700 hover:text-[#C5A059]"
             }`}
-            aria-label="Account"
+            aria-label="Account (Coming Soon)"
           >
             <svg
               className="h-[19px] w-[19px]"
