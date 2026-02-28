@@ -145,7 +145,7 @@ export default function AboutPage() {
             </span>
             <h1 className="mb-4 font-serif text-4xl md:text-5xl">
               Preserving Rajasthan&apos;s{" "}
-              <span className="font-light italic text-stone-400">
+              <span className="font-light italic text-stone-500">
                 Wooden Art Heritage
               </span>
             </h1>
@@ -210,7 +210,7 @@ export default function AboutPage() {
                 </span>
                 <h2 className="mb-4 font-serif text-3xl leading-tight md:text-4xl">
                   Crafting Cultural{" "}
-                  <span className="font-light italic text-stone-400">
+                  <span className="font-light italic text-stone-500">
                     Legacies
                   </span>
                 </h2>

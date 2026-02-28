@@ -200,7 +200,7 @@ ${sanitizedData.message}`;
             </span>
             <h1 className="mb-4 font-serif text-4xl md:text-5xl">
               Let&apos;s Create{" "}
-              <span className="font-light italic text-stone-400">Together</span>
+              <span className="font-light italic text-stone-500">Together</span>
             </h1>
             <p className="mx-auto max-w-2xl text-stone-500">
               Whether you&apos;re looking for a masterpiece for your home, a
@@ -408,7 +408,7 @@ ${sanitizedData.message}`;
                   {errors.message && (
                     <p className="mt-1 text-xs text-red-500">{errors.message}</p>
                   )}
-                  <p className="mt-1 text-right text-xs text-stone-400">
+                  <p className="mt-1 text-right text-xs text-stone-500">
                     {formData.message.length}/1000
                   </p>
                 </div>
@@ -517,7 +517,7 @@ ${sanitizedData.message}`;
                           {landmark.name}
                         </p>
                         <p className="text-xs text-[#C5A059]">{landmark.distance}</p>
-                        <p className="text-[10px] text-stone-400">{landmark.type}</p>
+                        <p className="text-[10px] text-stone-500">{landmark.type}</p>
                       </div>
                     </div>
                   ))}

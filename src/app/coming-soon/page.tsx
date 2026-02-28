@@ -37,7 +37,7 @@ export default function ComingSoonPage() {
 
         <h1 className="mb-4 font-serif text-4xl md:text-5xl">
           Coming{" "}
-          <span className="font-light italic text-stone-400">Soon</span>
+          <span className="font-light italic text-stone-500">Soon</span>
         </h1>
 
         <p className="mx-auto mb-8 max-w-md text-lg text-stone-500">
@@ -53,7 +53,7 @@ export default function ComingSoonPage() {
               style={{ animation: "pulse 2s infinite" }}
             />
           </div>
-          <p className="mt-2 text-xs text-stone-400">Development in progress...</p>
+          <p className="mt-2 text-xs text-stone-500">Development in progress...</p>
         </div>
       </div>
 

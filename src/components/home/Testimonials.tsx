@@ -156,7 +156,7 @@ export function Testimonials() {
                     <IconStar key={i} />
                   ))}
                 </div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-stone-400">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500">
                   Trusted Globally
                 </p>
               </div>
@@ -173,7 +173,7 @@ export function Testimonials() {
               }`}
             >
               &ldquo;A piece of Jaipur{" "}
-              <span className="text-stone-400">heritage.</span>&rdquo;
+              <span className="text-stone-500">heritage.</span>&rdquo;
             </h2>
 
             <p
@@ -192,7 +192,7 @@ export function Testimonials() {
               <h4 className="text-sm font-bold uppercase tracking-widest text-stone-900">
                 Sarah Jenkins
               </h4>
-              <p className="text-xs uppercase tracking-wide text-stone-400">
+              <p className="text-xs uppercase tracking-wide text-stone-500">
                 Heritage Art Collector
               </p>
             </div>
@@ -256,7 +256,7 @@ export function Testimonials() {
                   <p className="text-[10px] font-bold uppercase tracking-widest text-stone-900">
                     {review.author}
                   </p>
-                  <p className="text-[10px] uppercase tracking-wide text-stone-400">
+                  <p className="text-[10px] uppercase tracking-wide text-stone-500">
                     {review.role}
                   </p>
                 </div>

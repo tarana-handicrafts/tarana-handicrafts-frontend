@@ -39,7 +39,7 @@ export function Footer() {
           <div>
             <h3 className="mb-6 font-serif text-4xl leading-tight">
               Join the Inner Circle of <br />
-              <span className="font-light italic text-stone-400">
+              <span className="font-light italic text-stone-500">
                 Collectors.
               </span>
             </h3>
@@ -114,7 +114,7 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="flex flex-col items-center justify-between gap-8 pt-12 md:flex-row">
           {/* Copyright */}
-          <p className="text-[10px] uppercase tracking-widest text-stone-400">
+          <p className="text-[10px] uppercase tracking-widest text-stone-500">
             © {currentYear} {siteConfig.name}.
           </p>
 
@@ -156,7 +156,7 @@ export function Footer() {
           </div>
 
           {/* Tagline */}
-          <p className="text-[10px] font-black uppercase italic tracking-[0.4em] text-stone-400">
+          <p className="text-[10px] font-black uppercase italic tracking-[0.4em] text-stone-500">
             Elegance in subtraction.
           </p>
         </div>
