@@ -445,7 +445,7 @@ export default function AboutPage() {
       {/* CTA Section */}
       <section className="mx-4 mb-8 rounded-xl bg-[#C5A059] py-16 px-6 text-center text-white md:mx-auto md:max-w-7xl">
         <div className="mx-auto max-w-3xl">
-          <h2 className="mb-4 font-serif text-3xl md:text-5xl">
+          <h2 className="mb-4 font-serif text-3xl md:text-5xl !text-white">
             Ready to Own a Piece of Jaipur?
           </h2>
           <p className="mb-8 text-lg font-light opacity-90">

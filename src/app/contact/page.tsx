@@ -589,7 +589,7 @@ ${sanitizedData.message}`;
       {/* CTA Section */}
       <section className="mx-4 mb-8 rounded-xl bg-[#C5A059] py-16 px-6 text-center text-white md:mx-auto md:max-w-7xl">
         <div className="mx-auto max-w-3xl">
-          <h2 className="mb-4 font-serif text-3xl md:text-4xl">
+          <h2 className="mb-4 font-serif !text-white text-3xl md:text-4xl">
             Ready to Start Your Order?
           </h2>
           <p className="mb-8 text-lg font-light opacity-90">

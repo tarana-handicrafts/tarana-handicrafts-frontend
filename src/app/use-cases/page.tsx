@@ -59,7 +59,7 @@ export default function UseCasesPage() {
                   priority={index < 3}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <h2 className="absolute bottom-4 left-4 text-2xl font-bold text-white">
+                <h2 className="absolute bottom-4 left-4 text-2xl font-bold !text-white">
                   {useCase.title}
                 </h2>
               </div>
@@ -108,7 +108,7 @@ export default function UseCasesPage() {
 
         {/* CTA Section */}
         <div className="mt-20 rounded-xl bg-[#C5A059] p-8 text-center text-white sm:p-12">
-          <h2 className="mb-4 font-serif text-3xl sm:text-4xl">
+          <h2 className="mb-4 font-serif !text-white text-3xl sm:text-4xl">
             Need Custom Pieces for Your Project?
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-lg opacity-90">
