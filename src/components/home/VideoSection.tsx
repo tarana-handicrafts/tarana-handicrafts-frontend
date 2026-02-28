@@ -24,7 +24,7 @@ export function VideoSection() {
                 isHovered ? "grayscale-0 scale-105" : "grayscale"
               }`}
               sizes="(max-width: 1024px) 100vw, 50vw"
-              priority
+              loading="lazy"
             />
             {/* Overlay */}
             <div className="absolute inset-0 flex items-center justify-center bg-black/20">

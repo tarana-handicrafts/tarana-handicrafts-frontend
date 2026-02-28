@@ -231,6 +231,7 @@ export function Testimonials() {
                         fill
                         className="object-cover"
                         sizes="56px"
+                        loading="lazy"
                       />
                     </div>
                     <div className="absolute -bottom-1 -right-1 rounded-full bg-white p-1 text-amber-700 shadow-sm">

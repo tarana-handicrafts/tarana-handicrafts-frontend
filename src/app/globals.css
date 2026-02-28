@@ -31,9 +31,23 @@
   }
 }
 
+/* Reduce motion for users who prefer it - accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Base Styles */
 html {
   scroll-behavior: smooth;
+  /* Optimize text rendering */
+  text-rendering: optimizeSpeed;
 }
 
 body {
@@ -142,14 +156,39 @@ img {
 .animate-fade-in-left {
   animation: fadeInLeft 1s ease-out forwards;
   opacity: 0;
+  will-change: opacity, transform;
 }
 
 .animate-fade-in-up {
   animation: fadeInUp 0.7s ease-out forwards;
   opacity: 0;
+  will-change: opacity, transform;
 }
 
 .animate-fade-in-scale {
   animation: fadeInScale 1s ease-out forwards;
   opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* Performance: Content visibility for off-screen elements */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize images for better LCP */
+img {
+  content-visibility: auto;
+}
+
+/* Optimize font display */
+@font-face {
+  font-display: swap;
 }

@@ -7,19 +7,23 @@ import { CartSidebar } from "@/components/cart/CartSidebar";
 import "./globals.css";
 
 // Primary font for body text - optimized for readability
+// Using only necessary weights for better performance
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
   preload: true,
+  fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
 });
 
 // Elegant font for headings - perfect for handicrafts brand
+// Using only necessary weights for better performance
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
   display: "swap",
   preload: true,
+  fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
 // SEO Metadata Configuration
@@ -108,22 +112,77 @@ export const viewport: Viewport = {
 // JSON-LD Structured Data for SEO
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Tarana Handicrafts",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com",
-  logo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/logo.png`,
-  description:
-    "Authentic handcrafted art, home decor, and traditional handicrafts.",
-  sameAs: [
-    "https://facebook.com/taranahandicrafts",
-    "https://instagram.com/taranahandicrafts",
-    "https://twitter.com/taranahandicrafts",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/#organization`,
+      name: "Tarana Handicrafts",
+      url: process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com",
+      logo: {
+        "@type": "ImageObject",
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/logo.png`,
+      },
+      description: "Authentic handcrafted art, home decor, and traditional handicrafts from Jaipur, Rajasthan.",
+      sameAs: [
+        "https://facebook.com/taranahandicrafts",
+        "https://instagram.com/taranahandicrafts",
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+91-9509669135",
+        contactType: "customer service",
+        availableLanguage: ["English", "Hindi"],
+      },
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/#localbusiness`,
+      name: "Tarana Handicrafts",
+      image: `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/og-image.jpg`,
+      url: process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com",
+      telephone: "+91-9509669135",
+      email: "taranahandicrafts@gmail.com",
+      priceRange: "₹₹",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "B81, North Avenue, Harmara Ghati, Sikar Road",
+        addressLocality: "Jaipur",
+        addressRegion: "Rajasthan",
+        postalCode: "302039",
+        addressCountry: "IN",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 27.021601,
+        longitude: 75.767587,
+      },
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          opens: "10:00",
+          closes: "19:00",
+        },
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/#website`,
+      url: process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com",
+      name: "Tarana Handicrafts",
+      publisher: {
+        "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/#organization`,
+      },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/products?search={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
   ],
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "customer service",
-    availableLanguage: ["English", "Hindi"],
-  },
 };
 
 export default function RootLayout({
@@ -146,14 +205,32 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        {/* DNS Prefetch for external resources */}
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://wa.me" />
+        {/* Preload critical hero image for LCP optimization */}
+        <link
+          rel="preload"
+          href="/2.jpg"
+          as="image"
+          type="image/jpeg"
+          fetchPriority="high"
+        />
       </head>
       <body
         className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
       >
+        {/* Skip to content link for accessibility - improves keyboard navigation */}
+        <a
+          href="#main-content"
+          className="skip-to-content"
+        >
+          Skip to main content
+        </a>
         <CartProvider>
           <Header />
           <CartSidebar />
-          <main className="min-h-screen">{children}</main>
+          <main id="main-content" className="min-h-screen">{children}</main>
           <Footer />
         </CartProvider>
       </body>

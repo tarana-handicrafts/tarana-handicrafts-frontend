@@ -42,7 +42,7 @@ export default function UseCasesPage() {
 
         {/* Use Cases Grid */}
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {useCases.map((useCase) => (
+          {useCases.map((useCase, index) => (
             <article
               key={useCase.id}
               className="group overflow-hidden rounded-xl border border-stone-200 bg-white transition-all hover:shadow-xl"
@@ -51,10 +51,12 @@ export default function UseCasesPage() {
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
                   src={useCase.image}
-                  alt={useCase.title}
+                  alt={`${useCase.title} - Interior design inspiration`}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  loading={index < 3 ? "eager" : "lazy"}
+                  priority={index < 3}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <h2 className="absolute bottom-4 left-4 text-2xl font-bold text-white">

@@ -6,10 +6,23 @@ export const metadata: Metadata = {
   title: "About Us - Our Heritage & Craftsmanship",
   description:
     "Discover Tarana Handicrafts - A Jaipur-based wooden handicrafts brand preserving Rajasthan's cultural heritage through premium handcrafted wooden sculptures and elephants.",
+  keywords: [
+    "Tarana Handicrafts",
+    "Jaipur handicrafts",
+    "Rajasthani wooden art",
+    "handcrafted sculptures",
+    "wooden elephant art",
+    "Indian artisans",
+    "traditional craftsmanship",
+  ],
   openGraph: {
     title: "About Tarana Handicrafts - Jaipur Art Heritage",
     description:
       "Preserving and sharing the cultural wooden art heritage of Rajasthan through premium handcrafted wooden sculptures.",
+    type: "website",
+  },
+  alternates: {
+    canonical: "/about",
   },
 };
 
@@ -91,9 +104,38 @@ const icons = {
   ),
 };
 
+// JSON-LD for About Page
+const aboutJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "About Tarana Handicrafts",
+  description: "Discover Tarana Handicrafts - A Jaipur-based wooden handicrafts brand preserving Rajasthan's cultural heritage through premium handcrafted wooden sculptures and elephants.",
+  url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/about`,
+  mainEntity: {
+    "@type": "Organization",
+    name: "Tarana Handicrafts",
+    foundingLocation: {
+      "@type": "Place",
+      name: "Jaipur, Rajasthan, India",
+    },
+    knowsAbout: [
+      "Wooden Handicrafts",
+      "Elephant Sculptures",
+      "Rajasthani Art",
+      "Traditional Craftsmanship",
+    ],
+  },
+};
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#F9F8F6]">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
+      />
+
       {/* Hero Section - Consistent with Products Page */}
       <section className="px-4 pb-16 pt-32">
         <div className="mx-auto max-w-7xl">

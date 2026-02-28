@@ -144,6 +144,9 @@ export function Hero() {
                   className="object-cover object-bottom transition-transform duration-1000 group-hover:scale-110"
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   priority
+                  fetchPriority="high"
+                  loading="eager"
+                  quality={85}
                 />
 
                 {/* Product Quick-Label */}
