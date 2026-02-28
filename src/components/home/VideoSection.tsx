@@ -52,7 +52,7 @@ export function VideoSection() {
             </span>
             <h2 className="font-serif text-4xl leading-tight text-stone-900 md:text-5xl">
               Hand-Carved With <br />
-              <span className="italic text-stone-400">Sacred Patience</span>
+              <span className="italic text-stone-500">Sacred Patience</span>
             </h2>
             <p className="text-lg font-light leading-relaxed text-stone-600">
               Every Tarana sculpture is a masterpiece of subtraction. Starting
@@ -64,13 +64,13 @@ export function VideoSection() {
             <div className="grid grid-cols-2 gap-8 border-t border-stone-200 pt-6">
               <div>
                 <p className="font-serif text-2xl">100%</p>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-stone-400">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500">
                   Authentic Wood
                 </p>
               </div>
               <div>
                 <p className="font-serif text-2xl">24+ Mo.</p>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-stone-400">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500">
                   Natural Seasoning
                 </p>
               </div>

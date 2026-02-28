@@ -44,12 +44,12 @@ export function Hero() {
 
             <h1 className="font-serif text-5xl leading-[0.95] tracking-tight text-stone-900 md:text-7xl lg:text-[100px]">
               Curated <br />
-              <span className="font-light italic text-stone-400">
+              <span className="font-light italic text-stone-500">
                 Masterpieces
               </span>
             </h1>
 
-            <p className="mt-8 max-w-md text-base leading-relaxed text-stone-500 md:text-lg">
+            <p className="mt-8 max-w-md text-base leading-relaxed text-stone-600 md:text-lg">
               Experience the Jaipur Marketplace. From heritage sculptures to
               bespoke home decor, discover hand-carved luxury direct from master
               artisans.
@@ -107,19 +107,19 @@ export function Hero() {
             <div className="mt-16 grid max-w-md grid-cols-3 gap-8 border-t border-stone-200 pt-8">
               <div>
                 <p className="font-serif text-xl">12k+</p>
-                <p className="text-[9px] uppercase tracking-widest text-stone-400">
+                <p className="text-[9px] uppercase tracking-widest text-stone-500">
                   Collectors
                 </p>
               </div>
               <div>
                 <p className="font-serif text-xl">Jaipur</p>
-                <p className="text-[9px] uppercase tracking-widest text-stone-400">
+                <p className="text-[9px] uppercase tracking-widest text-stone-500">
                   Origin
                 </p>
               </div>
               <div>
                 <p className="font-serif text-xl">Global</p>
-                <p className="text-[9px] uppercase tracking-widest text-stone-400">
+                <p className="text-[9px] uppercase tracking-widest text-stone-500">
                   Shipping
                 </p>
               </div>

@@ -6,13 +6,18 @@
   --color-primary-light: #A0522D;
   --color-primary-dark: #654321;
   --color-secondary: #D4A574; /* Tan - warm, handcrafted feel */
-  --color-accent: #C19A6B; /* Camel - natural, organic */
+  --color-accent: #C5A059; /* Gold accent - consistent with design */
 
-  /* Neutral Colors */
+  /* Neutral Colors - Light Theme (consistent across all devices) */
   --background: #FDFBF7;
   --foreground: #1a1a1a;
-  --color-muted: #6b7280;
+  --color-muted: #57534e; /* stone-600 - better contrast for readability */
   --color-border: #e5e7eb;
+
+  /* Text Colors */
+  --text-primary: #1c1917; /* stone-900 */
+  --text-secondary: #44403c; /* stone-700 */
+  --text-muted: #78716c; /* stone-500 */
 }
 
 @theme inline {
@@ -22,6 +27,11 @@
   --font-heading: var(--font-playfair);
 }
 
+/*
+ * Dark mode disabled for consistency across devices
+ * Uncomment below to enable dark mode in future
+ */
+/*
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -30,6 +40,7 @@
     --color-border: #27272a;
   }
 }
+*/
 
 /* Reduce motion for users who prefer it - accessibility */
 @media (prefers-reduced-motion: reduce) {
@@ -48,6 +59,9 @@ html {
   scroll-behavior: smooth;
   /* Optimize text rendering */
   text-rendering: optimizeSpeed;
+  /* Prevent font scaling issues on mobile */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -57,6 +71,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Minimum font size for readability on mobile */
+  font-size: 16px;
 }
 
 /* Typography */
@@ -64,6 +80,30 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading, Georgia, serif);
   font-weight: 600;
   line-height: 1.2;
+  color: var(--text-primary);
+}
+
+/* Ensure minimum readable font size on mobile for small text */
+@media (max-width: 640px) {
+  /* Override very small font sizes for mobile readability */
+  .text-\[10px\] {
+    font-size: 11px !important;
+  }
+
+  .text-\[9px\] {
+    font-size: 11px !important;
+  }
+
+  .text-xs {
+    font-size: 12px !important;
+  }
+
+  /* Improve line height for small text on mobile */
+  .tracking-\[0\.2em\],
+  .tracking-\[0\.3em\],
+  .tracking-\[0\.4em\] {
+    letter-spacing: 0.1em !important;
+  }
 }
 
 /* Focus styles for accessibility */

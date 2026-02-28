@@ -75,7 +75,7 @@ export function ProfessionalQA() {
                 <span className="mb-4 block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
                   Heritage Preservation
                 </span>
-                <h2 className="mb-8 font-serif text-4xl leading-tight tracking-tight md:text-5xl">
+                <h2 className="mb-8 font-serif text-4xl leading-tight tracking-tight !text-white md:text-5xl">
                   Artisan <br />
                   <span className="font-light italic text-stone-500">
                     Ethics.
@@ -126,8 +126,8 @@ export function ProfessionalQA() {
                         <h3
                           className={`font-serif text-xl tracking-tight transition-all duration-500 md:text-2xl ${
                             isOpen
-                              ? "text-white"
-                              : "text-stone-400 group-hover:text-stone-200"
+                              ? "!text-white"
+                              : "!text-stone-400 group-hover:text-stone-200"
                           }`}
                         >
                           {faq.q}

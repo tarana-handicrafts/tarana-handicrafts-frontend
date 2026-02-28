@@ -257,7 +257,7 @@ function ProductCard({ product, onAddToCart, isInCart, priority = false }: Produ
               {formatPrice(product.price)}
             </p>
             {product.originalPrice && (
-              <p className="text-sm text-stone-400 line-through">
+              <p className="text-sm text-stone-500 line-through">
                 {formatPrice(product.originalPrice)}
               </p>
             )}
