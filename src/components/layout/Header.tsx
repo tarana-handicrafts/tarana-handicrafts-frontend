@@ -121,15 +121,15 @@ export function Header() {
 
           {/* User/Account Button */}
           <Link
-            href="/account"
+            href="/coming-soon"
             className={`hidden p-2.5 transition-colors md:block ${
-              pathname === "/account"
+              pathname === "/coming-soon"
                 ? "text-[#C5A059]"
                 : useLightText
                 ? "text-white hover:text-[#C5A059]"
                 : "text-stone-700 hover:text-[#C5A059]"
             }`}
-            aria-label="Account"
+            aria-label="Account (Coming Soon)"
           >
             <svg
               className="h-[19px] w-[19px]"
@@ -198,9 +198,13 @@ export function Header() {
 
       {/* Mobile Menu */}
       <div
+        id="mobile-menu"
+        role="navigation"
+        aria-label="Mobile navigation"
         className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
           isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
+        aria-hidden={!isMenuOpen}
       >
         <nav className="mt-4 flex flex-col rounded-2xl border border-stone-200/50 bg-white/90 p-4 backdrop-blur-md">
           {navLinks.map((link) => {
@@ -215,6 +219,7 @@ export function Header() {
                     : "text-stone-700 hover:bg-stone-100 hover:text-[#C5A059]"
                 }`}
                 onClick={() => setIsMenuOpen(false)}
+                aria-current={isActive ? "page" : undefined}
               >
                 {link.label}
               </Link>

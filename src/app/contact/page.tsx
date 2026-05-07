@@ -31,21 +31,26 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFCFB] text-[#000000] selection:bg-[#C5A059] selection:text-white pb-24">
-      
-      {/* --- MINIMAL HEADER --- */}
-      <header className="pt-32 pb-16 px-6 md:px-12 text-center max-w-4xl mx-auto">
-        <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[#C5A059] mb-6 block">
-          Get in Touch
-        </span>
-        <h1 className="font-serif text-5xl md:text-7xl leading-[1.1] mb-6">
-          Let's Discuss <br /> 
-          <span className="italic text-stone-400 font-light">Your Vision</span>
-        </h1>
-        <p className="text-stone-500 font-serif text-lg md:text-xl italic">
-          Whether you seek a bespoke masterpiece or a wholesale partnership, our atelier is at your service.
-        </p>
-      </header>
+    <div className="min-h-screen bg-[#F9F8F6]">
+      {/* Hero Section - Consistent with Products Page */}
+      <section className="px-4 pb-16 pt-32">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 text-center">
+            <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
+              Get in Touch
+            </span>
+            <h1 className="mb-4 font-serif text-4xl md:text-5xl">
+              Let&apos;s Create{" "}
+              <span className="font-light italic text-stone-500">Together</span>
+            </h1>
+            <p className="mx-auto max-w-2xl text-stone-500">
+              Whether you&apos;re looking for a masterpiece for your home, a
+              custom order for your business, or bulk export — we&apos;re here to
+              help.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* --- BENTO BOX GRID LAYOUT --- */}
       <main className="max-w-[1400px] mx-auto px-6 md:px-12">
@@ -67,11 +72,140 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-2 text-stone-400">Direct Lines</p>
-                  {contactInfo.phone.map(p => (
-                    <a key={p} href={`tel:${p.replace(/\s/g, "")}`} className="block font-serif text-xl hover:text-[#C5A059] transition-colors">
-                      {p}
-                    </a>
+                  <label
+                    htmlFor="message"
+                    className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-stone-500"
+                  >
+                    Your Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={5}
+                    maxLength={1000}
+                    className={`w-full resize-none border bg-transparent px-4 py-3 text-stone-900 transition-all focus:border-[#C5A059] focus:outline-none ${
+                      errors.message ? "border-red-500" : "border-stone-200"
+                    }`}
+                    placeholder="Tell us about your requirements..."
+                  />
+                  {errors.message && (
+                    <p className="mt-1 text-xs text-red-500">{errors.message}</p>
+                  )}
+                  <p className="mt-1 text-right text-xs text-stone-500">
+                    {formData.message.length}/1000
+                  </p>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting || isSubmitted}
+                  className={`flex w-full items-center justify-center gap-3 rounded-lg py-4 text-[10px] font-bold uppercase tracking-[0.3em] transition-all ${
+                    isSubmitted
+                      ? "bg-green-600 text-white"
+                      : "bg-stone-900 text-white hover:bg-[#C5A059] hover:shadow-xl"
+                  } disabled:cursor-not-allowed`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      Sending...
+                    </>
+                  ) : isSubmitted ? (
+                    <>
+                      <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Message Sent!
+                    </>
+                  ) : (
+                    <>
+                      Send via WhatsApp
+                      {icons.whatsapp}
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+
+            {/* Contact Details */}
+            <div>
+              <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
+                Contact Details
+              </span>
+              <h2 className="mb-8 font-serif text-3xl md:text-4xl">
+                Find Us Here
+              </h2>
+
+              {/* Business Info */}
+              <div className="mb-8 space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#C5A059]/10 text-[#C5A059]">
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-stone-900">{contactInfo.businessName}</h4>
+                    <p className="text-sm text-stone-500">Proprietor: {contactInfo.name}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#C5A059]/10 text-[#C5A059]">
+                    {icons.location}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-stone-900">Address</h4>
+                    <p className="text-sm text-stone-500">{contactInfo.address}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#C5A059]/10 text-[#C5A059]">
+                    {icons.phone}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-stone-900">Phone</h4>
+                    <p className="text-sm text-stone-500">{contactInfo.phone.join(" / ")}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#C5A059]/10 text-[#C5A059]">
+                    {icons.email}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-stone-900">Email</h4>
+                    <p className="text-sm text-stone-500">{contactInfo.email}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Nearby Landmarks */}
+              <div className="border-t border-stone-200 pt-8">
+                <h3 className="mb-6 text-[10px] font-bold uppercase tracking-widest text-stone-500">
+                  Nearby Landmarks
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {landmarks.map((landmark, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start gap-3 rounded-lg border border-stone-100 bg-stone-50 p-4"
+                    >
+                      <div className="text-[#C5A059]">
+                        {icons[landmark.icon as keyof typeof icons]}
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-stone-900">
+                          {landmark.name}
+                        </p>
+                        <p className="text-xs text-[#C5A059]">{landmark.distance}</p>
+                        <p className="text-[10px] text-stone-500">{landmark.type}</p>
+                      </div>
+                    </div>
                   ))}
                 </div>
 
@@ -113,79 +247,31 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* BLOCK 3: THE INQUIRY FORM (Bottom Left) */}
-          <div className="lg:col-span-8 bg-white border border-stone-200 rounded-[2rem] p-10 md:p-14 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.03)] relative overflow-hidden">
-            
-            {/* Decorative background element */}
-            <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
-               <Mail size={200} />
-            </div>
-
-            <div className="mb-10 relative z-10">
-              <h2 className="font-serif text-4xl mb-2">Send an Inquiry</h2>
-              <p className="text-stone-400 text-xs tracking-widest uppercase font-bold">Priority Response Queue</p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="relative group">
-                  <input 
-                    type="text" required placeholder=" " 
-                    className="peer w-full bg-stone-50 border border-stone-100 rounded-xl px-4 pt-6 pb-2 text-sm outline-none focus:border-[#C5A059] focus:bg-white transition-all"
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  />
-                  <label className="absolute left-4 top-4 text-stone-400 text-[9px] font-black uppercase tracking-widest transition-all peer-focus:top-2 peer-focus:text-[#C5A059] peer-[:not(:placeholder-shown)]:top-2">
-                    Full Name *
-                  </label>
-                </div>
-                <div className="relative group">
-                  <input 
-                    type="email" required placeholder=" " 
-                    className="peer w-full bg-stone-50 border border-stone-100 rounded-xl px-4 pt-6 pb-2 text-sm outline-none focus:border-[#C5A059] focus:bg-white transition-all"
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  />
-                  <label className="absolute left-4 top-4 text-stone-400 text-[9px] font-black uppercase tracking-widest transition-all peer-focus:top-2 peer-focus:text-[#C5A059] peer-[:not(:placeholder-shown)]:top-2">
-                    Email Address *
-                  </label>
-                </div>
-              </div>
-
-              <div className="relative group">
-                <select 
-                  required
-                  className="w-full bg-stone-50 border border-stone-100 rounded-xl px-4 py-4 text-sm outline-none focus:border-[#C5A059] focus:bg-white transition-all appearance-none text-stone-600 font-medium"
-                  onChange={(e) => setFormData({...formData, subject: e.target.value})}
-                >
-                  <option value="" disabled selected>Select Inquiry Subject *</option>
-                  <option value="Product Inquiry">Product Inquiry</option>
-                  <option value="Custom Carving">Custom Carving Commission</option>
-                  <option value="International Export">International Export</option>
-                  <option value="Wholesale">Wholesale / B2B</option>
-                </select>
-              </div>
-
-              <div className="relative group">
-                <textarea 
-                  rows={4} required placeholder=" " 
-                  className="peer w-full bg-stone-50 border border-stone-100 rounded-xl px-4 pt-6 pb-2 text-sm outline-none focus:border-[#C5A059] focus:bg-white transition-all resize-none"
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
-                />
-                <label className="absolute left-4 top-4 text-stone-400 text-[9px] font-black uppercase tracking-widest transition-all peer-focus:top-2 peer-focus:text-[#C5A059] peer-[:not(:placeholder-shown)]:top-2">
-                  Message Details *
-                </label>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting || isSubmitted}
-                className={`w-full py-5 rounded-xl flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-300 ${
-                  isSubmitted ? "bg-[#25D366] text-white" : "bg-[#000000] text-white hover:bg-[#C5A059] shadow-lg hover:shadow-xl hover:-translate-y-1"
-                }`}
-              >
-                {isSubmitting ? "Processing..." : isSubmitted ? "Inquiry Sent via WhatsApp" : "Submit Inquiry"}
-                {!isSubmitting && !isSubmitted && <ArrowUpRight size={16} />}
-              </button>
-            </form>
+      {/* CTA Section */}
+      <section className="mx-4 mb-8 rounded-xl bg-[#C5A059] py-16 px-6 text-center text-white md:mx-auto md:max-w-7xl">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="mb-4 font-serif !text-white text-3xl md:text-4xl">
+            Ready to Start Your Order?
+          </h2>
+          <p className="mb-8 text-lg font-light opacity-90">
+            Browse our collection or chat with us for custom requirements.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/products"
+              className="rounded-lg bg-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#C5A059] transition-all hover:bg-stone-900 hover:text-white hover:shadow-xl"
+            >
+              Browse Products
+            </Link>
+            <a
+              href={`https://wa.me/${contactInfo.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-lg border-2 border-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] transition-all hover:bg-white hover:text-[#C5A059]"
+            >
+              {icons.whatsapp}
+              Chat on WhatsApp
+            </a>
           </div>
 
           {/* BLOCK 4: WHATSAPP & HOURS (Bottom Right - Stacked) */}

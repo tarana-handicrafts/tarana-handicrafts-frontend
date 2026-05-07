@@ -29,15 +29,15 @@ export function Footer() {
   return (
     <footer className="bg-[#FDFCFB] pt-32 pb-12 px-6 md:px-12 border-t border-stone-200">
       <div className="mx-auto max-w-7xl">
-        
-        {/* --- TOP SECTION: NEWSLETTER & LINKS --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 pb-24 border-b border-stone-200">
-          
-          {/* Newsletter Column */}
-          <div className="lg:col-span-6 space-y-10">
-            <h3 className="text-4xl md:text-5xl font-serif text-[#000000] leading-[1.1] tracking-tight">
-              Join the Inner Circle of <br/> 
-              <span className="italic text-stone-400 font-light">Global Collectors.</span>
+        {/* Top Section */}
+        <div className="grid grid-cols-1 items-end gap-24 border-b border-stone-100 pb-24 lg:grid-cols-2">
+          {/* Newsletter Section */}
+          <div>
+            <h3 className="mb-6 font-serif text-4xl leading-tight">
+              Join the Inner Circle of <br />
+              <span className="font-light italic text-stone-500">
+                Collectors.
+              </span>
             </h3>
             
             <form onSubmit={handleSubscribe} className="relative max-w-md group">
@@ -64,43 +64,43 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Links Grid */}
-          <div className="lg:col-span-6 grid grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C5A059]">Explore</p>
-              <ul className="space-y-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#000000]">
-                {footerLinks.shop.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="hover:text-[#C5A059] transition-colors">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="space-y-6">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C5A059]">Maison</p>
-              <ul className="space-y-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#000000]">
-                {footerLinks.company.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="hover:text-[#C5A059] transition-colors">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-                <li className="pt-2 flex items-center gap-2 opacity-50">
-                   <span className="h-1 w-1 bg-[#C5A059] rounded-full" />
-                   Jaipur, India
+          {/* Links Section */}
+          <div className="grid grid-cols-2 gap-12 text-[10px] font-bold uppercase tracking-[0.3em]">
+            <ul className="space-y-4">
+              <li className="text-stone-300">Explore</li>
+              {footerLinks.shop.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-stone-900 transition-colors hover:text-[#C5A059]"
+                  >
+                    {link.label}
+                  </Link>
                 </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
+            <ul className="space-y-4">
+              <li className="text-stone-300">Company</li>
+              {footerLinks.company.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-stone-900 transition-colors hover:text-[#C5A059]"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* --- BOTTOM SECTION: BRANDING & LEGAL --- */}
-        <div className="pt-16 space-y-12">
-          {/* Big Center Brand Display - Classy Watermark */}
+        {/* Bottom Section */}
+        <div className="flex flex-col items-center justify-between gap-8 pt-12 md:flex-row">
+          {/* Copyright */}
+          <p className="text-[10px] uppercase tracking-widest text-stone-500">
+            © {currentYear} {siteConfig.name}.
+          </p>
 
           <div className="flex flex-col md:flex-row justify-between items-center gap-8 border-t border-stone-100 pt-12">
             <div className="flex items-center gap-8">
@@ -134,6 +134,11 @@ export function Footer() {
               </div>
             </button>
           </div>
+
+          {/* Tagline */}
+          <p className="text-[10px] font-black uppercase italic tracking-[0.4em] text-stone-500">
+            Elegance in subtraction.
+          </p>
         </div>
       </div>
     </footer>

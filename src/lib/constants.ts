@@ -28,24 +28,24 @@ export const navLinks = [
 export const footerLinks = {
   shop: [
     { href: "/products", label: "All Products" },
-    { href: "/categories", label: "Categories" },
-    { href: "/new-arrivals", label: "New Arrivals" },
-    { href: "/bestsellers", label: "Bestsellers" },
+    { href: "/coming-soon", label: "Categories" },
+    { href: "/coming-soon", label: "New Arrivals" },
+    { href: "/coming-soon", label: "Bestsellers" },
   ],
   company: [
     { href: "/about", label: "About Us" },
     { href: "/contact", label: "Contact" },
-    { href: "/careers", label: "Careers" },
+    { href: "/coming-soon", label: "Careers" },
   ],
   support: [
-    { href: "/faq", label: "FAQ" },
-    { href: "/shipping", label: "Shipping" },
-    { href: "/returns", label: "Returns" },
-    { href: "/track-order", label: "Track Order" },
+    { href: "/coming-soon", label: "FAQ" },
+    { href: "/coming-soon", label: "Shipping" },
+    { href: "/coming-soon", label: "Returns" },
+    { href: "/coming-soon", label: "Track Order" },
   ],
   legal: [
-    { href: "/privacy", label: "Privacy Policy" },
-    { href: "/terms", label: "Terms of Service" },
-    { href: "/cookies", label: "Cookie Policy" },
+    { href: "/coming-soon", label: "Privacy Policy" },
+    { href: "/coming-soon", label: "Terms of Service" },
+    { href: "/coming-soon", label: "Cookie Policy" },
   ],
 };

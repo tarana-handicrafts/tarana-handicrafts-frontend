@@ -5,7 +5,25 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About Us - Our Heritage & Craftsmanship",
   description:
-    "Discover Tarana Handicrafts - A Jaipur-based wooden handicrafts brand preserving Rajasthan's cultural heritage.",
+    "Discover Tarana Handicrafts - A Jaipur-based wooden handicrafts brand preserving Rajasthan's cultural heritage through premium handcrafted wooden sculptures and elephants.",
+  keywords: [
+    "Tarana Handicrafts",
+    "Jaipur handicrafts",
+    "Rajasthani wooden art",
+    "handcrafted sculptures",
+    "wooden elephant art",
+    "Indian artisans",
+    "traditional craftsmanship",
+  ],
+  openGraph: {
+    title: "About Tarana Handicrafts - Jaipur Art Heritage",
+    description:
+      "Preserving and sharing the cultural wooden art heritage of Rajasthan through premium handcrafted wooden sculptures.",
+    type: "website",
+  },
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 const stats = [
@@ -70,40 +88,51 @@ const icons = {
   ),
 };
 
+// JSON-LD for About Page
+const aboutJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "About Tarana Handicrafts",
+  description: "Discover Tarana Handicrafts - A Jaipur-based wooden handicrafts brand preserving Rajasthan's cultural heritage through premium handcrafted wooden sculptures and elephants.",
+  url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com"}/about`,
+  mainEntity: {
+    "@type": "Organization",
+    name: "Tarana Handicrafts",
+    foundingLocation: {
+      "@type": "Place",
+      name: "Jaipur, Rajasthan, India",
+    },
+    knowsAbout: [
+      "Wooden Handicrafts",
+      "Elephant Sculptures",
+      "Rajasthani Art",
+      "Traditional Craftsmanship",
+    ],
+  },
+};
+
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#FDFCFB]">
-      
-      {/* Hero Section */}
-      <section className="relative px-6 pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+    <div className="min-h-screen bg-[#F9F8F6]">
+      {/* Hero Section - Consistent with Products Page */}
+      <section className="px-4 pb-16 pt-32">
         <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-24">
-            <div className="w-full lg:w-3/5">
-              <div className="flex items-center gap-4 mb-8">
-                <span className="h-[1px] w-12 bg-[#C5A059]"></span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-[#C5A059]">
-                  Heritage Atelier
-                </span>
-              </div>
-              <h1 className="font-serif text-[clamp(2.5rem,8vw,5.5rem)] leading-[1.1] text-[#000000] mb-8">
-                Preserving <br />
-                Rajasthan&apos;s <br />
-                <span className="italic text-stone-400 font-light">Wooden Artistry</span>
-              </h1>
-            </div>
-            <div className="w-full lg:w-2/5 relative">
-              <div className="bg-white border-l-4 border-[#C5A059] p-8 md:p-12 shadow-[20px_20px_60px_rgba(0,0,0,0.05)]">
-                <p className="text-[#000000] text-lg md:text-xl font-light leading-relaxed mb-6">
-                  Tarana Handicrafts is a Jaipur-based atelier specializing in museum-grade wooden elephant art.
-                </p>
-                <p className="text-stone-500 text-sm leading-relaxed">
-                  Rooted in the royal traditions of Rajasthan, we curate timeless pieces that blend cultural legacy with modern elegance.
-                </p>
-              </div>
-              <div className="absolute -bottom-16 -right-10 text-[10rem] font-serif italic text-stone-200/40 -z-10 hidden lg:block select-none">
-                1999
-              </div>
-            </div>
+          <div className="mb-12 text-center">
+            <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
+              Our Story
+            </span>
+            <h1 className="mb-4 font-serif text-4xl md:text-5xl">
+              Preserving Rajasthan&apos;s{" "}
+              <span className="font-light italic text-stone-400">
+                Wooden Art Heritage
+              </span>
+            </h1>
+            <p className="mx-auto max-w-2xl text-stone-500">
+              Tarana Handicrafts is a Jaipur-based wooden handicrafts brand
+              specializing in handcrafted wooden elephant art. Rooted in the rich
+              artistic traditions of Rajasthan, we create timeless wooden décor
+              pieces that reflect cultural heritage, craftsmanship, and elegance.
+            </p>
           </div>
         </div>
       </section>
@@ -142,9 +171,14 @@ export default function AboutPage() {
             </div>
             <div className="space-y-8">
               <div>
-                <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">Our Mission</span>
-                <h2 className="mb-4 font-serif text-3xl md:text-4xl text-[#000000]">
-                  Crafting Cultural <span className="font-light italic text-stone-400">Legacies</span>
+                <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
+                  Our Mission
+                </span>
+                <h2 className="mb-4 font-serif text-3xl leading-tight md:text-4xl">
+                  Crafting Cultural{" "}
+                  <span className="font-light italic text-stone-400">
+                    Legacies
+                  </span>
                 </h2>
                 <p className="text-lg font-light leading-relaxed text-[#000000]">
                   To preserve and promote the wooden handicraft culture of Rajasthan by manufacturing authentic handcrafted art pieces.
@@ -182,7 +216,113 @@ export default function AboutPage() {
         </div>
       </section>
 
- 
+      {/* Customization & Export Section */}
+      <section className="px-4 py-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-8 lg:grid-cols-2">
+            {/* Customization */}
+            <div className="rounded-xl border border-stone-200 bg-white p-8 md:p-10">
+              <span className="mb-4 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
+                Bespoke Service
+              </span>
+              <h3 className="mb-4 font-serif text-2xl md:text-3xl">
+                Custom Orders
+              </h3>
+              <p className="mb-6 font-light leading-relaxed text-stone-600">
+                We support customization to bring your vision to life. Whether
+                it&apos;s a unique design, specific dimensions, or branded
+                packaging for corporate gifting — we deliver.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Design patterns & styles",
+                  "Sizes and dimensions",
+                  "Painting & finishing options",
+                  "Custom packaging for gifting",
+                  "Bulk order branding",
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center gap-3 text-stone-700">
+                    <svg className="h-5 w-5 text-[#C5A059]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Export */}
+            <div className="rounded-xl border border-stone-200 bg-white p-8 md:p-10">
+              <span className="mb-4 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
+                Worldwide
+              </span>
+              <h3 className="mb-4 font-serif text-2xl md:text-3xl">
+                Global Export
+              </h3>
+              <p className="mb-6 font-light leading-relaxed text-stone-600">
+                We export wooden handicraft items across the world, bringing the
+                cultural art of Rajasthan to global homes, offices, and décor
+                spaces.
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#C5A059]/10">
+                    <svg className="h-5 w-5 text-[#C5A059]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold">Museum-Grade Packaging</h4>
+                    <p className="text-sm text-stone-500">
+                      Zero-vibration crates with high-density foam suspension
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#C5A059]/10">
+                    <svg className="h-5 w-5 text-[#C5A059]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold">Secure Delivery</h4>
+                    <p className="text-sm text-stone-500">
+                      Insured shipping with real-time tracking worldwide
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="mx-4 mb-8 rounded-xl bg-[#C5A059] py-16 px-6 text-center text-white md:mx-auto md:max-w-7xl">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="mb-4 font-serif text-3xl md:text-5xl">
+            Ready to Own a Piece of Jaipur?
+          </h2>
+          <p className="mb-8 text-lg font-light opacity-90">
+            Explore our curated collection of handcrafted masterpieces or
+            connect with us for bespoke orders.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/products"
+              className="rounded-lg bg-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#C5A059] transition-all hover:bg-stone-900 hover:text-white hover:shadow-xl"
+            >
+              Shop Collection
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded-lg border-2 border-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] transition-all hover:bg-white hover:text-[#C5A059]"
+            >
+              Contact Us
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

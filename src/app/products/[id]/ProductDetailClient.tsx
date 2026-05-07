@@ -159,7 +159,7 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
                   {product.category}
                 </span>
                 {product.sku && (
-                  <span className="text-sm text-stone-400">SKU: {product.sku}</span>
+                  <span className="text-sm text-stone-500">SKU: {product.sku}</span>
                 )}
               </div>
 
@@ -171,7 +171,7 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
                 <div className="mb-6 flex items-center gap-3">
                   {renderStars(product.rating)}
                   <span className="font-medium text-stone-800">{product.rating.toFixed(1)}</span>
-                  <span className="text-stone-400">|</span>
+                  <span className="text-stone-500">|</span>
                   <Link href="#reviews" className="text-stone-500 transition-colors hover:text-[#C5A059]">
                     {product.reviewCount || 0} Reviews
                   </Link>
@@ -185,7 +185,7 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
                 </span>
                 {product.originalPrice && (
                   <>
-                    <span className="text-xl text-stone-400 line-through">
+                    <span className="text-xl text-stone-500 line-through">
                       {formatPrice(product.originalPrice)}
                     </span>
                     <span className="rounded-lg bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
@@ -203,12 +203,12 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
               {/* Material & Dimensions */}
               <div className="mb-6 grid grid-cols-2 gap-4">
                 <div className="rounded-xl border border-stone-200 bg-white p-4">
-                  <span className="mb-1 block text-xs font-bold uppercase tracking-wider text-stone-400">Material</span>
+                  <span className="mb-1 block text-xs font-bold uppercase tracking-wider text-stone-500">Material</span>
                   <span className="text-lg font-medium">{product.material}</span>
                 </div>
                 {product.dimensions && (
                   <div className="rounded-xl border border-stone-200 bg-white p-4">
-                    <span className="mb-1 block text-xs font-bold uppercase tracking-wider text-stone-400">Dimensions</span>
+                    <span className="mb-1 block text-xs font-bold uppercase tracking-wider text-stone-500">Dimensions</span>
                     <span className="text-lg font-medium">{product.dimensions}</span>
                   </div>
                 )}

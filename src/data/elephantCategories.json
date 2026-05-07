@@ -6,12 +6,22 @@
       description: "Elephants are large mammals known for their intelligence and social behavior."
     },
     {
+      id: 9,
+      name: "Painting",
+      description: "Elephants are often depicted in art and culture, symbolizing strength, wisdom, and good fortune."
+    },
+    {
       id: 2,
+      name: "Plain Jali",
+      description: "Elephants communicate through a variety of vocalizations and body language."
+    },
+    {
+      id: 3,
       name: "Jali Jewellery",
       description: "Elephants are herbivores, meaning they primarily eat plants."
     },
     {
-      id: 3,
+      id: 4,
       name: "Jungle Carving",
       description: "Many elephant species are classified as endangered due to habitat loss and poaching."
     },
@@ -25,20 +35,16 @@
       name: "Jungle Fight Carving",
       description: "Elephants are social animals that live in herds led by a matriarch."
     },
-    {
-      id: 6,
-      name: "Plain Jali",
-      description: "Elephants communicate through a variety of vocalizations and body language."
-    },
+
     {
       id: 7,
-      name: "",
+      name: "Light Carving",
       description: "Elephants have a long gestation period of about 22 months, the longest of any land animal."
     },
     {
       id: 8,
       name: "Jungle Fight Jali",
       description: "Elephants play a crucial role in their ecosystems by helping to maintain the balance of plant and animal life."
-    }
+    },
   ]
 }
