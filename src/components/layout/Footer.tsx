@@ -2,10 +2,15 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { siteConfig, footerLinks } from "@/lib/constants";
 import { Instagram, Facebook, ArrowUpRight, MessageCircle } from "lucide-react";
 
 export function Footer() {
+  const pathname = usePathname();
+  // Hide the main site footer on admin pages.
+  if (pathname.startsWith("/admin")) return null;
+
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);

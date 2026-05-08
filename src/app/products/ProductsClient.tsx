@@ -3,27 +3,31 @@
 import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Product, productsData } from "@/lib/products";
+import type { Product } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/utils";
 
-const categories = ["All", ...new Set(productsData.map((p) => p.category))];
-const materials = ["All", ...new Set(productsData.map((p) => p.material))];
+interface ProductsClientProps {
+  products: Product[];
+}
 
-export default function ProductsClient() {
+export default function ProductsClient({ products }: ProductsClientProps) {
   const { addToCart, cart } = useCart();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedMaterial, setSelectedMaterial] = useState("All");
   const [sortBy, setSortBy] = useState("default");
   const [searchQuery, setSearchQuery] = useState("");
 
+  const categories = useMemo(() => ["All", ...new Set(products.map((p) => p.category))], [products]);
+  const materials = useMemo(() => ["All", ...new Set(products.map((p) => p.material))], [products]);
+
   const filteredProducts = useMemo(() => {
-    let products = [...productsData];
+    let filtered = [...products];
 
     // Filter by search query
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      products = products.filter(
+      filtered = filtered.filter(
         (p) =>
           p.name.toLowerCase().includes(query) ||
           p.category.toLowerCase().includes(query) ||
@@ -33,29 +37,29 @@ export default function ProductsClient() {
 
     // Filter by category
     if (selectedCategory !== "All") {
-      products = products.filter((p) => p.category === selectedCategory);
+      filtered = filtered.filter((p) => p.category === selectedCategory);
     }
 
     // Filter by material
     if (selectedMaterial !== "All") {
-      products = products.filter((p) => p.material === selectedMaterial);
+      filtered = filtered.filter((p) => p.material === selectedMaterial);
     }
 
     // Sort
     switch (sortBy) {
       case "price-low":
-        products.sort((a, b) => a.price - b.price);
+        filtered.sort((a, b) => a.price - b.price);
         break;
       case "price-high":
-        products.sort((a, b) => b.price - a.price);
+        filtered.sort((a, b) => b.price - a.price);
         break;
       case "name":
-        products.sort((a, b) => a.name.localeCompare(b.name));
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
         break;
     }
 
-    return products;
-  }, [selectedCategory, selectedMaterial, sortBy, searchQuery]);
+    return filtered;
+  }, [products, selectedCategory, selectedMaterial, sortBy, searchQuery]);
 
   const isInCart = (productId: number) => {
     return cart.some((item) => item.id === productId);
@@ -143,7 +147,7 @@ export default function ProductsClient() {
 
       {/* Results Count */}
       <p className="mb-6 text-stone-500" aria-live="polite">
-        Showing {filteredProducts.length} of {productsData.length} products
+        Showing {filteredProducts.length} of {products.length} products
       </p>
 
       {/* Products Grid */}

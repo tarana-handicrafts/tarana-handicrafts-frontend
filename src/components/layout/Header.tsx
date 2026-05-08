@@ -15,6 +15,11 @@ export function Header() {
   const { cartCount, openCart } = useCart();
   const pathname = usePathname();
 
+  // Hide the main site chrome on admin pages.
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
+
   // Check if current page has dark hero
   const hasDarkHero = darkHeroPages.includes(pathname);
 
