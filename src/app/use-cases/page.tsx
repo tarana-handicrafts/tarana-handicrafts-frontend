@@ -30,7 +30,7 @@ export default function UseCasesPage() {
           <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
             Inspiration Gallery
           </span>
-          <h1 className="mb-4 font-serif text-4xl sm:text-5xl">
+          <h1 className="mb-4 text-black font-serif text-4xl sm:text-5xl">
             Transform Your Space
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-stone-500">

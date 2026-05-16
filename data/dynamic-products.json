@@ -1,0 +1,39 @@
+[
+  {
+    "id": 13,
+    "name": "Elephant ",
+    "price": 3200,
+    "originalPrice": 5000,
+    "category": "Wooden",
+    "material": "Cotton",
+    "image": "/uploads/products/13/image-1.png",
+    "images": [
+      {
+        "url": "/uploads/products/13/image-1.png",
+        "alt": "Elephant  - Image 1"
+      }
+    ],
+    "description": "Nice",
+    "inStock": true
+  },
+  {
+    "id": 14,
+    "name": "Elephant car",
+    "price": 2000,
+    "originalPrice": 7000,
+    "category": "Sculpture",
+    "material": "Antique Teak",
+    "image": "/uploads/products/14/image-1.png",
+    "images": [
+      {
+        "url": "/uploads/products/14/image-1.png",
+        "alt": "Elephant car - Image 1"
+      }
+    ],
+    "inStock": true,
+    "stockCount": 200,
+    "weight": "250",
+    "rating": 5,
+    "reviewCount": 2
+  }
+]

@@ -26,7 +26,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Stats data
 const stats = [
   { value: "25+", label: "Years of Heritage" },
   { value: "12k+", label: "Happy Collectors" },
@@ -34,43 +33,29 @@ const stats = [
   { value: "100%", label: "Handcrafted" },
 ];
 
-// Values data
 const values = [
   {
     icon: "heritage",
     title: "Cultural Heritage",
-    description:
-      "Every piece reflects the rich artistic traditions of Rajasthan, preserving techniques passed down through generations.",
+    description: "Every piece reflects the rich artistic traditions of Rajasthan.",
   },
   {
     icon: "craft",
     title: "Master Craftsmanship",
-    description:
-      "Our skilled artisans spend weeks on each piece, ensuring authenticity, durability, and uniqueness in every product.",
+    description: "Our skilled artisans spend weeks on each piece for authenticity.",
   },
   {
     icon: "quality",
     title: "Premium Quality",
-    description:
-      "We use only the finest seasoned wood, ensuring our pieces never crack or lose shape in any climate.",
+    description: "We use only the finest seasoned wood that never cracks.",
   },
   {
     icon: "global",
     title: "Global Delivery",
-    description:
-      "Museum-grade packaging ensures your treasures arrive in perfect condition, anywhere in the world.",
+    description: "Museum-grade packaging for perfect condition anywhere.",
   },
 ];
 
-// Product categories
-// const categories = [
-//   { name: "Elephants", description: "Intricate traditional patterns" },
-//   { name: "Ganesh Statue", description: "Delicate lattice artwork" },
-//   { name: "Buddha Statue", description: "Vibrant Rajasthani colors" },
-//   { name: "Cow", description: "Royal luxury designs" },
-//   { name: "Peacock", description: "Deep-cut premium carving" },
-//   { name: "Lion", description: "Traditional storytelling art" },
-// ];
 const categories = [
   { name: "Carving Elephants", description: "Intricate traditional patterns" },
   { name: "Jali Elephants", description: "Delicate lattice artwork" },
@@ -80,7 +65,6 @@ const categories = [
   { name: "Shikar Elephants", description: "Traditional storytelling art" },
 ];
 
-// Icon components
 const icons = {
   heritage: (
     <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -130,12 +114,6 @@ const aboutJsonLd = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#F9F8F6]">
-      {/* JSON-LD Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
-      />
-
       {/* Hero Section - Consistent with Products Page */}
       <section className="px-4 pb-16 pt-32">
         <div className="mx-auto max-w-7xl">
@@ -145,7 +123,7 @@ export default function AboutPage() {
             </span>
             <h1 className="mb-4 font-serif text-4xl md:text-5xl">
               Preserving Rajasthan&apos;s{" "}
-              <span className="font-light italic text-stone-500">
+              <span className="font-light italic text-stone-400">
                 Wooden Art Heritage
               </span>
             </h1>
@@ -168,7 +146,7 @@ export default function AboutPage() {
                 <p className="font-serif text-4xl text-[#C5A059] md:text-5xl">
                   {stat.value}
                 </p>
-                <p className="mt-2 text-[10px] font-bold uppercase tracking-widest text-stone-500">
+                <p className="mt-2 text-[10px] font-bold uppercase tracking-widest text-[#000000]">
                   {stat.label}
                 </p>
               </div>
@@ -177,32 +155,20 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Mission & Vision Section */}
+      {/* Mission & Vision */}
       <section className="py-16 px-4">
         <div className="mx-auto max-w-7xl">
           <div className="grid items-center gap-16 lg:grid-cols-2">
-            {/* Image */}
             <div className="relative">
               <div className="absolute -inset-4 -z-10 translate-x-3 translate-y-3 border border-[#C5A059]/30" />
-              <div className="relative aspect-[4/5] overflow-hidden bg-stone-200">
-                <Image
-                    src="/1.png"
-                    alt="Master artisan crafting wooden elephant"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                />
+              <div className="relative aspect-[4/5] overflow-hidden bg-stone-200 shadow-2xl">
+                <Image src="/1.png" alt="Master artisan" fill className="object-cover" />
               </div>
-              {/* Badge */}
               <div className="absolute -bottom-6 -right-6 bg-[#C5A059] p-6 text-white shadow-xl">
-                <p className="text-[9px] font-black uppercase tracking-widest">
-                  Made in
-                </p>
+                <p className="text-[9px] font-black uppercase tracking-widest text-white/80">Made in</p>
                 <p className="font-serif text-2xl italic">Jaipur</p>
               </div>
             </div>
-
-            {/* Content */}
             <div className="space-y-8">
               <div>
                 <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
@@ -210,153 +176,42 @@ export default function AboutPage() {
                 </span>
                 <h2 className="mb-4 font-serif text-3xl leading-tight md:text-4xl">
                   Crafting Cultural{" "}
-                  <span className="font-light italic text-stone-500">
+                  <span className="font-light italic text-stone-400">
                     Legacies
                   </span>
                 </h2>
-                <p className="text-lg font-light leading-relaxed text-stone-600">
-                  To preserve and promote the wooden handicraft culture of
-                  Rajasthan by manufacturing authentic handcrafted art pieces
-                  and delivering them globally with trust, quality, and pride.
+                <p className="text-lg font-light leading-relaxed text-[#000000]">
+                  To preserve and promote the wooden handicraft culture of Rajasthan by manufacturing authentic handcrafted art pieces.
                 </p>
               </div>
-
-              <div className="border-t border-stone-200 pt-8">
-                <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
-                  Our Vision
-                </span>
-                <p className="text-lg font-light leading-relaxed text-stone-600">
-                  To make Tarana Handicrafts a globally recognized brand
-                  representing Jaipur&apos;s traditional craftsmanship, becoming
-                  a trusted name in premium wooden décor and cultural gifting.
+              <div className="border-t border-stone-200 pt-8 text-[#000000]">
+                <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">Our Vision</span>
+                <p className="text-lg font-light leading-relaxed">
+                  To make Tarana Handicrafts a globally recognized brand representing Jaipur&apos;s traditional craftsmanship.
                 </p>
-              </div>
-
-              <div className="flex flex-wrap gap-4 pt-4">
-                <Link
-                  href="/products"
-                  className="rounded-lg bg-stone-900 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-white transition-all hover:bg-[#C5A059] hover:shadow-xl"
-                >
-                  Explore Collection
-                </Link>
-                <Link
-                  href="/contact"
-                  className="rounded-lg border border-stone-300 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-900 transition-all hover:border-[#C5A059] hover:text-[#C5A059]"
-                >
-                  Get in Touch
-                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Why Wooden Elephants Section */}
-      <section className="px-4 py-16">
-        <div className="mx-auto max-w-7xl rounded-xl border border-stone-200 bg-white p-8 md:p-12">
-          <div className="mb-12 text-center">
-            <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
-              Symbolic Meaning
-            </span>
-            <h2 className="mb-4 font-serif text-3xl md:text-5xl">
-              Why Wooden Elephants?
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg font-light text-stone-600">
-              Our wooden elephants are not just décor pieces — they are cultural
-              symbols that bring positive energy and happiness into homes.
-            </p>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-            {["Strength", "Wisdom", "Prosperity", "Positivity", "Good Luck"].map(
-              (meaning, index) => (
-                <div
-                  key={index}
-                  className="group rounded-xl border border-stone-100 p-8 text-center transition-all hover:border-[#C5A059]/30 hover:shadow-xl"
-                >
-                  <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[#C5A059]/10 text-3xl transition-all group-hover:bg-[#C5A059] group-hover:text-white">
-                    {["💪", "🧠", "✨", "☀️", "🍀"][index]}
-                  </div>
-                  <h3 className="font-serif text-xl">{meaning}</h3>
-                </div>
-              )
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="px-4 py-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-12 text-center">
-            <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
-              What Sets Us Apart
-            </span>
-            <h2 className="font-serif text-3xl md:text-5xl">Our Values</h2>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {values.map((value, index) => (
-              <div
-                key={index}
-                className="group rounded-xl border border-stone-200 bg-white p-8 transition-all hover:border-[#C5A059]/30 hover:shadow-xl"
-              >
-                <div className="mb-6 text-[#C5A059]">
-                  {icons[value.icon as keyof typeof icons]}
-                </div>
-                <h3 className="mb-3 font-serif text-xl">{value.title}</h3>
-                <p className="text-sm font-light leading-relaxed text-stone-500">
-                  {value.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Product Categories Section */}
-      <section className="px-4 py-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-12 text-center">
-            <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
-              Our Craft
-            </span>
-            <h2 className="mb-4 font-serif text-3xl md:text-5xl">
-              Product Categories
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg font-light text-stone-600">
-              We manufacture a wide range of wooden elephant handicrafts,
-              including multiple design styles and categories.
-            </p>
+      <section className="px-4 py-24 bg-stone-50 border-y border-stone-200">
+        <div className="mx-auto max-w-7xl text-[#000000]">
+          <div className="mb-16 text-center">
+            <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">The Archive</span>
+            <h2 className="font-serif text-4xl md:text-5xl mb-4">Product Categories</h2>
           </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((category, index) => (
-              <div
-                key={index}
-                className="group flex items-center gap-4 rounded-xl border border-stone-200 bg-white p-6 transition-all hover:border-[#C5A059]/50 hover:shadow-lg"
-              >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#C5A059]/10 font-mono text-sm font-bold text-[#C5A059] transition-all group-hover:bg-[#C5A059] group-hover:text-white">
-                  {String(index + 1).padStart(2, "0")}
-                </div>
+              <div key={index} className="group flex flex-col justify-between bg-white aspect-square p-10 border border-stone-200 hover:border-[#000000] transition-all duration-500">
+                <span className="font-serif italic text-4xl text-stone-100 group-hover:text-[#C5A059]/20">0{index+1}</span>
                 <div>
-                  <h3 className="font-serif text-lg">{category.name}</h3>
-                  <p className="text-sm text-stone-500">{category.description}</p>
+                  <h3 className="font-serif text-2xl mb-2">{category.name}</h3>
+                  <p className="text-sm text-stone-500 font-light">{category.description}</p>
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.3em] text-stone-900 transition-colors hover:text-[#C5A059]"
-            >
-              View All Products
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
           </div>
         </div>
       </section>
@@ -445,7 +300,7 @@ export default function AboutPage() {
       {/* CTA Section */}
       <section className="mx-4 mb-8 rounded-xl bg-[#C5A059] py-16 px-6 text-center text-white md:mx-auto md:max-w-7xl">
         <div className="mx-auto max-w-3xl">
-          <h2 className="mb-4 font-serif text-3xl md:text-5xl !text-white">
+          <h2 className="mb-4 font-serif text-3xl md:text-5xl">
             Ready to Own a Piece of Jaipur?
           </h2>
           <p className="mb-8 text-lg font-light opacity-90">

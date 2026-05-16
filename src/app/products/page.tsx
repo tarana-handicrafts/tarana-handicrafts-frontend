@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import ProductsClient from "./ProductsClient";
-import { productsData } from "@/lib/products";
+import { getAllProducts } from "@/lib/productsStore";
+
+export const dynamic = "force-dynamic";
 
 // SEO Metadata for Products Page
 export const metadata: Metadata = {
@@ -44,7 +46,7 @@ export const metadata: Metadata = {
 };
 
 // JSON-LD for Product Collection
-function generateCollectionJsonLd() {
+function generateCollectionJsonLd(products: Array<{ id: number; name: string; description?: string; category: string; material: string; image: string; price: number; inStock?: boolean; rating?: number; reviewCount?: number }>) {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com";
 
   return {
@@ -55,8 +57,8 @@ function generateCollectionJsonLd() {
     url: `${baseUrl}/products`,
     mainEntity: {
       "@type": "ItemList",
-      numberOfItems: productsData.length,
-      itemListElement: productsData.slice(0, 10).map((product, index) => ({
+      numberOfItems: products.length,
+      itemListElement: products.slice(0, 10).map((product, index) => ({
         "@type": "ListItem",
         position: index + 1,
         item: {
@@ -84,8 +86,9 @@ function generateCollectionJsonLd() {
   };
 }
 
-export default function ProductsPage() {
-  const jsonLd = generateCollectionJsonLd();
+export default async function ProductsPage() {
+  const products = await getAllProducts();
+  const jsonLd = generateCollectionJsonLd(products);
 
   return (
     <div className="min-h-screen bg-[#F9F8F6] px-4 pb-16 pt-32">
@@ -109,7 +112,7 @@ export default function ProductsPage() {
         </header>
 
         {/* Client-side filtering and products grid */}
-        <ProductsClient />
+        <ProductsClient products={products} />
       </div>
     </div>
   );

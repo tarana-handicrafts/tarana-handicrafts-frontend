@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProductById, productsData } from "@/lib/products";
+import { productsData } from "@/lib/products";
+import { getAllProducts, getProductById } from "@/lib/productsStore";
 import ProductDetailClient from "./ProductDetailClient";
+
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 
 // Generate static params for all products
 export function generateStaticParams() {
@@ -18,7 +22,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const productId = Number(id);
-  const product = getProductById(productId);
+  const product = await getProductById(productId);
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com";
 
   if (!product) {
@@ -74,11 +78,8 @@ export async function generateMetadata({
 }
 
 // Generate JSON-LD for Product
-function generateProductJsonLd(productId: number) {
-  const product = getProductById(productId);
+function generateProductJsonLd(product: NonNullable<Awaited<ReturnType<typeof getProductById>>>) {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com";
-
-  if (!product) return null;
 
   const imageUrl = product.image.startsWith("http") ? product.image : `${baseUrl}${product.image}`;
 
@@ -147,24 +148,32 @@ export default async function ProductPage({
 }) {
   const { id } = await params;
   const productId = Number(id);
-  const product = getProductById(productId);
+  const product = await getProductById(productId);
 
   if (!product) {
     notFound();
   }
 
-  const jsonLd = generateProductJsonLd(productId);
+  // Similar products are derived from the full store (static + dynamic).
+  const products = await getAllProducts();
+  const similarProducts = products
+    .filter((p) => p.id !== product.id && (p.category === product.category || p.material === product.material))
+    .slice(0, 4);
+
+  const jsonLd = generateProductJsonLd(product);
 
   return (
     <>
       {/* JSON-LD Structured Data for Product */}
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      )}
-      <ProductDetailClient productId={id} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ProductDetailClient
+        productId={id}
+        initialProduct={product}
+        initialSimilarProducts={similarProducts}
+      />
     </>
   );
 }

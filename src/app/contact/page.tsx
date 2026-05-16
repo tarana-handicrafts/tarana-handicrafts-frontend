@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { MapPin, Phone, Mail, MessageCircle, ArrowUpRight, Clock, Navigation } from "lucide-react";
 
 // Contact Information
 const contactInfo = {
@@ -13,180 +14,20 @@ const contactInfo = {
   whatsapp: "919509669135",
 };
 
-// Nearby Landmarks
-const landmarks = [
-  {
-    icon: "plane",
-    name: "Jaipur International Airport",
-    distance: "13 km",
-    type: "Nearest Airport",
-  },
-  {
-    icon: "train",
-    name: "Jaipur Junction",
-    distance: "12 km",
-    type: "Nearest Railway Station",
-  },
-  {
-    icon: "bus",
-    name: "Sindhi Camp",
-    distance: "12 km",
-    type: "Nearest Bus Stand",
-  },
-  {
-    icon: "busStop",
-    name: "Harmara Ghati Bus Stop",
-    distance: "100 meters",
-    type: "Nearest Bus Stop",
-  }
-];
-
-// Icon components
-const icons = {
-  train: (
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-    </svg>
-  ),
-  bus: (
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h8m-8 4h8m-4-8v16m-4 0h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v12a2 2 0 002 2z" />
-    </svg>
-  ),
-  busStop: (
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-  ),
-  plane: (
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-    </svg>
-  ),
-  phone: (
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-    </svg>
-  ),
-  email: (
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-    </svg>
-  ),
-  location: (
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-  ),
-  whatsapp: (
-    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-    </svg>
-  ),
-};
-
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  // Sanitize input to prevent XSS
-  const sanitizeInput = (input: string, maxLength: number = 500): string => {
-    return input
-      .replace(/[<>]/g, "") // Remove HTML brackets
-      .trim()
-      .slice(0, maxLength);
-  };
-
-  // Validate form data
-  const validateForm = (): boolean => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.name.trim() || formData.name.length < 2) {
-      newErrors.name = "Please enter a valid name";
-    }
-
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
-    }
-
-    if (!formData.subject) {
-      newErrors.subject = "Please select a subject";
-    }
-
-    if (!formData.message.trim() || formData.message.length < 10) {
-      newErrors.message = "Please enter a message (at least 10 characters)";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
     setIsSubmitting(true);
-
-    // Sanitize all inputs before creating message
-    const sanitizedData = {
-      name: sanitizeInput(formData.name, 100),
-      email: sanitizeInput(formData.email, 254),
-      phone: sanitizeInput(formData.phone, 20),
-      subject: sanitizeInput(formData.subject, 100),
-      message: sanitizeInput(formData.message, 1000),
-    };
-
-    // Generate WhatsApp message
-    const message = `*New Inquiry from Website*
-
-*Name:* ${sanitizedData.name}
-*Email:* ${sanitizedData.email}
-*Phone:* ${sanitizedData.phone || "Not provided"}
-*Subject:* ${sanitizedData.subject}
-
-*Message:*
-${sanitizedData.message}`;
-
+    const message = `*Website Inquiry*\n\n*Name:* ${formData.name}\n*Email:* ${formData.email}\n*Subject:* ${formData.subject}\n*Message:* ${formData.message}`;
     const whatsappUrl = `https://wa.me/${contactInfo.whatsapp}?text=${encodeURIComponent(message)}`;
-
-    // Use noopener and noreferrer for security
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
-
     setIsSubmitting(false);
     setIsSubmitted(true);
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-      setErrors({});
-    }, 3000);
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors({ ...errors, [name]: "" });
-    }
+    setTimeout(() => setIsSubmitted(false), 3000);
   };
 
   return (
@@ -211,178 +52,23 @@ ${sanitizedData.message}`;
         </div>
       </section>
 
-      {/* Contact Cards Section */}
-      <section className="px-4 pb-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {/* Phone Card */}
-            <a
-              href={`tel:${contactInfo.phone[0].replace(/\s/g, "")}`}
-              className="group flex flex-col items-center rounded-xl border border-stone-200 bg-white p-8 text-center transition-all hover:border-[#C5A059]/50 hover:shadow-xl"
-            >
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#C5A059]/10 text-[#C5A059] transition-all group-hover:bg-[#C5A059] group-hover:text-white">
-                {icons.phone}
-              </div>
-              <h3 className="mb-2 font-serif text-lg">Call Us</h3>
-              <p className="text-sm text-stone-600">{contactInfo.phone[0]}</p>
-              <p className="text-sm text-stone-600">{contactInfo.phone[1]}</p>
-            </a>
-
-            {/* WhatsApp Card */}
-            <a
-              href={`https://wa.me/${contactInfo.whatsapp}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col items-center border border-stone-200 bg-white p-8 text-center transition-all hover:border-[#25D366]/50 hover:shadow-xl"
-            >
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366] transition-all group-hover:bg-[#25D366] group-hover:text-white">
-                {icons.whatsapp}
-              </div>
-              <h3 className="mb-2 font-serif text-lg">WhatsApp</h3>
-              <p className="text-sm text-stone-600">Quick Response</p>
-              <p className="text-sm text-stone-600">Chat with us</p>
-            </a>
-
-            {/* Email Card */}
-            <a
-              href={`mailto:${contactInfo.email}`}
-              className="group flex flex-col items-center rounded-xl border border-stone-200 bg-white p-8 text-center transition-all hover:border-[#C5A059]/50 hover:shadow-xl"
-            >
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#C5A059]/10 text-[#C5A059] transition-all group-hover:bg-[#C5A059] group-hover:text-white">
-                {icons.email}
-              </div>
-              <h3 className="mb-2 font-serif text-lg">Email Us</h3>
-              <p className="text-sm text-stone-600 break-all">{contactInfo.email}</p>
-            </a>
-
-            {/* Location Card */}
-            <div className="group flex flex-col items-center rounded-xl border border-stone-200 bg-white p-8 text-center transition-all hover:border-[#C5A059]/50 hover:shadow-xl">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#C5A059]/10 text-[#C5A059] transition-all group-hover:bg-[#C5A059] group-hover:text-white">
-                {icons.location}
-              </div>
-              <h3 className="mb-2 font-serif text-lg">Visit Us</h3>
-              <p className="text-sm text-stone-600">Jaipur, Rajasthan</p>
-              <p className="text-sm text-stone-600">India 🇮🇳</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Main Contact Section */}
-      <section className="px-4 pb-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-16 lg:grid-cols-2">
-            {/* Contact Form */}
+      {/* --- BENTO BOX GRID LAYOUT --- */}
+      <main className="max-w-[1400px] mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 auto-rows-min">
+          
+          {/* BLOCK 1: THE DIRECTORY (Top Left) */}
+          <div className="lg:col-span-5 bg-stone-100 rounded-[2rem] p-10 md:p-14 flex flex-col justify-between group hover:bg-stone-200/50 transition-colors duration-500">
             <div>
-              <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
-                Send a Message
-              </span>
-              <h2 className="mb-8 font-serif text-3xl md:text-4xl">
-                Inquiry Form
-              </h2>
-
-              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-                <div className="grid gap-6 md:grid-cols-2">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-stone-500"
-                    >
-                      Your Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      maxLength={100}
-                      autoComplete="name"
-                      className={`w-full border bg-transparent px-4 py-3 text-stone-900 transition-all focus:border-[#C5A059] focus:outline-none ${
-                        errors.name ? "border-red-500" : "border-stone-200"
-                      }`}
-                      placeholder="John Doe"
-                    />
-                    {errors.name && (
-                      <p className="mt-1 text-xs text-red-500">{errors.name}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-stone-500"
-                    >
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      maxLength={254}
-                      autoComplete="email"
-                      className={`w-full border bg-transparent px-4 py-3 text-stone-900 transition-all focus:border-[#C5A059] focus:outline-none ${
-                        errors.email ? "border-red-500" : "border-stone-200"
-                      }`}
-                      placeholder="john@example.com"
-                    />
-                    {errors.email && (
-                      <p className="mt-1 text-xs text-red-500">{errors.email}</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="grid gap-6 md:grid-cols-2">
-                  <div>
-                    <label
-                      htmlFor="phone"
-                      className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-stone-500"
-                    >
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      maxLength={20}
-                      autoComplete="tel"
-                      className="w-full border border-stone-200 bg-transparent px-4 py-3 text-stone-900 transition-all focus:border-[#C5A059] focus:outline-none"
-                      placeholder="+91 9876543210"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="subject"
-                      className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-stone-500"
-                    >
-                      Subject *
-                    </label>
-                    <select
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      className={`w-full border bg-transparent px-4 py-3 text-stone-900 transition-all focus:border-[#C5A059] focus:outline-none ${
-                        errors.subject ? "border-red-500" : "border-stone-200"
-                      }`}
-                    >
-                      <option value="">Select a subject</option>
-                      <option value="Product Inquiry">Product Inquiry</option>
-                      <option value="Custom Order">Custom Order</option>
-                      <option value="Bulk/Export Order">Bulk/Export Order</option>
-                      <option value="Collaboration">Collaboration</option>
-                      <option value="Other">Other</option>
-                    </select>
-                    {errors.subject && (
-                      <p className="mt-1 text-xs text-red-500">{errors.subject}</p>
-                    )}
-                  </div>
+              <div className="flex items-center gap-3 mb-10">
+                <div className="h-2 w-2 bg-[#C5A059] rounded-full animate-pulse" />
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-stone-500">Directory</span>
+              </div>
+              
+              <div className="space-y-10">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-2 text-stone-400">Proprietor</p>
+                  <p className="font-serif text-2xl">{contactInfo.name}</p>
+                  <p className="text-sm text-stone-500">{contactInfo.businessName}</p>
                 </div>
 
                 <div>
@@ -522,69 +208,44 @@ ${sanitizedData.message}`;
                     </div>
                   ))}
                 </div>
+
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-2 text-stone-400">Electronic Mail</p>
+                  <a href={`mailto:${contactInfo.email}`} className="font-serif text-xl break-all hover:text-[#C5A059] transition-colors border-b border-transparent hover:border-[#C5A059]">
+                    {contactInfo.email}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Map Section */}
-      <section className="px-4 pb-16">
-        <div className="mx-auto max-w-7xl">
-          {/* Map Header */}
-          <div className="mb-8 text-center">
-            <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
-              Our Location
-            </span>
-            <h2 className="mb-4 font-serif text-3xl md:text-4xl">
-              Visit Our Workshop
-            </h2>
-            <p className="mx-auto max-w-xl text-stone-500">
-              {contactInfo.address}
-            </p>
-          </div>
-
-          {/* Google Maps Embed */}
-          <div className="relative h-[500px] w-full overflow-hidden rounded-xl border border-stone-200">
+          {/* BLOCK 2: THE MAP TILE (Top Right) */}
+          <div className="lg:col-span-7 h-[400px] lg:h-auto rounded-[2rem] overflow-hidden relative group border border-stone-200">
             <iframe
-              src="https://www.google.com/maps?q=27.021606,75.767502&z=17&output=embed"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Tarana Handicrafts Location - Jaipur, Rajasthan"
-              className="grayscale transition-all duration-500 hover:grayscale-0"
+              src="http://googleusercontent.com/maps.google.com/4"
+              width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy"
+              className="absolute inset-0 grayscale-[0.8] contrast-[1.1] group-hover:grayscale-0 transition-all duration-1000 object-cover"
             />
-
-            {/* Map Overlay Card */}
-            <div className="absolute bottom-8 left-8 z-10 hidden max-w-sm rounded-xl border border-stone-200 bg-white p-6 shadow-2xl md:block">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#C5A059] text-white">
-                  {icons.location}
+            {/* Map Glassmorphism Overlay */}
+            <div className="absolute bottom-6 left-6 right-6 md:right-auto md:w-80 bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl transition-transform duration-500 group-hover:-translate-y-2">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="bg-[#000000] text-white p-2 rounded-full">
+                  <MapPin size={16} />
                 </div>
-                <div>
-                  <h4 className="font-serif text-lg">{contactInfo.businessName}</h4>
-                  <p className="text-xs text-stone-500">Jaipur, Rajasthan</p>
-                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em]">Atelier Location</span>
               </div>
-              <p className="mb-4 text-sm text-stone-600">{contactInfo.address}</p>
-              <a
-                href="https://www.google.com/maps/dir/?api=1&destination=27.021606,75.767502"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-stone-900 px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-white transition-all hover:bg-[#C5A059]"
+              <p className="text-sm font-serif leading-relaxed text-stone-800 mb-4">
+                {contactInfo.address}
+              </p>
+              <a 
+                href="http://googleusercontent.com/maps.google.com/5" 
+                target="_blank" rel="noopener noreferrer"
+                className="text-[10px] font-black uppercase tracking-widest text-[#C5A059] flex items-center gap-2 hover:text-black transition-colors"
               >
-                Get Directions
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                Get Directions <Navigation size={12} />
               </a>
             </div>
           </div>
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="mx-4 mb-8 rounded-xl bg-[#C5A059] py-16 px-6 text-center text-white md:mx-auto md:max-w-7xl">
@@ -612,8 +273,48 @@ ${sanitizedData.message}`;
               Chat on WhatsApp
             </a>
           </div>
+
+          {/* BLOCK 4: WHATSAPP & HOURS (Bottom Right - Stacked) */}
+          <div className="lg:col-span-4 flex flex-col gap-6">
+            
+            {/* WhatsApp Quick Connect Tile */}
+            <a 
+              href={`https://wa.me/${contactInfo.whatsapp}`}
+              target="_blank" rel="noopener noreferrer"
+              className="flex-1 bg-[#25D366] text-white rounded-[2rem] p-10 flex flex-col justify-between group hover:scale-[1.02] transition-transform duration-500 shadow-lg"
+            >
+              <div className="flex justify-between items-start">
+                <MessageCircle size={40} className="opacity-80 group-hover:opacity-100 transition-opacity" />
+                <ArrowUpRight size={24} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+              </div>
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] mb-2 opacity-80">Instant Connect</p>
+                <h3 className="font-serif text-3xl">Chat on <br/>WhatsApp</h3>
+              </div>
+            </a>
+
+            {/* Business Hours Tile */}
+            <div className="bg-[#000000] text-white rounded-[2rem] p-10 flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-6 text-[#C5A059]">
+                <Clock size={20} />
+                <span className="text-[10px] font-black uppercase tracking-[0.2em]">Operating Hours</span>
+              </div>
+              <ul className="space-y-4">
+                <li className="flex justify-between items-end border-b border-white/10 pb-2">
+                  <span className="text-sm text-stone-400">Mon - Sat</span>
+                  <span className="font-serif">09:00 AM — 08:00 PM</span>
+                </li>
+                <li className="flex justify-between items-end pb-2">
+                  <span className="text-sm text-stone-400">Sunday</span>
+                  <span className="font-serif italic text-stone-500">Closed</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
         </div>
-      </section>
+      </main>
     </div>
   );
 }

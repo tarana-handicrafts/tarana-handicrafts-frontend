@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/utils";
 
@@ -10,6 +11,10 @@ const WHATSAPP_NUMBER = "919509669135"; // Format: country code + number without
 
 export function CartSidebar() {
   const { cart, isCartOpen, closeCart, removeFromCart, cartTotal } = useCart();
+  const pathname = usePathname();
+
+  // Hide cart sidebar on admin pages.
+  if (pathname.startsWith("/admin")) return null;
 
   // Close cart on escape key
   useEffect(() => {

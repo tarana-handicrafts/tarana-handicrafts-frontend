@@ -1,25 +1,27 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Product, getProductById, getSimilarProducts, ProductImage, ProductReview } from "@/lib/products";
+import type { Product, ProductImage, ProductReview } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/utils";
 
 interface ProductDetailClientProps {
   productId: string;
+  initialProduct: Product;
+  initialSimilarProducts: Product[];
 }
 
-export default function ProductDetailClient({ productId }: ProductDetailClientProps) {
-  const numericId = Number(productId);
+export default function ProductDetailClient({
+  productId,
+  initialProduct,
+  initialSimilarProducts,
+}: ProductDetailClientProps) {
+  void productId;
 
-  // Derive product and similar products from productId using useMemo
-  const product = useMemo(() => getProductById(numericId), [numericId]);
-  const similarProducts = useMemo(
-    () => (product ? getSimilarProducts(product, 4) : []),
-    [product]
-  );
+  const product = initialProduct;
+  const similarProducts = initialSimilarProducts;
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -27,17 +29,6 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
   const [isZoomed, setIsZoomed] = useState(false);
   const { addToCart, cart } = useCart();
 
-
-  if (!product) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F9F8F6] pt-24">
-        <div className="text-center">
-          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-[#C5A059] border-t-transparent"></div>
-          <p className="text-stone-500">Loading product...</p>
-        </div>
-      </div>
-    );
-  }
 
   const images: ProductImage[] = product.images || [{ url: product.image, alt: product.name }];
   const isInCart = cart.some((item) => item.id === product.id);
