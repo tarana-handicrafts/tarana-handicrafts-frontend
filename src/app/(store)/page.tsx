@@ -1,5 +1,5 @@
 import { Hero, TopSeller, VideoSection, Testimonials, ProfessionalQA } from "@/components/home";
-import { productsData } from "@/lib/products";
+import { getTopSellers } from "@/lib/storeApi";
 
 // Homepage JSON-LD for rich snippets
 function generateHomeJsonLd() {
@@ -40,8 +40,16 @@ function generateHomeJsonLd() {
   };
 }
 
-export default function Home() {
+export default async function Home() {
   const jsonLd = generateHomeJsonLd();
+
+  let topProducts: import("@/lib/storeApi").Product[] = [];
+  try {
+    const data = await getTopSellers(4);
+    topProducts = data.products;
+  } catch (error) {
+    console.error("Failed to fetch top sellers:", error);
+  }
 
   return (
     <>
@@ -51,7 +59,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Hero />
-      <TopSeller products={productsData} />
+      <TopSeller products={topProducts} />
       <VideoSection />
       <Testimonials />
       <ProfessionalQA />

@@ -1,25 +1,33 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Product, getProductById, getSimilarProducts, ProductImage, ProductReview } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/utils";
+import type { Product, ProductImage } from "@/lib/storeApi";
+
+interface ProductReview {
+  id: number;
+  author: string;
+  rating: number;
+  date: string;
+  title: string;
+  content: string;
+  verified: boolean;
+  avatar?: string;
+}
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 interface ProductDetailClientProps {
   productId: string;
 }
 
 export default function ProductDetailClient({ productId }: ProductDetailClientProps) {
-  const numericId = Number(productId);
-
-  // Derive product and similar products from productId using useMemo
-  const product = useMemo(() => getProductById(numericId), [numericId]);
-  const similarProducts = useMemo(
-    () => (product ? getSimilarProducts(product, 4) : []),
-    [product]
-  );
+  const [product, setProduct] = useState<Product | null>(null);
+  const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -27,8 +35,36 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
   const [isZoomed, setIsZoomed] = useState(false);
   const { addToCart, cart } = useCart();
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch(`${API_URL}/api/products/${productId}`);
+        if (!res.ok) throw new Error("Product not found");
+        const data = await res.json();
+        setProduct(data.product);
 
-  if (!product) {
+        // Fetch similar products (same category)
+        if (data.product?.category) {
+          const simRes = await fetch(
+            `${API_URL}/api/products/public?category=${encodeURIComponent(data.product.category)}&limit=5`
+          );
+          if (simRes.ok) {
+            const simData = await simRes.json();
+            setSimilarProducts(
+              (simData.products || []).filter((p: Product) => p._id !== productId).slice(0, 4)
+            );
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch product:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [productId]);
+
+  if (loading || !product) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#F9F8F6] pt-24">
         <div className="text-center">
@@ -40,12 +76,12 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
   }
 
   const images: ProductImage[] = product.images || [{ url: product.image, alt: product.name }];
-  const isInCart = cart.some((item) => item.id === product.id);
+  const isInCart = cart.some((item) => (item as unknown as {_id?: string})._id === product._id);
   const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
-      addToCart(product);
+      addToCart(product as never);
     }
   };
 
@@ -499,7 +535,7 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
 
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {similarProducts.map((item) => (
-                <SimilarProductCard key={item.id} product={item} />
+                <SimilarProductCard key={item._id} product={item} />
               ))}
             </div>
 
@@ -575,11 +611,11 @@ function ReviewCard({ review }: { review: ProductReview }) {
 // Similar Product Card Component
 function SimilarProductCard({ product }: { product: Product }) {
   const { addToCart, cart } = useCart();
-  const isInCart = cart.some((item) => item.id === product.id);
+  const isInCart = cart.some((item) => (item as unknown as {_id?: string})._id === product._id);
 
   return (
     <Link
-      href={`/products/${product.id}`}
+      href={`/products/${product._id}`}
       className="group relative overflow-hidden rounded-xl border border-stone-200 bg-white transition-all hover:shadow-xl"
     >
       {/* Product Image */}
@@ -601,7 +637,7 @@ function SimilarProductCard({ product }: { product: Product }) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              addToCart(product);
+              addToCart(product as never);
             }}
             disabled={isInCart}
             className={`rounded-lg px-6 py-3 font-medium transition-transform hover:scale-105 ${

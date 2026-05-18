@@ -23,6 +23,15 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "media.istockphoto.com",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "5000",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
     ],
     // Enable image optimization for better LCP
     unoptimized: false,
@@ -69,7 +78,7 @@ const nextConfig: NextConfig = {
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https: blob:",
               "frame-src 'self' https://www.google.com https://maps.google.com",
-              "connect-src 'self' https://wa.me https://api.whatsapp.com",
+              "connect-src 'self' https://wa.me https://api.whatsapp.com http://localhost:5000",
               "form-action 'self'",
               "base-uri 'self'",
               "object-src 'none'",

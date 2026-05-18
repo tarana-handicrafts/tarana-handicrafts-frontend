@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import ProductsClient from "./ProductsClient";
-import { productsData } from "@/lib/products";
 
 // SEO Metadata for Products Page
 export const metadata: Metadata = {
@@ -43,58 +42,9 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD for Product Collection
-function generateCollectionJsonLd() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com";
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "Handcrafted Wooden Art Collection",
-    description: "Curated collection of handcrafted wooden elephant sculptures and traditional Rajasthani handicrafts.",
-    url: `${baseUrl}/products`,
-    mainEntity: {
-      "@type": "ItemList",
-      numberOfItems: productsData.length,
-      itemListElement: productsData.slice(0, 10).map((product, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        item: {
-          "@type": "Product",
-          name: product.name,
-          description: product.description || `Handcrafted ${product.category} made from ${product.material}`,
-          image: product.image.startsWith("http") ? product.image : `${baseUrl}${product.image}`,
-          url: `${baseUrl}/products/${product.id}`,
-          offers: {
-            "@type": "Offer",
-            price: product.price,
-            priceCurrency: "INR",
-            availability: product.inStock !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-          },
-          ...(product.rating && {
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: product.rating,
-              reviewCount: product.reviewCount || 1,
-            },
-          }),
-        },
-      })),
-    },
-  };
-}
-
 export default function ProductsPage() {
-  const jsonLd = generateCollectionJsonLd();
-
   return (
     <div className="min-h-screen bg-[#F9F8F6] px-4 pb-16 pt-32">
-      {/* JSON-LD Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-
       <div className="mx-auto max-w-7xl">
         {/* Page Header */}
         <header className="mb-12 text-center">
