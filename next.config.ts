@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   // Enable React Strict Mode for better development experience
   reactStrictMode: true,
 
+  // Use standalone output only for Docker; Vercel handles this automatically
+  ...(process.env.DOCKER_BUILD === "1" ? { output: "standalone" as const } : {}),
+
   // Image Optimization Configuration
   images: {
     formats: ["image/avif", "image/webp"],
@@ -37,18 +40,20 @@ const nextConfig: NextConfig = {
         hostname: "*.onrender.com",
       },
     ],
-    // Enable image optimization for better LCP
     unoptimized: false,
   },
 
   // Enable compression
   compress: true,
 
-  // Optimize production builds
-  poweredByHeader: false, // Remove X-Powered-By header for security
+  // Remove X-Powered-By header for security
+  poweredByHeader: false,
 
-  // Headers for security and caching
+  // Security and Performance Headers
   async headers() {
+    const isDev = process.env.NODE_ENV === "development";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    
     return [
       {
         source: "/(.*)",
@@ -71,32 +76,52 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=()",
+            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains; preload",
+          },
+          {
+            key: "X-DNS-Prefetch-Control",
+            value: "on",
           },
           {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+              `script-src 'self' ${isDev ? "'unsafe-eval'" : ""} 'unsafe-inline'`,
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https: blob:",
-              "frame-src 'self' https://www.google.com https://maps.google.com",
-              "connect-src 'self' https://wa.me https://api.whatsapp.com http://localhost:5000",
+              "frame-src 'self' https://www.google.com https://maps.google.com https://www.youtube.com",
+              `connect-src 'self' ${apiUrl} https://*.onrender.com https://wa.me https://api.whatsapp.com`,
               "form-action 'self'",
               "base-uri 'self'",
               "object-src 'none'",
+              "frame-ancestors 'none'",
+              "upgrade-insecure-requests",
             ].join("; "),
           },
         ],
       },
       {
-        // Cache static assets for 1 year
-        source: "/(.*)\\.(ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)",
+        // Cache static assets aggressively
+        source: "/(.*)\\.(ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|js|css)",
         headers: [
           {
             key: "Cache-Control",
             value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        // Stale-while-revalidate for API-driven pages 
+        source: "/(products|use-cases|about)(.*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, s-maxage=60, stale-while-revalidate=300",
           },
         ],
       },
@@ -105,15 +130,7 @@ const nextConfig: NextConfig = {
 
   // Experimental features for better performance
   experimental: {
-    optimizeCss: true, // Enable CSS optimization
-  },
-
-  // Optimize client-side navigation
-  onDemandEntries: {
-    // period (in ms) where the server will keep pages in the buffer
-    maxInactiveAge: 25 * 1000,
-    // number of pages that should be kept simultaneously without being disposed
-    pagesBufferLength: 5,
+    optimizeCss: true,
   },
 };
 
