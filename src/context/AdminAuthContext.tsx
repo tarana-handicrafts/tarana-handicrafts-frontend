@@ -1,6 +1,11 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useSyncExternalStore, type ReactNode } from "react";
+import {
+  getAccessToken, getRefreshToken, getUser,
+  setTokens, setUser as storeUser, clearTokens,
+  secureFetch
+} from "@/lib/secureApiClient";
 
 interface AdminUser {
   id: string;
@@ -15,57 +20,90 @@ interface AdminAuthContextType {
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
+  logoutAll: () => Promise<void>;
 }
 
 const AdminAuthContext = createContext<AdminAuthContextType | undefined>(undefined);
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
-export function AdminAuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AdminUser | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+// Use useSyncExternalStore to safely check if we're on the client
+const emptySubscribe = () => () => {};
+const getIsClient = () => true;
+const getServerSnapshot = () => false;
 
-  useEffect(() => {
-    const savedToken = localStorage.getItem("admin_token");
-    const savedUser = localStorage.getItem("admin_user");
-    if (savedToken && savedUser) {
-      try {
-        setToken(savedToken);
-        setUser(JSON.parse(savedUser));
-      } catch {
-        localStorage.removeItem("admin_token");
-        localStorage.removeItem("admin_user");
-      }
-    }
-    setIsLoading(false);
-  }, []);
+export function AdminAuthProvider({ children }: { children: ReactNode }) {
+  const isClient = useSyncExternalStore(emptySubscribe, getIsClient, getServerSnapshot);
+  
+  const [user, setUser] = useState<AdminUser | null>(() => {
+    if (typeof window === "undefined") return null;
+    return getUser();
+  });
+  const [token, setToken] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    return getAccessToken();
+  });
+
+  // isLoading is false once we know we're on the client (state is already initialized from localStorage)
+  const isLoading = !isClient;
 
   const login = useCallback(async (email: string, password: string) => {
     const res = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
+      credentials: "include",
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Login failed");
+
+    if (!res.ok) {
+      throw new Error(data.error || "Login failed");
+    }
+
+    // Store tokens securely
+    setTokens(data.token, data.refreshToken);
+    storeUser(data.user);
     setToken(data.token);
     setUser(data.user);
-    localStorage.setItem("admin_token", data.token);
-    localStorage.setItem("admin_user", JSON.stringify(data.user));
   }, []);
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
+    try {
+      const refreshToken = getRefreshToken();
+      await fetch(`${API_URL}/api/auth/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${getAccessToken()}`,
+        },
+        body: JSON.stringify({ refreshToken }),
+        credentials: "include",
+      });
+    } catch {
+      // Logout even if server request fails
+    }
+    clearTokens();
     setToken(null);
     setUser(null);
-    localStorage.removeItem("admin_token");
-    localStorage.removeItem("admin_user");
+  }, []);
+
+  const logoutAll = useCallback(async () => {
+    try {
+      await secureFetch(`${API_URL}/api/auth/logout-all`, {
+        method: "POST",
+      });
+    } catch {
+      // Continue with local logout
+    }
+    clearTokens();
+    setToken(null);
+    setUser(null);
   }, []);
 
   return (
     <AdminAuthContext.Provider
-      value={{ user, token, isLoading, isAuthenticated: !!token && !!user, login, logout }}
+      value={{ user, token, isLoading, isAuthenticated: !!token && !!user, login, logout, logoutAll }}
     >
       {children}
     </AdminAuthContext.Provider>
@@ -77,4 +115,3 @@ export function useAdminAuth() {
   if (!context) throw new Error("useAdminAuth must be used within AdminAuthProvider");
   return context;
 }
-

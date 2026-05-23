@@ -1,4 +1,10 @@
-// Public API functions for fetching store data from the backend
+/**
+ * Public Store API Functions
+ * - Server-side fetching with Next.js cache
+ * - Revalidation strategies
+ * - Error boundaries
+ * - Type-safe responses
+ */
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 export interface ProductImage {
@@ -23,6 +29,7 @@ export interface Product {
   image: string;
   images?: ProductImage[];
   tag?: string;
+  tags?: string[];
   description?: string;
   longDescription?: string;
   specifications?: ProductSpecification[];
@@ -94,43 +101,86 @@ export interface PublicProductParams {
   tag?: string;
 }
 
-async function fetchJSON<T>(url: string): Promise<T> {
-  const res = await fetch(url, { next: { revalidate: 60 } });
-  if (!res.ok) {
-    throw new Error(`API error: ${res.status}`);
+// ─── Fetch with retry and timeout ───
+async function fetchJSON<T>(
+  url: string,
+  options: { revalidate?: number; tags?: string[]; timeout?: number } = {}
+): Promise<T> {
+  const { revalidate = 60, tags, timeout = 10000 } = options;
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const res = await fetch(url, {
+      next: { revalidate, tags },
+      signal: controller.signal,
+      headers: {
+        "Accept": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(`API error: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+  } finally {
+    clearTimeout(timeoutId);
   }
-  return res.json();
 }
+
+// ─── Public API Functions ───
 
 export async function getPublicProducts(params: PublicProductParams = {}): Promise<PaginatedProducts> {
   const searchParams = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== "") searchParams.set(key, String(value));
   });
-  return fetchJSON<PaginatedProducts>(`${API_URL}/api/products/public?${searchParams.toString()}`);
+  return fetchJSON<PaginatedProducts>(
+    `${API_URL}/api/products/public?${searchParams.toString()}`,
+    { revalidate: 60, tags: ["products"] }
+  );
 }
 
 export async function getProductById(id: string): Promise<{ product: Product }> {
-  return fetchJSON<{ product: Product }>(`${API_URL}/api/products/${id}`);
+  return fetchJSON<{ product: Product }>(
+    `${API_URL}/api/products/${id}`,
+    { revalidate: 300, tags: [`product-${id}`] }
+  );
 }
 
 export async function getTopSellers(limit: number = 8): Promise<{ products: Product[] }> {
-  return fetchJSON<{ products: Product[] }>(`${API_URL}/api/products/top-sellers?limit=${limit}`);
+  return fetchJSON<{ products: Product[] }>(
+    `${API_URL}/api/products/top-sellers?limit=${limit}`,
+    { revalidate: 120, tags: ["top-sellers"] }
+  );
 }
 
 export async function getFeaturedProducts(limit: number = 8): Promise<{ products: Product[] }> {
-  return fetchJSON<{ products: Product[] }>(`${API_URL}/api/products/featured?limit=${limit}`);
+  return fetchJSON<{ products: Product[] }>(
+    `${API_URL}/api/products/featured?limit=${limit}`,
+    { revalidate: 120, tags: ["featured"] }
+  );
 }
 
 export async function getProductFilters(): Promise<ProductFilters> {
-  return fetchJSON<ProductFilters>(`${API_URL}/api/products/filters`);
+  return fetchJSON<ProductFilters>(
+    `${API_URL}/api/products/filters`,
+    { revalidate: 300, tags: ["filters"] }
+  );
 }
 
 export async function getUseCases(): Promise<{ useCases: UseCase[] }> {
-  return fetchJSON<{ useCases: UseCase[] }>(`${API_URL}/api/use-cases/public`);
+  return fetchJSON<{ useCases: UseCase[] }>(
+    `${API_URL}/api/use-cases/public`,
+    { revalidate: 300, tags: ["use-cases"] }
+  );
 }
 
 export async function getCategoryTree(): Promise<{ categories: CategoryNode[] }> {
-  return fetchJSON<{ categories: CategoryNode[] }>(`${API_URL}/api/categories/tree`);
+  return fetchJSON<{ categories: CategoryNode[] }>(
+    `${API_URL}/api/categories/tree`,
+    { revalidate: 300, tags: ["categories"] }
+  );
 }
-

@@ -17,7 +17,16 @@ async function handleResponse<T>(res: Response): Promise<T> {
   const data = await res.json();
   if (!res.ok) {
     if (res.status === 401) {
+      // Try refresh token before giving up
+      if (data.code === "TOKEN_EXPIRED") {
+        const refreshed = await tryRefreshToken();
+        if (refreshed) {
+          // Caller should retry - throw specific error
+          throw new Error("TOKEN_REFRESHED");
+        }
+      }
       localStorage.removeItem("admin_token");
+      localStorage.removeItem("admin_refresh_token");
       localStorage.removeItem("admin_user");
       if (typeof window !== "undefined") {
         window.location.href = "/admin/login";
@@ -26,6 +35,29 @@ async function handleResponse<T>(res: Response): Promise<T> {
     throw new Error(data.error || `Request failed: ${res.status}`);
   }
   return data as T;
+}
+
+async function tryRefreshToken(): Promise<boolean> {
+  const refreshToken = typeof window !== "undefined"
+    ? localStorage.getItem("admin_refresh_token")
+    : null;
+  if (!refreshToken) return false;
+
+  try {
+    const res = await fetch(`${API_URL}/api/auth/refresh`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refreshToken }),
+      credentials: "include",
+    });
+    if (!res.ok) return false;
+    const data = await res.json();
+    localStorage.setItem("admin_token", data.token);
+    localStorage.setItem("admin_refresh_token", data.refreshToken);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 // ─── Dashboard ───

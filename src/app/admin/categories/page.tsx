@@ -79,11 +79,9 @@ export default function CategoriesPage() {
         isActive: formData.isActive,
       };
       if (editingId) {
-        // @ts-ignore - CategoryInput type accepts string parent
         await updateCategory(editingId, payload);
         setSuccess("Category updated successfully");
       } else {
-        // @ts-ignore - CategoryInput type accepts string parent
         await createCategory(payload);
         setSuccess("Category created successfully");
       }
