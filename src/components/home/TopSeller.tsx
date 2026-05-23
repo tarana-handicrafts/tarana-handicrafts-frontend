@@ -2,12 +2,26 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Product } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/utils";
 
+interface TopSellerProduct {
+  _id?: string;
+  id?: number;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  category: string;
+  material?: string;
+  image: string;
+  tag?: string;
+  rating?: number;
+  reviewCount?: number;
+  inStock?: boolean;
+}
+
 interface TopSellerProps {
-  products: Product[];
+  products: TopSellerProduct[];
 }
 
 export function TopSeller({ products }: TopSellerProps) {
@@ -35,9 +49,11 @@ export function TopSeller({ products }: TopSellerProps) {
 
         {/* Products Grid */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {topProducts.map((product) => (
+          {topProducts.map((product) => {
+            const productId = product._id || product.id;
+            return (
             <div
-              key={product.id}
+              key={productId}
               className="group relative overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--background)] transition-all hover:shadow-xl"
             >
               {/* Product Tag */}
@@ -48,7 +64,7 @@ export function TopSeller({ products }: TopSellerProps) {
               )}
 
               {/* Product Image */}
-              <Link href={`/products/${product.id}`} className="block">
+              <Link href={`/products/${productId}`} className="block">
                 <div className="relative aspect-square overflow-hidden">
                   <Image
                     src={product.image}
@@ -62,7 +78,7 @@ export function TopSeller({ products }: TopSellerProps) {
                     <button
                       onClick={(e) => {
                         e.preventDefault();
-                        addToCart(product);
+                        addToCart(product as never);
                       }}
                       className="rounded-lg bg-white px-6 py-3 font-medium text-[var(--color-primary)] transition-transform hover:scale-105"
                     >
@@ -78,9 +94,9 @@ export function TopSeller({ products }: TopSellerProps) {
               {/* Product Info */}
               <div className="p-4">
                 <p className="mb-1 text-xs uppercase tracking-wider text-[var(--color-muted)]">
-                  {product.category} • {product.material}
+                  {product.category}{product.material ? ` • ${product.material}` : ''}
                 </p>
-                <Link href={`/products/${product.id}`}>
+                <Link href={`/products/${productId}`}>
                   <h3 className="mb-2 font-semibold line-clamp-1 transition-colors hover:text-[var(--color-primary)]">
                     {product.name}
                   </h3>
@@ -100,7 +116,8 @@ export function TopSeller({ products }: TopSellerProps) {
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* View All Link */}

@@ -1,8 +1,8 @@
 import { MetadataRoute } from "next";
-import { productsData } from "@/lib/products";
+import { getPublicProducts } from "@/lib/storeApi";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.taranahandicrafts.com";
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -38,13 +38,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // Dynamic product pages
-  const productPages: MetadataRoute.Sitemap = productsData.map((product) => ({
-    url: `${baseUrl}/products/${product.id}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.7,
-  }));
+  // Dynamic product pages from API
+  let productPages: MetadataRoute.Sitemap = [];
+  try {
+    const data = await getPublicProducts({ limit: 100 });
+    productPages = data.products.map((product) => ({
+      url: `${baseUrl}/products/${product._id}`,
+      lastModified: product.createdAt ? new Date(product.createdAt) : new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
+  } catch {
+    // If API is unavailable, return static pages only
+  }
 
   return [...staticPages, ...productPages];
 }

@@ -1,9 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { CartProvider } from "@/context/CartContext";
-import { CartSidebar } from "@/components/cart/CartSidebar";
 import "./globals.css";
 
 // Primary font for body text - optimized for readability
@@ -269,12 +265,7 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <CartProvider>
-          <Header />
-          <CartSidebar />
-          <main id="main-content" className="min-h-screen">{children}</main>
-          <Footer />
-        </CartProvider>
+        {children}
       </body>
     </html>
   );
