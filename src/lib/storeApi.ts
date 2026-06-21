@@ -104,21 +104,28 @@ export interface PublicProductParams {
 // ─── Fetch with retry and timeout ───
 async function fetchJSON<T>(
   url: string,
-  options: { revalidate?: number; tags?: string[]; timeout?: number } = {}
+  options: { revalidate?: number; tags?: string[]; timeout?: number; cache?: RequestCache } = {}
 ): Promise<T> {
-  const { revalidate = 60, tags, timeout = 10000 } = options;
+  const { revalidate = 60, tags, timeout = 10000, cache } = options;
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
   try {
-    const res = await fetch(url, {
-      next: { revalidate, tags },
+    const init: RequestInit & { next?: { revalidate?: number; tags?: string[] } } = {
       signal: controller.signal,
       headers: {
         "Accept": "application/json",
       },
-    });
+    };
+
+    if (cache) {
+      init.cache = cache;
+    } else {
+      init.next = { revalidate, tags };
+    }
+
+    const res = await fetch(url, init);
 
     if (!res.ok) {
       throw new Error(`API error: ${res.status} ${res.statusText}`);
@@ -174,7 +181,7 @@ export async function getProductFilters(): Promise<ProductFilters> {
 export async function getUseCases(): Promise<{ useCases: UseCase[] }> {
   return fetchJSON<{ useCases: UseCase[] }>(
     `${API_URL}/api/use-cases/public`,
-    { revalidate: 300, tags: ["use-cases"] }
+    { cache: "no-store" }
   );
 }
 

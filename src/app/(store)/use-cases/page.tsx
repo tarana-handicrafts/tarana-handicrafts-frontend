@@ -9,6 +9,8 @@ export const metadata: Metadata = {
     "Discover how our handcrafted pieces can transform your living spaces. Get inspiration for your home decor.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function UseCasesPage() {
   let useCases: Awaited<ReturnType<typeof getUseCases>>["useCases"] = [];
   try {
