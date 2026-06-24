@@ -288,7 +288,7 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
                   </button>
                   <span className="w-12 text-center text-lg font-semibold">{quantity}</span>
                   <button
-                    onClick={() => setQuantity(Math.min(10, quantity + 1))}
+                    onClick={() => setQuantity(Math.min(product.stockCount || 99, quantity + 1))}
                     className="px-4 py-3 text-stone-600 transition-colors hover:text-[#C5A059]"
                     aria-label="Increase quantity"
                   >
@@ -337,6 +337,29 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
                   </svg>
                 </button>
               </div>
+
+              {/* Bulk / Wholesale CTA */}
+              <Link
+                href={`/rfq?product=${encodeURIComponent(product._id)}&name=${encodeURIComponent(product.name)}`}
+                className="mb-8 flex items-center justify-between gap-4 rounded-xl border border-[#C5A059]/30 bg-[#C5A059]/5 px-5 py-4 transition-all hover:border-[#C5A059] hover:bg-[#C5A059]/10"
+              >
+                <span className="flex items-center gap-3">
+                  <svg className="h-6 w-6 shrink-0 text-[#C5A059]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                  <span>
+                    <span className="block text-sm font-semibold text-stone-900">
+                      Buying in bulk or for export?
+                    </span>
+                    <span className="block text-xs text-stone-500">
+                      Get manufacturer-direct wholesale pricing &amp; lead times.
+                    </span>
+                  </span>
+                </span>
+                <span className="hidden shrink-0 text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059] sm:inline">
+                  Request Quote →
+                </span>
+              </Link>
 
               {/* Trust Badges */}
               <div className="grid grid-cols-2 gap-4 rounded-2xl border border-stone-200 bg-white p-4 sm:grid-cols-4">

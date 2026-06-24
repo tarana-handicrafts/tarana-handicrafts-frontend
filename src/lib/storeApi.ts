@@ -46,6 +46,24 @@ export interface Product {
   isTopSeller?: boolean;
   status?: string;
   createdAt?: string;
+  // ─── B2B / Wholesale / Export ───
+  moq?: number;
+  priceTiers?: { minQty: number; unitPrice: number }[];
+  wholesaleAvailable?: boolean;
+  leadTimeDays?: number;
+  isCustomizable?: boolean;
+  customizationOptions?: string[];
+  woodType?: string;
+  careInstructions?: string;
+  originCountry?: string;
+  hsCode?: string;
+  portOfLoading?: string;
+  packaging?: {
+    unitsPerCarton?: number;
+    cartonCBM?: number;
+    netWeight?: string;
+    grossWeight?: string;
+  };
 }
 
 export interface CategoryNode {
@@ -191,3 +209,61 @@ export async function getCategoryTree(): Promise<{ categories: CategoryNode[] }>
     { revalidate: 300, tags: ["categories"] }
   );
 }
+
+// ─── RFQ / Bulk Quote Request ───
+export interface RFQItem {
+  productId?: string;
+  productName: string;
+  quantity: number;
+}
+
+export interface RFQPayload {
+  name: string;
+  email: string;
+  phone: string;
+  company?: string;
+  country?: string;
+  customerType?: "wholesale" | "retail" | "exporter" | "interior" | "other";
+  items?: RFQItem[];
+  message?: string;
+  targetPrice?: string;
+  incoterm?: "EXW" | "FOB" | "CIF" | "DDP";
+  destinationPort?: string;
+  requiredBy?: string;
+}
+
+export interface RFQResponse {
+  success: boolean;
+  message?: string;
+  quoteRef?: string;
+  error?: string;
+}
+
+/**
+ * Submit a bulk quote request (RFQ). Client-side POST.
+ */
+export async function submitRFQ(payload: RFQPayload): Promise<RFQResponse> {
+  const res = await fetch(`${API_URL}/api/rfq`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    cache: "no-store",
+  });
+
+  let data: RFQResponse = { success: false };
+  try {
+    data = await res.json();
+  } catch {
+    // ignore JSON parse errors; fall back to status check
+  }
+
+  if (!res.ok) {
+    return {
+      success: false,
+      error: data?.error || data?.message || "Unable to submit your request. Please try again.",
+    };
+  }
+
+  return { ...data, success: true };
+}
+

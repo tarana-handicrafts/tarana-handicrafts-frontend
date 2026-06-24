@@ -106,9 +106,9 @@ export function Hero() {
             {/* Quick Trust Stats */}
             <div className="mt-16 grid max-w-md grid-cols-3 gap-8 border-t border-stone-200 pt-8">
               <div>
-                <p className="font-serif text-xl">12k+</p>
+                <p className="font-serif text-xl">Factory</p>
                 <p className="text-[9px] uppercase tracking-widest text-stone-500">
-                  Collectors
+                  Direct Pricing
                 </p>
               </div>
               <div>
