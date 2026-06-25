@@ -223,7 +223,15 @@ export interface RFQPayload {
   phone: string;
   company?: string;
   country?: string;
-  customerType?: "wholesale" | "retail" | "exporter" | "interior" | "other";
+  customerType?:
+    | "retailer"
+    | "wholesaler"
+    | "importer"
+    | "distributor"
+    | "interior_designer"
+    | "hotel"
+    | "corporate_gifting"
+    | "other";
   items?: RFQItem[];
   message?: string;
   targetPrice?: string;

@@ -1,9 +1,15 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useId, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { submitRFQ, type RFQItem, type RFQPayload } from "@/lib/storeApi";
+import {
+  getPublicProducts,
+  submitRFQ,
+  type Product,
+  type RFQItem,
+  type RFQPayload,
+} from "@/lib/storeApi";
 
 const whatsappNumber = "919509669135";
 
@@ -11,10 +17,13 @@ type CustomerType = NonNullable<RFQPayload["customerType"]>;
 type Incoterm = NonNullable<RFQPayload["incoterm"]>;
 
 const customerTypes: { value: CustomerType; label: string }[] = [
-  { value: "wholesale", label: "Wholesaler / Reseller" },
-  { value: "retail", label: "Retail Buyer" },
-  { value: "exporter", label: "Importer / Exporter" },
-  { value: "interior", label: "Interior Designer / Decor" },
+  { value: "wholesaler", label: "Wholesaler / Reseller" },
+  { value: "retailer", label: "Retail Buyer" },
+  { value: "importer", label: "Importer / Exporter" },
+  { value: "distributor", label: "Distributor" },
+  { value: "interior_designer", label: "Interior Designer / Decor" },
+  { value: "hotel", label: "Hotel / Hospitality" },
+  { value: "corporate_gifting", label: "Corporate Gifting" },
   { value: "other", label: "Other" },
 ];
 
@@ -23,6 +32,108 @@ const incoterms: Incoterm[] = ["EXW", "FOB", "CIF", "DDP"];
 // Sanitize input to prevent XSS (matches contact page convention)
 const sanitize = (input: string, maxLength = 500): string =>
   input.replace(/[<>]/g, "").trim().slice(0, maxLength);
+
+// ─── Searchable catalog product picker (hybrid: pick a product or type a custom item) ───
+function ProductCombobox({
+  products,
+  value,
+  linked,
+  inputClassName,
+  onType,
+  onPick,
+}: {
+  products: Product[];
+  value: string;
+  linked: boolean;
+  inputClassName: string;
+  onType: (value: string) => void;
+  onPick: (product: Product) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const listboxId = useId();
+
+  const matches = useMemo(() => {
+    if (!products.length) return [];
+    const q = value.trim().toLowerCase();
+    const base = q
+      ? products.filter(
+          (p) =>
+            p.name.toLowerCase().includes(q) ||
+            p.category?.toLowerCase().includes(q) ||
+            p.sku?.toLowerCase().includes(q)
+        )
+      : products;
+    return base.slice(0, 8);
+  }, [products, value]);
+
+  useEffect(() => {
+    function onDocMouseDown(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", onDocMouseDown);
+    return () => document.removeEventListener("mousedown", onDocMouseDown);
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative flex-1">
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => {
+          onType(e.target.value);
+          setOpen(true);
+        }}
+        onFocus={() => setOpen(true)}
+        maxLength={200}
+        className={inputClassName}
+        placeholder="Search a product or type a custom item"
+        autoComplete="off"
+        role="combobox"
+        aria-controls={listboxId}
+        aria-expanded={open}
+        aria-autocomplete="list"
+      />
+      {linked && (
+        <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#C5A059]">
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </span>
+      )}
+      {open && matches.length > 0 && (
+        <ul
+          id={listboxId}
+          role="listbox"
+          className="absolute z-30 mt-1 max-h-64 w-full overflow-auto rounded-lg border border-stone-200 bg-white py-1 shadow-lg"
+        >
+          {matches.map((p) => (
+            <li key={p._id} role="option" aria-selected={value === p.name}>
+              <button
+                type="button"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => {
+                  onPick(p);
+                  setOpen(false);
+                }}
+                className="flex w-full items-center justify-between gap-3 px-4 py-2 text-left text-sm transition-colors hover:bg-stone-50"
+              >
+                <span className="truncate text-stone-800">{p.name}</span>
+                {p.category && (
+                  <span className="shrink-0 text-[10px] uppercase tracking-widest text-stone-400">
+                    {p.category}
+                  </span>
+                )}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 function RFQForm() {
   const searchParams = useSearchParams();
@@ -33,7 +144,7 @@ function RFQForm() {
     phone: "",
     company: "",
     country: "",
-    customerType: "wholesale" as CustomerType,
+    customerType: "wholesaler" as CustomerType,
     targetPrice: "",
     incoterm: "FOB" as Incoterm,
     destinationPort: "",
@@ -55,6 +166,24 @@ function RFQForm() {
   const [quoteRef, setQuoteRef] = useState<string | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
 
+  // Catalog products for the product picker (hybrid: pick from catalog or type a custom item)
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    let active = true;
+    getPublicProducts({ limit: 100, sortBy: "name", sortOrder: "asc" })
+      .then((res) => {
+        if (active) setProducts(res.products || []);
+      })
+      .catch(() => {
+        // Non-fatal: picker degrades to free-text entry if the catalog can't load
+        if (active) setProducts([]);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
@@ -63,19 +192,33 @@ function RFQForm() {
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const handleItemChange = (
-    index: number,
-    field: keyof RFQItem,
-    value: string
-  ) => {
+  // Free-text typing: keep the name, drop any linked catalog productId
+  const handleItemNameChange = (index: number, value: string) => {
+    setItems((prev) =>
+      prev.map((item, i) =>
+        i === index ? { ...item, productName: value, productId: undefined } : item
+      )
+    );
+    if (errors.items) setErrors((prev) => ({ ...prev, items: "" }));
+  };
+
+  // Selecting a catalog product links both productId and productName
+  const handleItemSelect = (index: number, product: Product) => {
     setItems((prev) =>
       prev.map((item, i) =>
         i === index
-          ? {
-              ...item,
-              [field]:
-                field === "quantity" ? Math.max(1, parseInt(value) || 0) : value,
-            }
+          ? { ...item, productId: product._id, productName: product.name }
+          : item
+      )
+    );
+    if (errors.items) setErrors((prev) => ({ ...prev, items: "" }));
+  };
+
+  const handleItemQuantityChange = (index: number, value: string) => {
+    setItems((prev) =>
+      prev.map((item, i) =>
+        i === index
+          ? { ...item, quantity: Math.max(1, parseInt(value) || 0) }
           : item
       )
     );
@@ -321,19 +464,19 @@ function RFQForm() {
         <div className="space-y-3">
           {items.map((item, index) => (
             <div key={index} className="flex gap-3">
-              <input
-                type="text"
+              <ProductCombobox
+                products={products}
                 value={item.productName}
-                onChange={(e) => handleItemChange(index, "productName", e.target.value)}
-                maxLength={200}
-                className={`${inputBase} border-stone-200 flex-1`}
-                placeholder="Product name or description"
+                linked={Boolean(item.productId)}
+                inputClassName={`${inputBase} border-stone-200 w-full`}
+                onType={(value) => handleItemNameChange(index, value)}
+                onPick={(product) => handleItemSelect(index, product)}
               />
               <input
                 type="number"
                 min={1}
                 value={item.quantity}
-                onChange={(e) => handleItemChange(index, "quantity", e.target.value)}
+                onChange={(e) => handleItemQuantityChange(index, e.target.value)}
                 className={`${inputBase} border-stone-200 w-28`}
                 placeholder="Qty"
                 aria-label="Quantity"
@@ -353,6 +496,9 @@ function RFQForm() {
             </div>
           ))}
         </div>
+        <p className="mt-2 text-xs text-stone-400">
+          Start typing to search our catalog, or enter a custom product / description.
+        </p>
         {errors.items && <p className="mt-1 text-xs text-red-500">{errors.items}</p>}
       </div>
 
