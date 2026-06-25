@@ -441,3 +441,96 @@ export async function deleteUseCase(id: string): Promise<{ message: string }> {
   });
   return handleResponse<{ message: string }>(res);
 }
+
+// ─── RFQ / Quote Requests (CRM pipeline) ───
+export type RFQStatus =
+  | "new"
+  | "quoted"
+  | "negotiating"
+  | "sample"
+  | "won"
+  | "lost"
+  | "closed";
+
+export interface RFQItem {
+  productId?: { _id: string; name: string; image?: string; price?: number; moq?: number } | string | null;
+  productName?: string;
+  quantity: number;
+}
+
+export interface RFQ {
+  _id: string;
+  quoteRef: string;
+  name: string;
+  email: string;
+  phone: string;
+  company?: string;
+  country?: string;
+  customerType: string;
+  items: RFQItem[];
+  message?: string;
+  targetPrice?: string;
+  incoterm?: string;
+  destinationPort?: string;
+  requiredBy?: string;
+  status: RFQStatus;
+  adminNotes?: string;
+  source?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface RFQsResponse {
+  rfqs: RFQ[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    pages: number;
+  };
+}
+
+export interface RFQFilters {
+  page?: number;
+  limit?: number;
+  status?: string;
+  customerType?: string;
+}
+
+export async function fetchRFQs(filters: RFQFilters = {}): Promise<RFQsResponse> {
+  const params = new URLSearchParams();
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value !== undefined && value !== "") params.set(key, String(value));
+  });
+  const res = await fetch(`${API_URL}/api/rfq?${params.toString()}`, {
+    headers: authHeaders(),
+  });
+  return handleResponse<RFQsResponse>(res);
+}
+
+export async function fetchRFQById(id: string): Promise<{ rfq: RFQ }> {
+  const res = await fetch(`${API_URL}/api/rfq/${id}`, {
+    headers: authHeaders(),
+  });
+  return handleResponse<{ rfq: RFQ }>(res);
+}
+
+export async function updateRFQ(
+  id: string,
+  data: { status: RFQStatus; adminNotes?: string }
+): Promise<{ rfq: RFQ; message: string }> {
+  const res = await fetch(`${API_URL}/api/rfq/${id}`, {
+    method: "PATCH",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  return handleResponse<{ rfq: RFQ; message: string }>(res);
+}
+
+export async function deleteRFQ(id: string): Promise<{ message: string }> {
+  const res = await fetch(`${API_URL}/api/rfq/${id}`, {
+    method: "DELETE",
+    headers: authHeaders(),
+  });
+  return handleResponse<{ message: string }>(res);
+}
