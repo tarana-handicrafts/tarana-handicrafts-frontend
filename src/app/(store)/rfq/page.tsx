@@ -78,7 +78,7 @@ function ProductCombobox({
   }, []);
 
   return (
-    <div ref={containerRef} className="relative flex-1">
+    <div ref={containerRef} className="relative min-w-0 flex-1">
       <input
         type="text"
         value={value}
@@ -463,29 +463,31 @@ function RFQForm() {
         </div>
         <div className="space-y-3">
           {items.map((item, index) => (
-            <div key={index} className="flex gap-3">
+            <div key={index} className="flex items-start gap-3">
               <ProductCombobox
                 products={products}
                 value={item.productName}
                 linked={Boolean(item.productId)}
-                inputClassName={`${inputBase} border-stone-200 w-full`}
+                inputClassName={`${inputBase} border-stone-200`}
                 onType={(value) => handleItemNameChange(index, value)}
                 onPick={(product) => handleItemSelect(index, product)}
               />
-              <input
-                type="number"
-                min={1}
-                value={item.quantity}
-                onChange={(e) => handleItemQuantityChange(index, e.target.value)}
-                className={`${inputBase} border-stone-200 w-28`}
-                placeholder="Qty"
-                aria-label="Quantity"
-              />
+              <div className="w-24 shrink-0">
+                <input
+                  type="number"
+                  min={1}
+                  value={item.quantity}
+                  onChange={(e) => handleItemQuantityChange(index, e.target.value)}
+                  className={`${inputBase} border-stone-200`}
+                  placeholder="Qty"
+                  aria-label="Quantity"
+                />
+              </div>
               {items.length > 1 && (
                 <button
                   type="button"
                   onClick={() => removeItem(index)}
-                  className="px-3 text-stone-400 transition-colors hover:text-red-500"
+                  className="shrink-0 px-2 py-3 text-stone-400 transition-colors hover:text-red-500"
                   aria-label="Remove product"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
