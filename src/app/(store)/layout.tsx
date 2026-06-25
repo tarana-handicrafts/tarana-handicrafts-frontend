@@ -1,5 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { CartProvider } from "@/context/CartContext";
 import { CartSidebar } from "@/components/cart/CartSidebar";
 
@@ -14,6 +15,7 @@ export default function StoreLayout({
       <CartSidebar />
       <main id="main-content" className="min-h-screen">{children}</main>
       <Footer />
+      <WhatsAppButton />
     </CartProvider>
   );
 }

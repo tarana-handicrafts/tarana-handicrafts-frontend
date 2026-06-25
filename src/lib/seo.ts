@@ -102,15 +102,9 @@ export function generateProductJsonLd(product: {
         name: SITE_NAME,
       },
     },
-    ...(product.rating && product.reviewCount && {
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: product.rating,
-        reviewCount: product.reviewCount,
-        bestRating: 5,
-        worstRating: 1,
-      },
-    }),
+    // NOTE: aggregateRating intentionally omitted. Do NOT emit AggregateRating
+    // schema until reviews come from real, verifiable customer data — fabricated
+    // ratings violate Google's review snippet policy and risk manual penalties.
   };
 }
 

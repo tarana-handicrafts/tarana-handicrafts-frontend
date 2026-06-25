@@ -28,24 +28,24 @@ export const navLinks = [
 export const footerLinks = {
   shop: [
     { href: "/products", label: "All Products" },
-    { href: "/coming-soon", label: "Categories" },
-    { href: "/coming-soon", label: "New Arrivals" },
-    { href: "/coming-soon", label: "Bestsellers" },
+    { href: "/use-cases", label: "Use Cases" },
+    { href: "/rfq", label: "Wholesale / Bulk" },
+    { href: "/rfq", label: "Request a Quote" },
   ],
   company: [
     { href: "/about", label: "About Us" },
     { href: "/contact", label: "Contact" },
-    { href: "/coming-soon", label: "Careers" },
+    { href: "/faq", label: "FAQ" },
   ],
   support: [
-    { href: "/coming-soon", label: "FAQ" },
-    { href: "/coming-soon", label: "Shipping" },
-    { href: "/coming-soon", label: "Returns" },
-    { href: "/coming-soon", label: "Track Order" },
+    { href: "/faq", label: "FAQ" },
+    { href: "/shipping", label: "Shipping & Delivery" },
+    { href: "/returns", label: "Returns & Refunds" },
+    { href: "/contact", label: "Track Order" },
   ],
   legal: [
-    { href: "/coming-soon", label: "Privacy Policy" },
-    { href: "/coming-soon", label: "Terms of Service" },
-    { href: "/coming-soon", label: "Cookie Policy" },
+    { href: "/privacy-policy", label: "Privacy Policy" },
+    { href: "/terms", label: "Terms of Service" },
+    { href: "/privacy-policy", label: "Cookie Policy" },
   ],
 };
