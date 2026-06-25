@@ -16,6 +16,7 @@ import {
   Shield,
   FolderTree,
   Lightbulb,
+  Inbox,
 } from "lucide-react";
 
 const sidebarLinks = [
@@ -23,6 +24,7 @@ const sidebarLinks = [
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/categories", label: "Categories", icon: FolderTree },
   { href: "/admin/use-cases", label: "Use Cases", icon: Lightbulb },
+  { href: "/admin/rfq", label: "Quote Requests", icon: Inbox },
   { href: "/admin/upload", label: "Bulk Upload", icon: Upload },
   { href: "/admin/activity", label: "Activity Logs", icon: Activity },
 ];
