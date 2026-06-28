@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { navLinks, siteConfig } from "@/lib/constants";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 
 // Pages with dark hero sections (none currently - all pages use light backgrounds)
 const darkHeroPages: string[] = [];
@@ -13,6 +14,7 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { cartCount, openCart } = useCart();
+  const { count: wishlistCount } = useWishlist();
   const pathname = usePathname();
 
   // Check if current page has dark hero
@@ -25,20 +27,15 @@ export function Header() {
 
   // Handle scroll effect
   useEffect(() => {
-    // Check initial scroll position
     handleScroll();
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
   // Close mobile menu on route change
   useEffect(() => {
-    if (isMenuOpen) {
-      setIsMenuOpen(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+    if (isMenuOpen) setIsMenuOpen(false);
+  }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Determine if we should use light text (for dark backgrounds)
   const useLightText = hasDarkHero && !isScrolled;
@@ -100,47 +97,26 @@ export function Header() {
 
         {/* RIGHT ACTIONS */}
         <div className="flex items-center gap-1 md:gap-3">
-          {/* Search Button */}
-          <button
-            aria-label="Search"
-            className={`hidden p-2.5 transition-colors hover:text-[#C5A059] sm:block ${
-              useLightText ? "text-white" : "text-stone-700"
-            }`}
-          >
-            <svg
-              className="h-[19px] w-[19px]"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-          </button>
-
-          {/* User/Account Button */}
+          {/* Wishlist Button */}
           <Link
-            href="/coming-soon"
-            className={`hidden p-2.5 transition-colors md:block ${
-              pathname === "/coming-soon"
+            href="/wishlist"
+            className={`relative hidden p-2.5 transition-colors md:block ${
+              pathname === "/wishlist"
                 ? "text-[#C5A059]"
                 : useLightText
                 ? "text-white hover:text-[#C5A059]"
                 : "text-stone-700 hover:text-[#C5A059]"
             }`}
-            aria-label="Account (Coming Soon)"
+            aria-label="Wishlist"
           >
-            <svg
-              className="h-[19px] w-[19px]"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
+            <svg className="h-[19px] w-[19px]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
+            {wishlistCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white">
+                {wishlistCount}
+              </span>
+            )}
           </Link>
 
           {/* Get Quote CTA */}
@@ -163,18 +139,11 @@ export function Header() {
             aria-label="Shopping Cart"
             className="relative ml-2 rounded-full bg-stone-900 p-3 text-white shadow-xl transition-all duration-300 hover:scale-105 hover:bg-[#C5A059] active:scale-95"
           >
-            <svg
-              className="h-[18px] w-[18px]"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
+            <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
               <line x1="3" y1="6" x2="21" y2="6" />
               <path d="M16 10a4 4 0 0 1-8 0" />
             </svg>
-            {/* Cart Count Badge */}
             <span
               className={`absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-[#C5A059] text-[9px] font-black text-black transition-transform duration-300 ${
                 cartCount > 0 ? "scale-100" : "scale-0"
@@ -186,25 +155,13 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className={`ml-2 p-2.5 md:hidden ${
-              useLightText ? "text-white" : "text-stone-900"
-            }`}
+            className={`ml-2 p-2.5 md:hidden ${useLightText ? "text-white" : "text-stone-900"}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
             aria-expanded={isMenuOpen}
           >
-            <svg
-              className="h-[22px] w-[22px]"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              {isMenuOpen ? (
-                <path d="M18 6 6 18M6 6l12 12" />
-              ) : (
-                <path d="M4 12h16M4 6h16M4 18h16" />
-              )}
+            <svg className="h-[22px] w-[22px]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              {isMenuOpen ? <path d="M18 6 6 18M6 6l12 12" /> : <path d="M4 12h16M4 6h16M4 18h16" />}
             </svg>
           </button>
         </div>
@@ -228,9 +185,7 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 className={`rounded-lg px-4 py-3 text-sm font-bold uppercase tracking-wider transition-all ${
-                  isActive
-                    ? "bg-stone-900 text-white"
-                    : "text-stone-700 hover:bg-stone-100 hover:text-[#C5A059]"
+                  isActive ? "bg-stone-900 text-white" : "text-stone-700 hover:bg-stone-100 hover:text-[#C5A059]"
                 }`}
                 onClick={() => setIsMenuOpen(false)}
                 aria-current={isActive ? "page" : undefined}
@@ -239,6 +194,24 @@ export function Header() {
               </Link>
             );
           })}
+          <Link
+            href="/blog"
+            className={`rounded-lg px-4 py-3 text-sm font-bold uppercase tracking-wider transition-all ${
+              pathname === "/blog" ? "bg-stone-900 text-white" : "text-stone-700 hover:bg-stone-100 hover:text-[#C5A059]"
+            }`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Blog
+          </Link>
+          <Link
+            href="/wishlist"
+            className={`rounded-lg px-4 py-3 text-sm font-bold uppercase tracking-wider transition-all ${
+              pathname === "/wishlist" ? "bg-stone-900 text-white" : "text-stone-700 hover:bg-stone-100 hover:text-[#C5A059]"
+            }`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Wishlist {wishlistCount > 0 && `(${wishlistCount})`}
+          </Link>
           <Link
             href="/rfq"
             className="mt-2 rounded-lg bg-[#C5A059] px-4 py-3 text-center text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-[#B8934E]"

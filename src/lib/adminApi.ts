@@ -534,3 +534,181 @@ export async function deleteRFQ(id: string): Promise<{ message: string }> {
   });
   return handleResponse<{ message: string }>(res);
 }
+
+// ─── Blog ───
+export interface BlogPostAdmin {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  content?: string;
+  coverImage?: string;
+  videoUrl?: string;
+  author: string;
+  category?: string;
+  tags?: string[];
+  readTime?: number;
+  isPublished: boolean;
+  publishedAt?: string;
+  viewCount?: number;
+  featured?: boolean;
+  seo?: { metaTitle?: string; metaDescription?: string; keywords?: string[] };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface BlogPostsResponse {
+  posts: BlogPostAdmin[];
+  pagination: { page: number; limit: number; total: number; pages: number };
+}
+
+export async function fetchBlogPosts(params: { page?: number; limit?: number; isPublished?: string; category?: string; search?: string } = {}): Promise<BlogPostsResponse> {
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== "") searchParams.set(key, String(value));
+  });
+  const res = await fetch(`${API_URL}/api/blog?${searchParams.toString()}`, { headers: authHeaders() });
+  return handleResponse<BlogPostsResponse>(res);
+}
+
+export async function fetchBlogPostById(id: string): Promise<{ post: BlogPostAdmin }> {
+  const res = await fetch(`${API_URL}/api/blog/${id}`, { headers: authHeaders() });
+  return handleResponse<{ post: BlogPostAdmin }>(res);
+}
+
+export async function createBlogPost(data: Partial<BlogPostAdmin>): Promise<{ post: BlogPostAdmin; message: string }> {
+  const res = await fetch(`${API_URL}/api/blog`, {
+    method: "POST", headers: authHeaders(), body: JSON.stringify(data),
+  });
+  return handleResponse<{ post: BlogPostAdmin; message: string }>(res);
+}
+
+export async function updateBlogPost(id: string, data: Partial<BlogPostAdmin>): Promise<{ post: BlogPostAdmin; message: string }> {
+  const res = await fetch(`${API_URL}/api/blog/${id}`, {
+    method: "PUT", headers: authHeaders(), body: JSON.stringify(data),
+  });
+  return handleResponse<{ post: BlogPostAdmin; message: string }>(res);
+}
+
+export async function deleteBlogPost(id: string): Promise<{ message: string }> {
+  const res = await fetch(`${API_URL}/api/blog/${id}`, {
+    method: "DELETE", headers: authHeaders(),
+  });
+  return handleResponse<{ message: string }>(res);
+}
+
+// ─── Reviews (Admin) ───
+export interface ReviewAdmin {
+  _id: string;
+  productId: { _id: string; name: string; image?: string; price?: number } | string;
+  name: string;
+  email: string;
+  rating: number;
+  title?: string;
+  content?: string;
+  verified: boolean;
+  isVisible: boolean;
+  adminReply?: string;
+  createdAt: string;
+}
+
+export interface ReviewsResponse {
+  reviews: ReviewAdmin[];
+  pagination: { page: number; limit: number; total: number; pages: number };
+}
+
+export async function fetchAllReviews(params: { page?: number; limit?: number; isVisible?: string; rating?: number } = {}): Promise<ReviewsResponse> {
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== "") searchParams.set(key, String(value));
+  });
+  const res = await fetch(`${API_URL}/api/reviews?${searchParams.toString()}`, { headers: authHeaders() });
+  return handleResponse<ReviewsResponse>(res);
+}
+
+export async function updateReview(id: string, data: { isVisible?: boolean; adminReply?: string }): Promise<{ review: ReviewAdmin; message: string }> {
+  const res = await fetch(`${API_URL}/api/reviews/${id}`, {
+    method: "PATCH", headers: authHeaders(), body: JSON.stringify(data),
+  });
+  return handleResponse<{ review: ReviewAdmin; message: string }>(res);
+}
+
+export async function deleteReview(id: string): Promise<{ message: string }> {
+  const res = await fetch(`${API_URL}/api/reviews/${id}`, {
+    method: "DELETE", headers: authHeaders(),
+  });
+  return handleResponse<{ message: string }>(res);
+}
+
+// ─── Sample Orders ───
+export interface SampleOrderItem {
+  productId?: { _id: string; name: string; image?: string; price?: number } | string | null;
+  productName?: string;
+  quantity: number;
+  unitPrice?: number;
+}
+
+export interface SampleOrder {
+  _id: string;
+  orderRef: string;
+  name: string;
+  email: string;
+  phone: string;
+  company?: string;
+  country: string;
+  city?: string;
+  address?: string;
+  items: SampleOrderItem[];
+  message?: string;
+  status: "new" | "confirmed" | "shipped" | "delivered" | "credited" | "cancelled";
+  totalAmount?: number;
+  shippingCost?: number;
+  trackingNumber?: string;
+  creditedToPO?: string;
+  adminNotes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SampleOrdersResponse {
+  orders: SampleOrder[];
+  pagination: { page: number; limit: number; total: number; pages: number };
+}
+
+export async function fetchSampleOrders(params: { page?: number; limit?: number; status?: string; search?: string } = {}): Promise<SampleOrdersResponse> {
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== "") searchParams.set(key, String(value));
+  });
+  const res = await fetch(`${API_URL}/api/sample-orders?${searchParams.toString()}`, { headers: authHeaders() });
+  return handleResponse<SampleOrdersResponse>(res);
+}
+
+export async function fetchSampleOrderById(id: string): Promise<{ order: SampleOrder }> {
+  const res = await fetch(`${API_URL}/api/sample-orders/${id}`, { headers: authHeaders() });
+  return handleResponse<{ order: SampleOrder }>(res);
+}
+
+export async function updateSampleOrder(id: string, data: { status?: string; adminNotes?: string; shippingCost?: number; trackingNumber?: string; creditedToPO?: string }): Promise<{ order: SampleOrder; message: string }> {
+  const res = await fetch(`${API_URL}/api/sample-orders/${id}`, {
+    method: "PATCH", headers: authHeaders(), body: JSON.stringify(data),
+  });
+  return handleResponse<{ order: SampleOrder; message: string }>(res);
+}
+
+export async function deleteSampleOrder(id: string): Promise<{ message: string }> {
+  const res = await fetch(`${API_URL}/api/sample-orders/${id}`, {
+    method: "DELETE", headers: authHeaders(),
+  });
+  return handleResponse<{ message: string }>(res);
+}
+
+// ─── Upload Video ───
+export async function uploadBlogVideo(file: File): Promise<{ url: string; filename: string; message: string }> {
+  const formData = new FormData();
+  formData.append('video', file);
+  const res = await fetch(`${API_URL}/api/upload/video`, {
+    method: "POST", headers: { Authorization: `Bearer ${getToken()}` }, body: formData,
+  });
+  return handleResponse<{ url: string; filename: string; message: string }>(res);
+}
