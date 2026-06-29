@@ -3,7 +3,7 @@
 import { AdminAuthProvider, useAdminAuth } from "@/context/AdminAuthContext";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   Package,
@@ -37,6 +37,13 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Redirect to login when unauthenticated (after loading completes)
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated && pathname !== "/admin/login") {
+      router.push("/admin/login");
+    }
+  }, [isLoading, isAuthenticated, pathname, router]);
+
   // Login page doesn't need sidebar
   if (pathname === "/admin/login") {
     return <>{children}</>;
@@ -54,9 +61,6 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   }
 
   if (!isAuthenticated) {
-    if (typeof window !== "undefined") {
-      router.push("/admin/login");
-    }
     return null;
   }
 
