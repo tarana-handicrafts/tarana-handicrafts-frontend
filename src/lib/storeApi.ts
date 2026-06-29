@@ -275,3 +275,128 @@ export async function submitRFQ(payload: RFQPayload): Promise<RFQResponse> {
   return { ...data, success: true };
 }
 
+// ─── Blog ───
+export interface BlogPost {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  content?: string;
+  coverImage?: string;
+  videoUrl?: string;
+  author: string;
+  category?: string;
+  tags?: string[];
+  readTime?: number;
+  isPublished: boolean;
+  publishedAt?: string;
+  viewCount?: number;
+  featured?: boolean;
+  relatedProducts?: Product[];
+  seo?: { metaTitle?: string; metaDescription?: string; keywords?: string[] };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export async function getBlogPosts(params: { page?: number; limit?: number; category?: string; tag?: string; sort?: string } = {}): Promise<{ posts: BlogPost[]; pagination: { page: number; limit: number; total: number; pages: number } }> {
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== "") searchParams.set(key, String(value));
+  });
+  return fetchJSON<{ posts: BlogPost[]; pagination: { page: number; limit: number; total: number; pages: number } }>(
+    `${API_URL}/api/blog/public?${searchParams.toString()}`,
+    { revalidate: 120, tags: ["blog"] }
+  );
+}
+
+export async function getBlogPostBySlug(slug: string): Promise<{ post: BlogPost }> {
+  return fetchJSON<{ post: BlogPost }>(
+    `${API_URL}/api/blog/public/${slug}`,
+    { revalidate: 300, tags: ["blog-post"] }
+  );
+}
+
+export async function getBlogCategories(): Promise<{ categories: string[] }> {
+  return fetchJSON<{ categories: string[] }>(
+    `${API_URL}/api/blog/public/categories`,
+    { revalidate: 300, tags: ["blog-categories"] }
+  );
+}
+
+// ─── Reviews ───
+export interface Review {
+  _id: string;
+  productId: string;
+  name: string;
+  rating: number;
+  title?: string;
+  content?: string;
+  verified: boolean;
+  adminReply?: string;
+  createdAt: string;
+}
+
+export interface ReviewStats {
+  avgRating: number;
+  totalReviews: number;
+  distribution: Record<number, number>;
+}
+
+export async function getProductReviews(productId: string, params: { page?: number; limit?: number; sort?: string; rating?: number } = {}): Promise<{ reviews: Review[]; stats: ReviewStats; pagination: { page: number; limit: number; total: number; pages: number } }> {
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== "") searchParams.set(key, String(value));
+  });
+  return fetchJSON<{ reviews: Review[]; stats: ReviewStats; pagination: { page: number; limit: number; total: number; pages: number } }>(
+    `${API_URL}/api/reviews/product/${productId}?${searchParams.toString()}`,
+    { revalidate: 60, tags: ["reviews"] }
+  );
+}
+
+export async function submitReview(productId: string, payload: { name: string; email: string; rating: number; title?: string; content?: string }): Promise<{ message: string; review?: Review }> {
+  const res = await fetch(`${API_URL}/api/reviews/product/${productId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    cache: "no-store",
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Failed to submit review");
+  return data;
+}
+
+// ─── Wishlist ───
+export async function getWishlist(visitorId: string): Promise<{ items: Product[]; count: number }> {
+  return fetchJSON<{ items: Product[]; count: number }>(
+    `${API_URL}/api/wishlist?visitorId=${encodeURIComponent(visitorId)}`,
+    { cache: "no-store" }
+  );
+}
+
+export async function addToWishlist(visitorId: string, productId: string): Promise<{ message: string; alreadyExists?: boolean }> {
+  const res = await fetch(`${API_URL}/api/wishlist`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ visitorId, productId }),
+    cache: "no-store",
+  });
+  return res.json();
+}
+
+export async function removeFromWishlist(visitorId: string, productId: string): Promise<{ message: string }> {
+  const res = await fetch(`${API_URL}/api/wishlist`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ visitorId, productId }),
+    cache: "no-store",
+  });
+  return res.json();
+}
+
+export async function checkWishlist(visitorId: string, productId: string): Promise<{ isWishlisted: boolean }> {
+  return fetchJSON<{ isWishlisted: boolean }>(
+    `${API_URL}/api/wishlist/check?visitorId=${encodeURIComponent(visitorId)}&productId=${productId}`,
+    { cache: "no-store" }
+  );
+}
+

@@ -21,6 +21,7 @@ export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
   { href: "/use-cases", label: "Use Cases" },
+  { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -30,10 +31,12 @@ export const footerLinks = {
     { href: "/products", label: "All Products" },
     { href: "/use-cases", label: "Use Cases" },
     { href: "/rfq", label: "Wholesale / Bulk" },
+    { href: "/sample-order", label: "Order Samples" },
     { href: "/rfq", label: "Request a Quote" },
   ],
   company: [
     { href: "/about", label: "About Us" },
+    { href: "/blog", label: "Blog" },
     { href: "/contact", label: "Contact" },
     { href: "/faq", label: "FAQ" },
   ],
@@ -42,6 +45,7 @@ export const footerLinks = {
     { href: "/shipping", label: "Shipping & Delivery" },
     { href: "/returns", label: "Returns & Refunds" },
     { href: "/contact", label: "Track Order" },
+    { href: "/wishlist", label: "Wishlist" },
   ],
   legal: [
     { href: "/privacy-policy", label: "Privacy Policy" },
