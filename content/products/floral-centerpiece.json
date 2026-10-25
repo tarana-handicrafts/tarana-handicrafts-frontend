@@ -1,0 +1,51 @@
+{
+  "name": "Carved Floral Centrepiece Bowl",
+  "category": "tableware",
+  "material": "Seasoned Sheesham wood",
+  "images": [
+    {
+      "file": "1.jpg",
+      "alt": "Carved Floral Centrepiece Bowl"
+    }
+  ],
+  "shortDescription": "A scalloped decorative bowl with pierced floral and vine carving.",
+  "description": "A functional work of art for the dining or console table. The scalloped rim is pierced with a continuous floral vine, while the interior carries a carved medallion. Use it as a fruit bowl, a catch-all for keys and trinkets, or simply as a sculptural centrepiece.",
+  "sizes": [
+    {
+      "label": "12 in diameter × 3.5 in (H)",
+      "price": 1950
+    }
+  ],
+  "details": [
+    {
+      "label": "Material",
+      "value": "Seasoned Sheesham wood"
+    },
+    {
+      "label": "Dimensions",
+      "value": "12 in diameter × 3.5 in (H)"
+    },
+    {
+      "label": "Finish",
+      "value": "Natural matte hand-polish"
+    },
+    {
+      "label": "Origin",
+      "value": "Jaipur, Rajasthan"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Can I serve food in it?",
+      "answer": "It is ideal for dry items such as fruit, bread or dry snacks. We recommend a liner for oily foods and avoid soaking it in water."
+    },
+    {
+      "question": "How do I clean it?",
+      "answer": "Wipe with a dry or lightly damp cloth. Do not immerse in water or place in a dishwasher."
+    },
+    {
+      "question": "Is the carving all around?",
+      "answer": "Yes, the pierced floral pattern runs around the entire rim and body of the bowl."
+    }
+  ]
+}

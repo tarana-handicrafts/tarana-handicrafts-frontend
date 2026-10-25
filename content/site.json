@@ -1,0 +1,22 @@
+{
+  "name": "Tarana Handicrafts",
+  "tagline": "Hand-carved wooden art from Jaipur",
+  "description": "Hand-carved wooden elephants, figurines and home decor made by artisan families in Jaipur, Rajasthan. Retail, wholesale and corporate gifting.",
+  "url": "https://www.taranahandicrafts.com",
+  "whatsapp": "919509669135",
+  "phone": "+91 95096 69135",
+  "email": "taranahandicrafts@gmail.com",
+  "address": {
+    "street": "B81, North Avenue, Harmara Ghati, Sikar Road",
+    "city": "Jaipur",
+    "region": "Rajasthan",
+    "postalCode": "302039",
+    "country": "IN"
+  },
+  "hours": "Mon–Sat, 10:00–19:00 IST",
+  "currency": "INR",
+  "socials": {
+    "instagram": "https://instagram.com/taranahandicrafts",
+    "facebook": "https://facebook.com/taranahandicrafts"
+  }
+}

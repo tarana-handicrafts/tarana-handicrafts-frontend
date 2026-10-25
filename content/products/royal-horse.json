@@ -1,0 +1,51 @@
+{
+  "name": "Royal Rearing Horse",
+  "category": "animal-figurines",
+  "material": "Seasoned Teak wood",
+  "images": [
+    {
+      "file": "1.jpg",
+      "alt": "Royal Rearing Horse"
+    }
+  ],
+  "shortDescription": "A spirited rearing horse with intricately carved regalia and saddle.",
+  "description": "Poised mid-rear on a decorated oval base, this horse embodies strength and grace. The mane is rendered strand by strand, while the saddle and bridle carry fine floral relief and tasselled detailing inspired by royal Rajput steeds. A statement piece for a console, mantel or study shelf.",
+  "sizes": [
+    {
+      "label": "9 in (H) × 6 in (W)",
+      "price": 3400
+    }
+  ],
+  "details": [
+    {
+      "label": "Material",
+      "value": "Seasoned Teak wood"
+    },
+    {
+      "label": "Dimensions",
+      "value": "9 in (H) × 6 in (W)"
+    },
+    {
+      "label": "Finish",
+      "value": "Natural matte hand-polish"
+    },
+    {
+      "label": "Origin",
+      "value": "Jaipur, Rajasthan"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is the horse carved from one piece of wood?",
+      "answer": "Yes, the body and base are carved from a single block, which gives the piece its strength and seamless flow."
+    },
+    {
+      "question": "Will it stand steadily?",
+      "answer": "The weighted oval base is carved for balance so the rearing pose stands securely on any flat surface."
+    },
+    {
+      "question": "Is the colour painted on?",
+      "answer": "No paint is used. The rich brown tone is the natural colour of the teak, sealed with a protective matte finish."
+    }
+  ]
+}

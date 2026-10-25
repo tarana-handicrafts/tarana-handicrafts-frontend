@@ -1,0 +1,107 @@
+{
+  "name": "Jungle Shikar Elephant",
+  "category": "shikargah-elephants",
+  "material": "Kadamb wood",
+  "images": [
+    {
+      "file": "1.jpg",
+      "alt": "Jungle Shikar Elephant"
+    }
+  ],
+  "shortDescription": "Hand-carved Kadamb wood elephant draped in a lush jungle Shikargah scene of trees and wildlife.",
+  "description": "Hand-carved from a single block of Kadamb (Burflower) wood, this standing elephant wears a ceremonial drape carved with a living jungle — a little elephant ambling beneath spreading trees, framed by a dense canopy of scalloped foliage and finished with a floral rosette across the back. Every leaf, border and toenail is worked entirely by hand and sealed with a soft matte polish that lets the warm honey grain glow. Its calm, all-over-detailed presence makes it wonderfully versatile — equally at home as desk branding, in interior design and home decor, as a corporate gift, or as a showcase and exhibition centrepiece. As each one is individually carved, no two are ever alike.",
+  "sizes": [
+    {
+      "label": "3 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    },
+    {
+      "label": "4 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    },
+    {
+      "label": "5 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    },
+    {
+      "label": "6 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    }
+  ],
+  "details": [
+    {
+      "label": "Material",
+      "value": "Kadamb wood (Burflower tree)"
+    },
+    {
+      "label": "Customisation",
+      "value": "Side customisation available"
+    },
+    {
+      "label": "Order options",
+      "value": "Single piece & bulk orders"
+    },
+    {
+      "label": "Use cases",
+      "value": "Desk branding, home & interior decor, corporate gifting, showcases, exhibitions"
+    },
+    {
+      "label": "Origin",
+      "value": "Jaipur, Rajasthan"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is this product handmade?",
+      "answer": "Yes. Each elephant is carved entirely by hand by skilled Jaipur artisans from a single block of wood, so every piece is unique."
+    },
+    {
+      "question": "What material is it made from?",
+      "answer": "It is carved from Kadamb wood, also known as the Burflower tree — a fine-grained wood prized for detailed hand-carving."
+    },
+    {
+      "question": "What is the jungle Shikargah design?",
+      "answer": "The drape is carved with a forest scene in the Shikargah tradition — a small elephant among trees and dense foliage — a motif celebrating nature and the wild."
+    },
+    {
+      "question": "What sizes are available?",
+      "answer": "Standard sizes are 3, 4, 5 and 6 inches. Larger pieces up to 12 inches can be made on demand."
+    },
+    {
+      "question": "Do you offer bulk pricing?",
+      "answer": "Yes. Single pieces are ₹700 each. For bulk orders with a minimum order quantity of 50, the price is ₹500 per piece."
+    },
+    {
+      "question": "Can the piece be customised?",
+      "answer": "Yes, side customisation is available, and we accept both single-piece and bulk orders."
+    },
+    {
+      "question": "How do I care for it?",
+      "answer": "Dust gently with a dry, soft cloth and keep it away from direct sunlight and moisture to preserve the natural grain."
+    }
+  ]
+}

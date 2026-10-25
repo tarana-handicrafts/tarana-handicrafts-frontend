@@ -1,24 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getUseCases } from "@/lib/storeApi";
+import { getProduct, getUseCases } from "@/lib/catalog";
 
 export const metadata: Metadata = {
-  title: "Use Cases - Interior Inspiration",
+  title: "Wooden Elephants for Corporate Gifts, Offices & Home Decor",
   description:
-    "Discover how our handcrafted pieces can transform your living spaces. Get inspiration for your home decor.",
+    "Ideas for using hand-carved Jaipur wooden elephants and figurines: executive desk branding, corporate gifts, hotel receptions and home interiors.",
+  alternates: { canonical: "/use-cases" },
 };
 
-export const dynamic = "force-dynamic";
-
-export default async function UseCasesPage() {
-  let useCases: Awaited<ReturnType<typeof getUseCases>>["useCases"] = [];
-  try {
-    const data = await getUseCases();
-    useCases = data.useCases;
-  } catch (error) {
-    console.error("Failed to fetch use cases:", error);
-  }
+export default function UseCasesPage() {
+  const useCases = getUseCases().map((uc) => ({
+    ...uc,
+    products: uc.products.map((s) => getProduct(s)!).map((p) => ({ slug: p.slug, name: p.name })),
+  }));
 
   return (
     <div className="min-h-screen bg-[#F9F8F6] px-4 pb-16 pt-32">
@@ -48,13 +44,13 @@ export default async function UseCasesPage() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {useCases.map((useCase, index) => (
               <article
-                key={useCase._id}
+                key={useCase.slug}
                 className="group overflow-hidden rounded-xl border border-stone-200 bg-white transition-all hover:shadow-xl"
               >
                 {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
-                    src={useCase.image || "/placeholder.jpg"}
+                    src={useCase.image}
                     alt={`${useCase.title} - Interior design inspiration`}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -79,8 +75,8 @@ export default async function UseCasesPage() {
                     <div className="mb-4 flex flex-wrap gap-2">
                       {useCase.products.map((product) => (
                         <Link
-                          key={product._id}
-                          href={`/products/${product._id}`}
+                          key={product.slug}
+                          href={`/products/${product.slug}`}
                           className="rounded-full bg-[#C5A059]/10 px-3 py-1 text-xs font-medium text-[#C5A059] hover:bg-[#C5A059]/20 transition-colors"
                         >
                           {product.name}
@@ -90,7 +86,7 @@ export default async function UseCasesPage() {
                   )}
 
                   <Link
-                    href="/products"
+                    href={useCase.products[0] ? `/products/${useCase.products[0].slug}` : "/products"}
                     className="inline-flex items-center gap-2 font-medium text-[#C5A059] transition-colors hover:text-stone-900"
                   >
                     Shop This Look
@@ -124,7 +120,7 @@ export default async function UseCasesPage() {
             requirements. From size to finish, we bring your vision to life.
           </p>
           <Link
-            href="/contact"
+            href="/rfq"
             className="inline-block rounded-lg bg-white px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#C5A059] transition-all hover:bg-stone-900 hover:text-white hover:shadow-xl"
           >
             Request Custom Quote

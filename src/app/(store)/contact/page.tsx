@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { siteConfig, whatsappLink } from "@/lib/constants";
 
 // Contact Information
 const contactInfo = {
@@ -10,7 +11,7 @@ const contactInfo = {
   address: "B81, North Avenue, Harmara Ghati, Sikar Road, Jaipur, Rajasthan, India",
   phone: ["+91 9509669135", "+91 8952819888"],
   email: "taranahandicrafts@gmail.com",
-  whatsapp: "919509669135",
+  whatsapp: siteConfig.whatsapp,
 };
 
 // Nearby Landmarks
@@ -97,6 +98,9 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [sent, setSent] = useState<{ ref: string; whatsappText: string } | null>(null);
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [website, setWebsite] = useState(""); // honeypot
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Sanitize input to prevent XSS
@@ -151,31 +155,28 @@ export default function ContactPage() {
       message: sanitizeInput(formData.message, 1000),
     };
 
-    // Generate WhatsApp message
-    const message = `*New Inquiry from Website*
+    setServerError(null);
+    try {
+      const res = await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "contact", website, ...sanitizedData }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Could not send your message. Please try WhatsApp instead.");
 
-*Name:* ${sanitizedData.name}
-*Email:* ${sanitizedData.email}
-*Phone:* ${sanitizedData.phone || "Not provided"}
-*Subject:* ${sanitizedData.subject}
-
-*Message:*
-${sanitizedData.message}`;
-
-    const whatsappUrl = `https://wa.me/${contactInfo.whatsapp}?text=${encodeURIComponent(message)}`;
-
-    // Use noopener and noreferrer for security
-    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
+      setSent({
+        ref: data.ref,
+        whatsappText: `Hi, I just sent an enquiry (${data.ref}) on your website.\n\n*Subject:* ${sanitizedData.subject}\n${sanitizedData.message}`,
+      });
+      setIsSubmitted(true);
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
       setErrors({});
-    }, 3000);
+    } catch (err) {
+      setServerError(err instanceof Error ? err.message : "Could not send your message.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -230,7 +231,7 @@ ${sanitizedData.message}`;
 
             {/* WhatsApp Card */}
             <a
-              href={`https://wa.me/${contactInfo.whatsapp}`}
+              href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center border border-stone-200 bg-white p-8 text-center transition-all hover:border-[#25D366]/50 hover:shadow-xl"
@@ -282,6 +283,17 @@ ${sanitizedData.message}`;
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                {/* Honeypot: hidden from people, bots fill it in */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  className="hidden"
+                  aria-hidden="true"
+                />
                 <div className="grid gap-6 md:grid-cols-2">
                   <div>
                     <label
@@ -435,12 +447,31 @@ ${sanitizedData.message}`;
                       Message Sent!
                     </>
                   ) : (
-                    <>
-                      Send via WhatsApp
-                      {icons.whatsapp}
-                    </>
+                    "Send Message"
                   )}
                 </button>
+                {serverError && (
+                  <p role="alert" className="text-sm text-red-600">
+                    {serverError}{" "}
+                    <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="font-semibold underline">Message us on WhatsApp</a>
+                  </p>
+                )}
+                {sent && (
+                  <div role="status" className="rounded-lg border border-green-200 bg-green-50 p-4 text-sm text-green-800">
+                    <p className="mb-2">
+                      Thank you! We&apos;ve received your message (ref <span className="font-mono font-semibold">{sent.ref}</span>) and will reply within one business day.
+                    </p>
+                    <a
+                      href={whatsappLink(sent.whatsappText)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 font-semibold text-[#1a9e4b] hover:underline"
+                    >
+                      {icons.whatsapp}
+                      Need a faster reply? Continue on WhatsApp
+                    </a>
+                  </div>
+                )}
               </form>
             </div>
 
@@ -603,7 +634,7 @@ ${sanitizedData.message}`;
               Browse Products
             </Link>
             <a
-              href={`https://wa.me/${contactInfo.whatsapp}`}
+              href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 rounded-lg border-2 border-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] transition-all hover:bg-white hover:text-[#C5A059]"

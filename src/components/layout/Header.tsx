@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
-import { navLinks, siteConfig } from "@/lib/constants";
+import { navLinks, siteConfig, whatsappLink } from "@/lib/constants";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 
@@ -27,15 +27,20 @@ export function Header() {
 
   // Handle scroll effect
   useEffect(() => {
-    handleScroll();
+    const frame = requestAnimationFrame(handleScroll);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [handleScroll]);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    if (isMenuOpen) setIsMenuOpen(false);
-  }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Close mobile menu on route change (including back/forward navigation)
+  const [menuPathname, setMenuPathname] = useState(pathname);
+  if (menuPathname !== pathname) {
+    setMenuPathname(pathname);
+    setIsMenuOpen(false);
+  }
 
   // Determine if we should use light text (for dark backgrounds)
   const useLightText = hasDarkHero && !isScrolled;
@@ -195,15 +200,6 @@ export function Header() {
             );
           })}
           <Link
-            href="/blog"
-            className={`rounded-lg px-4 py-3 text-sm font-bold uppercase tracking-wider transition-all ${
-              pathname === "/blog" ? "bg-stone-900 text-white" : "text-stone-700 hover:bg-stone-100 hover:text-[#C5A059]"
-            }`}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Blog
-          </Link>
-          <Link
             href="/wishlist"
             className={`rounded-lg px-4 py-3 text-sm font-bold uppercase tracking-wider transition-all ${
               pathname === "/wishlist" ? "bg-stone-900 text-white" : "text-stone-700 hover:bg-stone-100 hover:text-[#C5A059]"
@@ -220,7 +216,7 @@ export function Header() {
             Get a Bulk Quote
           </Link>
           <a
-            href="https://wa.me/919509669135"
+            href={whatsappLink()}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2 flex items-center justify-center gap-2 rounded-lg border border-[#25D366] px-4 py-3 text-center text-sm font-bold uppercase tracking-wider text-[#25D366] transition-all hover:bg-[#25D366] hover:text-white"

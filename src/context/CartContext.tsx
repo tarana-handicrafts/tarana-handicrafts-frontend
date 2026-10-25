@@ -1,86 +1,82 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
-import { Product, CartItem } from "@/lib/products";
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback, useMemo } from "react";
+import { unitPrice, type BulkTier } from "@/lib/pricing";
 
-// Maximum cart size to prevent abuse
-const MAX_CART_ITEMS = 50;
-const CART_STORAGE_KEY = "tarana_cart";
+// Maximum distinct lines / quantity per line to prevent abuse
+const MAX_CART_LINES = 50;
+const MAX_LINE_QTY = 10000;
+// v2: lines are keyed by product + size (v1 stored one entry per unit)
+const CART_STORAGE_KEY = "tarana_cart_v2";
+
+export interface CartLine {
+  slug: string;
+  name: string;
+  image: string;
+  size: string;
+  price: number;
+  bulk?: BulkTier[];
+  qty: number;
+}
+
+type NewCartLine = Omit<CartLine, "qty">;
 
 interface CartContextType {
-  cart: CartItem[];
+  cart: CartLine[];
   isCartOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
-  addToCart: (product: Product) => void;
-  removeFromCart: (cartId: number) => void;
+  addToCart: (line: NewCartLine, qty?: number) => void;
+  setQty: (slug: string, size: string, qty: number) => void;
+  removeFromCart: (slug: string, size: string) => void;
   clearCart: () => void;
+  lineTotal: (line: CartLine) => number;
   cartTotal: number;
   cartCount: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-/**
- * Validates a cart item to ensure it has required properties
- * and sanitizes string values to prevent XSS
- */
-function isValidCartItem(item: unknown): item is CartItem {
+const clampQty = (qty: number) => Math.min(MAX_LINE_QTY, Math.max(1, Math.floor(Number(qty) || 1)));
+
+function isValidLine(item: unknown): item is CartLine {
   if (!item || typeof item !== "object") return false;
   const obj = item as Record<string, unknown>;
-
   return (
-    typeof obj.id === "number" &&
-    typeof obj.cartId === "number" &&
+    typeof obj.slug === "string" &&
     typeof obj.name === "string" &&
-    typeof obj.price === "number" &&
-    typeof obj.category === "string" &&
-    typeof obj.material === "string" &&
     typeof obj.image === "string" &&
+    typeof obj.size === "string" &&
+    typeof obj.price === "number" &&
+    typeof obj.qty === "number" &&
     obj.price >= 0 &&
-    obj.name.length <= 200 &&
-    obj.category.length <= 100 &&
-    obj.material.length <= 100
+    (obj.bulk === undefined || Array.isArray(obj.bulk))
   );
 }
 
-/**
- * Sanitizes a cart item by escaping potentially dangerous characters
- */
-function sanitizeCartItem(item: CartItem): CartItem {
+function sanitizeLine(item: CartLine): CartLine {
   return {
-    ...item,
+    slug: String(item.slug).slice(0, 100),
     name: String(item.name).slice(0, 200),
-    category: String(item.category).slice(0, 100),
-    material: String(item.material).slice(0, 100),
     image: String(item.image).slice(0, 500),
-    tag: item.tag ? String(item.tag).slice(0, 50) : undefined,
+    size: String(item.size).slice(0, 100),
     price: Math.max(0, Number(item.price) || 0),
+    bulk: item.bulk
+      ?.filter((t) => typeof t?.minQty === "number" && typeof t?.price === "number")
+      .map((t) => ({ minQty: t.minQty, price: t.price })),
+    qty: clampQty(item.qty),
   };
 }
 
-/**
- * Safely parses cart from localStorage with validation
- */
-function loadCartFromStorage(): CartItem[] {
+function loadCartFromStorage(): CartLine[] {
   if (typeof window === "undefined") return [];
-
   try {
-    const savedCart = localStorage.getItem(CART_STORAGE_KEY);
-    if (!savedCart) return [];
-
-    const parsed = JSON.parse(savedCart);
+    const saved = localStorage.getItem(CART_STORAGE_KEY);
+    if (!saved) return [];
+    const parsed = JSON.parse(saved);
     if (!Array.isArray(parsed)) return [];
-
-    // Validate and sanitize each item
-    const validItems = parsed
-      .filter(isValidCartItem)
-      .map(sanitizeCartItem)
-      .slice(0, MAX_CART_ITEMS);
-
-    return validItems;
+    return parsed.filter(isValidLine).map(sanitizeLine).slice(0, MAX_CART_LINES);
   } catch (error) {
-    // Clear corrupted data
     try {
       localStorage.removeItem(CART_STORAGE_KEY);
     } catch {
@@ -91,73 +87,63 @@ function loadCartFromStorage(): CartItem[] {
   }
 }
 
-/**
- * Safely saves cart to localStorage
- */
-function saveCartToStorage(cart: CartItem[]): void {
+function saveCartToStorage(cart: CartLine[]): void {
   if (typeof window === "undefined") return;
-
   try {
-    const sanitizedCart = cart.map(sanitizeCartItem).slice(0, MAX_CART_ITEMS);
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(sanitizedCart));
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart.slice(0, MAX_CART_LINES)));
   } catch (error) {
     console.error("Failed to save cart to localStorage:", error);
   }
 }
 
+const sameLine = (a: Pick<CartLine, "slug" | "size">, slug: string, size: string) => a.slug === slug && a.size === size;
+
 export function CartProvider({ children }: { children: ReactNode }) {
-  // Initialize cart with empty array, will hydrate on client
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartLine[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
 
   // Hydrate cart from localStorage on mount - this is intentional for SSR hydration
   useEffect(() => {
-    const savedCart = loadCartFromStorage();
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setCart(savedCart);
+    setCart(loadCartFromStorage());
     setIsHydrated(true);
   }, []);
 
-  // Save cart to localStorage whenever it changes (after hydration)
   useEffect(() => {
-    if (isHydrated) {
-      saveCartToStorage(cart);
-    }
+    if (isHydrated) saveCartToStorage(cart);
   }, [cart, isHydrated]);
 
-  const addToCart = useCallback((product: Product) => {
+  const addToCart = useCallback((line: NewCartLine, qty = 1) => {
     setCart((prev) => {
-      // Prevent exceeding max cart size
-      if (prev.length >= MAX_CART_ITEMS) {
+      const existing = prev.find((l) => sameLine(l, line.slug, line.size));
+      if (existing) {
+        return prev.map((l) => (l === existing ? { ...l, qty: clampQty(l.qty + qty) } : l));
+      }
+      if (prev.length >= MAX_CART_LINES) {
         console.warn("Cart is full");
         return prev;
       }
-
-      const cartItem: CartItem = sanitizeCartItem({
-        ...product,
-        cartId: Date.now() + Math.random(),
-      });
-
-      return [...prev, cartItem];
+      return [...prev, sanitizeLine({ ...line, qty })];
     });
     setIsCartOpen(true);
   }, []);
 
-  const removeFromCart = useCallback((cartId: number) => {
-    if (typeof cartId !== "number" || !isFinite(cartId)) return;
-    setCart((prev) => prev.filter((item) => item.cartId !== cartId));
+  const setQty = useCallback((slug: string, size: string, qty: number) => {
+    setCart((prev) => prev.map((l) => (sameLine(l, slug, size) ? { ...l, qty: clampQty(qty) } : l)));
   }, []);
 
-  const clearCart = useCallback(() => {
-    setCart([]);
+  const removeFromCart = useCallback((slug: string, size: string) => {
+    setCart((prev) => prev.filter((l) => !sameLine(l, slug, size)));
   }, []);
 
+  const clearCart = useCallback(() => setCart([]), []);
   const openCart = useCallback(() => setIsCartOpen(true), []);
   const closeCart = useCallback(() => setIsCartOpen(false), []);
 
-  const cartTotal = cart.reduce((sum, item) => sum + (item.price || 0), 0);
-  const cartCount = cart.length;
+  const lineTotal = useCallback((line: CartLine) => unitPrice(line, line.qty) * line.qty, []);
+  const cartTotal = useMemo(() => cart.reduce((sum, l) => sum + lineTotal(l), 0), [cart, lineTotal]);
+  const cartCount = useMemo(() => cart.reduce((sum, l) => sum + l.qty, 0), [cart]);
 
   return (
     <CartContext.Provider
@@ -167,8 +153,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
         openCart,
         closeCart,
         addToCart,
+        setQty,
         removeFromCart,
         clearCart,
+        lineTotal,
         cartTotal,
         cartCount,
       }}

@@ -1,41 +1,28 @@
 import type { Metadata } from "next";
+import { getAllProducts, getCategoryTree, toSummary } from "@/lib/catalog";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 import ProductsClient from "./ProductsClient";
 
 // SEO Metadata for Products Page
 export const metadata: Metadata = {
-  title: "Shop Handcrafted Wooden Art | Elephant Sculptures & Home Decor",
+  title: "Shop Wooden Elephants & Jaipur Handicrafts",
   description:
-    "Browse our curated collection of handcrafted wooden elephant sculptures, home decor, and traditional Rajasthani handicrafts. Premium quality with worldwide shipping.",
+    "Shop hand-carved wooden elephants, figurines, spiritual sculptures and home decor from Jaipur, Rajasthan. Factory-direct prices, bulk discounts and worldwide shipping.",
   keywords: [
-    "wooden elephant sculptures",
-    "handcrafted art",
+    "buy wooden elephant",
+    "wooden elephants Jaipur",
+    "Jaipur handicrafts online",
     "Rajasthani handicrafts",
     "wooden home decor",
-    "Jaipur art",
-    "traditional Indian crafts",
-    "elephant figurines",
-    "wooden sculptures India",
+    "wooden figurines",
+    "handicrafts wholesale India",
   ],
   openGraph: {
-    title: "Shop Handcrafted Wooden Art | Tarana Handicrafts",
+    title: "Shop Wooden Elephants & Jaipur Handicrafts | Tarana Handicrafts",
     description:
-      "Browse our curated collection of handcrafted wooden elephant sculptures and traditional Rajasthani handicrafts.",
+      "Hand-carved wooden elephants, figurines and home decor from Jaipur artisans.",
     type: "website",
-    images: [
-      {
-        url: "/og-products.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Tarana Handicrafts - Handcrafted Wooden Art Collection",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Shop Handcrafted Wooden Art | Tarana Handicrafts",
-    description:
-      "Browse our curated collection of handcrafted wooden elephant sculptures.",
-    images: ["/og-products.jpg"],
+    images: [DEFAULT_OG_IMAGE],
   },
   alternates: {
     canonical: "/products",
@@ -51,15 +38,15 @@ export default function ProductsPage() {
           <span className="mb-2 inline-block text-[10px] font-bold uppercase tracking-[0.4em] text-[#C5A059]">
             Curated Collection
           </span>
-          <h1 className="mb-4 font-serif text-4xl md:text-5xl">Our Collection</h1>
+          <h1 className="mb-4 font-serif text-4xl md:text-5xl">Wooden Elephants &amp; Handicrafts</h1>
           <p className="mx-auto max-w-2xl text-stone-500">
-            Explore our curated collection of handcrafted masterpieces. Each
-            piece is unique and made with love by skilled artisans.
+            Hand-carved in Jaipur, Rajasthan. Each piece is individually made by
+            skilled artisans, so no two are exactly alike.
           </p>
         </header>
 
-        {/* Client-side filtering and products grid */}
-        <ProductsClient />
+        {/* Client-side filtering over the pre-rendered catalog */}
+        <ProductsClient products={getAllProducts().map(toSummary)} categories={getCategoryTree()} />
       </div>
     </div>
   );

@@ -1,4 +1,9 @@
 import type { NextConfig } from "next";
+import categories from "./content/categories.json";
+
+type CategoryNode = { slug: string; children?: CategoryNode[] };
+const categorySlugs = (nodes: CategoryNode[]): string[] =>
+  nodes.flatMap((c) => [c.slug, ...categorySlugs(c.children ?? [])]);
 
 const nextConfig: NextConfig = {
   // Enable React Strict Mode for better development experience
@@ -13,33 +18,6 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days cache
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "i.pravatar.cc",
-      },
-      {
-        protocol: "https",
-        hostname: "media.istockphoto.com",
-      },
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "5000",
-      },
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-      },
-      {
-        protocol: "https",
-        hostname: "*.onrender.com",
-      },
-    ],
     unoptimized: false,
   },
 
@@ -52,8 +30,6 @@ const nextConfig: NextConfig = {
   // Security and Performance Headers
   async headers() {
     const isDev = process.env.NODE_ENV === "development";
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-    
     return [
       {
         source: "/(.*)",
@@ -95,7 +71,7 @@ const nextConfig: NextConfig = {
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https: blob:",
               "frame-src 'self' https://www.google.com https://maps.google.com https://www.youtube.com",
-              `connect-src 'self' ${apiUrl} https://*.onrender.com https://wa.me https://api.whatsapp.com`,
+              "connect-src 'self'",
               "form-action 'self'",
               "base-uri 'self'",
               "object-src 'none'",
@@ -106,31 +82,35 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Cache static assets aggressively
-        source: "/(.*)\\.(ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|js|css)",
+        // Files in public/ keep their names when edited, so don't mark them immutable.
+        source: "/(.*)\\.(ico|png|jpg|jpeg|gif|svg|webp|avif|woff|woff2)",
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        // Stale-while-revalidate for API-driven pages 
-        source: "/(products|use-cases|about)(.*)",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, s-maxage=60, stale-while-revalidate=300",
+            value: "public, max-age=86400, stale-while-revalidate=604800",
           },
         ],
       },
     ];
   },
 
-  // Experimental features for better performance
-  experimental: {
-    optimizeCss: true,
+  // Old backend URLs: Mongo-id product pages, category pages, and removed features.
+  async redirects() {
+    return [
+      { source: "/products/:id([0-9a-f]{24})", destination: "/products", permanent: true },
+      ...categorySlugs(categories as CategoryNode[]).map((slug) => ({
+        source: `/products/${slug}`,
+        destination: `/collections/${slug}`,
+        permanent: true,
+      })),
+      { source: "/blog/:path*", destination: "/", permanent: true },
+      { source: "/sample-order", destination: "/", permanent: true },
+    ];
+  },
+
+  // Content JSON is read from disk at runtime by API routes (e.g. product names in enquiries).
+  outputFileTracingIncludes: {
+    "/api/**": ["./content/**/*"],
   },
 };
 

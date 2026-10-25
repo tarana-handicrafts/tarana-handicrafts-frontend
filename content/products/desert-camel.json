@@ -1,0 +1,51 @@
+{
+  "name": "Decorated Desert Camel",
+  "category": "animal-figurines",
+  "material": "Seasoned Sheesham wood",
+  "images": [
+    {
+      "file": "1.jpg",
+      "alt": "Decorated Desert Camel"
+    }
+  ],
+  "shortDescription": "A regal camel adorned with an ornately carved festive saddle.",
+  "description": "The pride of the desert, captured in wood. This camel wears a festive carved saddle rich with floral medallions and hanging tassels, echoing the caparisoned camels of Rajasthan's fairs and processions. A warm, characterful piece that celebrates the spirit of the region.",
+  "sizes": [
+    {
+      "label": "8 in (H) × 7 in (W)",
+      "price": 2300
+    }
+  ],
+  "details": [
+    {
+      "label": "Material",
+      "value": "Seasoned Sheesham wood"
+    },
+    {
+      "label": "Dimensions",
+      "value": "8 in (H) × 7 in (W)"
+    },
+    {
+      "label": "Finish",
+      "value": "Natural matte hand-polish"
+    },
+    {
+      "label": "Origin",
+      "value": "Jaipur, Rajasthan"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is the saddle a separate piece?",
+      "answer": "No, the saddle and tassels are carved as part of the same block for durability."
+    },
+    {
+      "question": "Is this product handmade?",
+      "answer": "Yes, it is entirely hand-carved and hand-polished by skilled artisans."
+    },
+    {
+      "question": "Does the colour vary?",
+      "answer": "As it is natural sheesham wood with no paint, tone and grain vary slightly from piece to piece."
+    }
+  ]
+}

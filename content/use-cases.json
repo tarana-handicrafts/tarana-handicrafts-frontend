@@ -1,0 +1,37 @@
+[
+  {
+    "slug": "executive-desk-branding",
+    "title": "Executive Desk Branding",
+    "description": "Transform a standard workspace into a position of power. A hand-carved elephant on the desk is a constant, quiet reminder of your brand's strength.",
+    "image": "/usecase_1.png",
+    "products": ["jaali-net-elephant", "shikargah-standing-elephant", "jaali-lattice-elephant"]
+  },
+  {
+    "slug": "corporate-milestone-gifts",
+    "title": "Corporate Milestone Gifts",
+    "description": "Celebrate promotions, retirements, or years of service with symbolic art. Jaali work represents protection and long-term legacy, and bulk pricing makes it practical for whole teams.",
+    "image": "/usecase_2_2.png",
+    "products": ["peacock-jaali-elephant", "jaali-jewel-elephant", "shikargah-jaali-elephant"]
+  },
+  {
+    "slug": "hospitality-reception",
+    "title": "Hospitality & Reception",
+    "description": "Make a lasting first impression in your lobby or concierge desk. Statement figurines and wall panels welcome guests with elegance and warmth.",
+    "image": "/usecase_5_2.png",
+    "products": ["royal-horse", "jungle-panel", "dancing-peacock"]
+  },
+  {
+    "slug": "home-interior-styling",
+    "title": "Home & Interior Styling",
+    "description": "Give a console, mantel or bookshelf a focal point with real hand-carved wood. Each piece is individually carved, so no two homes look the same.",
+    "image": "/usecase_4.png",
+    "products": ["jhule-elephant", "floral-centerpiece", "desert-camel", "folk-musician"]
+  },
+  {
+    "slug": "pooja-and-meditation",
+    "title": "Pooja Room & Meditation Corners",
+    "description": "Bring calm to a home temple or meditation space with a carved deity sculpture finished by hand in Jaipur.",
+    "image": "/usecase_6.png",
+    "products": ["seated-deity", "jungle-shikar-elephant"]
+  }
+]

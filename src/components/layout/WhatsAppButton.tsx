@@ -1,19 +1,10 @@
-"use client";
+import { whatsappLink } from "@/lib/constants";
 
-import { usePathname } from "next/navigation";
-
-const WHATSAPP_NUMBER = "919509669135";
 const DEFAULT_MESSAGE =
   "Hi Tarana Handicrafts, I'd like to know more about your handcrafted products.";
 
 export function WhatsAppButton() {
-  const pathname = usePathname();
-
-  // Hide on admin routes (this component only mounts in the store layout,
-  // but guard anyway for safety).
-  if (pathname?.startsWith("/admin")) return null;
-
-  const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(DEFAULT_MESSAGE)}`;
+  const href = whatsappLink(DEFAULT_MESSAGE);
 
   return (
     <a

@@ -1,0 +1,107 @@
+{
+  "name": "Jaali Jewel Elephant",
+  "category": "ornamental-elephants",
+  "material": "Kadamb wood",
+  "images": [
+    {
+      "file": "1.jpg",
+      "alt": "Jaali Jewel Elephant"
+    }
+  ],
+  "shortDescription": "Hand-carved Kadamb wood elephant adorned with a jewelled medallion drape framing a little carved elephant.",
+  "description": "Hand-carved from a single block of Kadamb (Burflower) wood, this standing elephant wears a richly jewelled ceremonial drape — its centrepiece a large circular medallion ringed with beadwork that frames a tiny carved elephant, crowned by a sunburst rosette across the back and finished with finely detailed ornamental trappings that read like carved jewellery. Every border, bead and toenail is worked entirely by hand and sealed with a soft matte polish that lets the warm honey grain glow. Its regal, ornate presence makes it wonderfully versatile — equally at home as desk branding, in interior design and home decor, as a corporate gift, or as a showcase and exhibition centrepiece. As each one is individually carved, no two are ever alike.",
+  "sizes": [
+    {
+      "label": "3 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    },
+    {
+      "label": "4 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    },
+    {
+      "label": "5 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    },
+    {
+      "label": "6 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    }
+  ],
+  "details": [
+    {
+      "label": "Material",
+      "value": "Kadamb wood (Burflower tree)"
+    },
+    {
+      "label": "Customisation",
+      "value": "Side customisation available"
+    },
+    {
+      "label": "Order options",
+      "value": "Single piece & bulk orders"
+    },
+    {
+      "label": "Use cases",
+      "value": "Desk branding, home & interior decor, corporate gifting, showcases, exhibitions"
+    },
+    {
+      "label": "Origin",
+      "value": "Jaipur, Rajasthan"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is this product handmade?",
+      "answer": "Yes. Each elephant is carved entirely by hand by skilled Jaipur artisans from a single block of wood, so every piece is unique."
+    },
+    {
+      "question": "What material is it made from?",
+      "answer": "It is carved from Kadamb wood, also known as the Burflower tree — a fine-grained wood prized for detailed hand-carving."
+    },
+    {
+      "question": "What is the medallion design?",
+      "answer": "The drape features a large circular jewel-like medallion, ringed with beaded borders, framing a small carved elephant — an auspicious 'elephant within an elephant' motif surrounded by ornate jewellery-style carving."
+    },
+    {
+      "question": "What sizes are available?",
+      "answer": "Standard sizes are 3, 4, 5 and 6 inches. Larger pieces up to 12 inches can be made on demand."
+    },
+    {
+      "question": "Do you offer bulk pricing?",
+      "answer": "Yes. Single pieces are ₹700 each. For bulk orders with a minimum order quantity of 50, the price is ₹500 per piece."
+    },
+    {
+      "question": "Can the piece be customised?",
+      "answer": "Yes, side customisation is available, and we accept both single-piece and bulk orders."
+    },
+    {
+      "question": "How do I care for it?",
+      "answer": "Dust gently with a dry, soft cloth and keep it away from direct sunlight and moisture to preserve the natural grain."
+    }
+  ]
+}

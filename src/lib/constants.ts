@@ -1,27 +1,30 @@
-// Site configuration constants
+// Site configuration constants (source of truth: content/site.json)
+import site from "@content/site.json";
 
 export const siteConfig = {
-  name: "Tarana Handicrafts",
-  description:
-    "Discover exquisite handcrafted art, home decor, and traditional handicrafts.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com",
+  name: site.name,
+  description: site.description,
+  url: process.env.NEXT_PUBLIC_SITE_URL || site.url,
   ogImage: "/og-image.jpg",
-  links: {
-    facebook: "https://facebook.com/taranahandicrafts",
-    instagram: "https://instagram.com/taranahandicrafts",
-    twitter: "https://twitter.com/taranahandicrafts",
-  },
+  whatsapp: site.whatsapp,
+  links: site.socials as Record<string, string>,
   contact: {
-    email: "taranahandicrafts@gmail.com",
-    phone: "+91 9509669135",
+    email: site.email,
+    phone: site.phone,
   },
+  address: site.address,
+  hours: site.hours,
 };
+
+export function whatsappLink(message?: string): string {
+  const base = `https://wa.me/${site.whatsapp}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
 
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
   { href: "/use-cases", label: "Use Cases" },
-  { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -31,12 +34,10 @@ export const footerLinks = {
     { href: "/products", label: "All Products" },
     { href: "/use-cases", label: "Use Cases" },
     { href: "/rfq", label: "Wholesale / Bulk" },
-    { href: "/sample-order", label: "Order Samples" },
     { href: "/rfq", label: "Request a Quote" },
   ],
   company: [
     { href: "/about", label: "About Us" },
-    { href: "/blog", label: "Blog" },
     { href: "/contact", label: "Contact" },
     { href: "/faq", label: "FAQ" },
   ],

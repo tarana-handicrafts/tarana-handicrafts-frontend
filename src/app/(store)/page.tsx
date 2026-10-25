@@ -1,65 +1,52 @@
-import { Hero, TopSeller, VideoSection, Testimonials, ProfessionalQA } from "@/components/home";
-import { getTopSellers } from "@/lib/storeApi";
+import type { Metadata } from "next";
+import { Hero, FeaturedProducts, ShopByCategory, AboutJaipurCraft, VideoSection, Testimonials, ProfessionalQA } from "@/components/home";
+import { getCategoryTree, getFeaturedProducts, getProductsInCategory, toSummary } from "@/lib/catalog";
+import { siteConfig } from "@/lib/constants";
+
+const title = "Tarana Handicrafts Jaipur | Hand-Carved Wooden Elephants & Handicrafts";
+const description =
+  "Tarana Handicrafts, Jaipur: hand-carved wooden elephants, jaali and shikargah carvings, figurines and home decor by Rajasthani artisans. Retail, wholesale and corporate gifts, shipped worldwide.";
+
+export const metadata: Metadata = {
+  title: { absolute: title },
+  description,
+  alternates: { canonical: "/" },
+};
 
 // Homepage JSON-LD for rich snippets
 function generateHomeJsonLd() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taranahandicrafts.com";
+  const baseUrl = siteConfig.url;
 
   return {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": `${baseUrl}/#webpage`,
-        url: baseUrl,
-        name: "Tarana Handicrafts - Authentic Handcrafted Art & Decor",
-        description: "Discover exquisite handcrafted wooden elephant sculptures, home decor, and traditional Rajasthani handicrafts from Jaipur artisans.",
-        isPartOf: {
-          "@id": `${baseUrl}/#website`,
-        },
-        about: {
-          "@id": `${baseUrl}/#organization`,
-        },
-        primaryImageOfPage: {
-          "@type": "ImageObject",
-          url: `${baseUrl}/og-image.jpg`,
-        },
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: baseUrl,
-          },
-        ],
-      },
-    ],
+    "@type": "WebPage",
+    "@id": `${baseUrl}/#webpage`,
+    url: `${baseUrl}/`,
+    name: title,
+    description,
+    inLanguage: "en-IN",
+    isPartOf: { "@id": `${baseUrl}/#website` },
+    about: { "@id": `${baseUrl}/#localbusiness` },
+    primaryImageOfPage: { "@type": "ImageObject", url: `${baseUrl}/opengraph-image` },
   };
 }
 
-export default async function Home() {
+export default function Home() {
   const jsonLd = generateHomeJsonLd();
-
-  let topProducts: import("@/lib/storeApi").Product[] = [];
-  try {
-    const data = await getTopSellers(4);
-    topProducts = data.products;
-  } catch (error) {
-    console.error("Failed to fetch top sellers:", error);
-  }
+  const featured = getFeaturedProducts(4).map(toSummary);
+  const categories = getCategoryTree().map((c) => ({ ...c, count: getProductsInCategory(c.slug).length }));
 
   return (
     <>
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
       <Hero />
-      <TopSeller products={topProducts} />
+      <FeaturedProducts products={featured} />
+      <ShopByCategory categories={categories} />
+      <AboutJaipurCraft />
       <VideoSection />
       <Testimonials />
       <ProfessionalQA />

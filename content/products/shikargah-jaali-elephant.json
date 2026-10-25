@@ -1,0 +1,108 @@
+{
+  "name": "Shikargah Jaali Elephant",
+  "category": "shikargah-elephants",
+  "material": "Kadamb wood",
+  "featured": true,
+  "images": [
+    {
+      "file": "1.jpg",
+      "alt": "Shikargah Jaali Elephant"
+    }
+  ],
+  "shortDescription": "Hand-carved Kadamb wood elephant with intricate Shikargah jaali panels of forest wildlife.",
+  "description": "A masterpiece of Rajasthani miniature carving, this elephant is worked entirely by hand from a single block of Kadamb (Burflower) wood. Its ceremonial drape is a Shikargah panel — the traditional ‘hunting-scene’ motif — alive with deer, tigers and foliage carved in delicate open jaali (lattice) work, framed by a royal jhula saddle and finely ornamented headpiece. The warm honey tone of the natural grain and soft matte finish make it a versatile statement piece: equally at home as desk branding, in interior and home decor, as a premium corporate gift, or as a showcase and exhibition centrepiece. Each piece is individually carved, so no two are ever identical.",
+  "sizes": [
+    {
+      "label": "3 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    },
+    {
+      "label": "4 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    },
+    {
+      "label": "5 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    },
+    {
+      "label": "6 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    }
+  ],
+  "details": [
+    {
+      "label": "Material",
+      "value": "Kadamb wood (Burflower tree)"
+    },
+    {
+      "label": "Customisation",
+      "value": "Side customisation available"
+    },
+    {
+      "label": "Order options",
+      "value": "Single piece & bulk orders"
+    },
+    {
+      "label": "Use cases",
+      "value": "Desk branding, home & interior decor, corporate gifting, showcases, exhibitions"
+    },
+    {
+      "label": "Origin",
+      "value": "Jaipur, Rajasthan"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is this product handmade?",
+      "answer": "Yes. Every elephant is carved entirely by hand by skilled Jaipur artisans from a single block of wood, so each piece is unique."
+    },
+    {
+      "question": "What material is it made from?",
+      "answer": "It is carved from Kadamb wood, also known as the Burflower tree — a fine-grained wood prized for detailed hand-carving."
+    },
+    {
+      "question": "What is the Shikargah design?",
+      "answer": "Shikargah is a traditional hunting-scene motif. Here it is rendered as intricate open jaali (lattice) panels filled with carved deer, tigers and foliage."
+    },
+    {
+      "question": "What sizes are available?",
+      "answer": "Standard sizes are 3, 4, 5 and 6 inches. Larger pieces up to 12 inches can be made on demand."
+    },
+    {
+      "question": "Do you offer bulk pricing?",
+      "answer": "Yes. Single pieces are ₹700 each. For bulk orders with a minimum order quantity of 50, the price is ₹500 per piece."
+    },
+    {
+      "question": "Can the piece be customised?",
+      "answer": "Yes, side customisation is available. Both single-piece and bulk orders can be accommodated."
+    },
+    {
+      "question": "How do I care for it?",
+      "answer": "Dust gently with a dry, soft cloth and keep away from direct sunlight and moisture to preserve the natural grain."
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "name": "Jaali Net Elephant",
+  "category": "jaali-elephants",
+  "material": "Kadamb wood",
+  "featured": true,
+  "images": [
+    {
+      "file": "1.jpg",
+      "alt": "Jaali Net Elephant"
+    }
+  ],
+  "shortDescription": "Hand-carved Kadamb wood elephant with a pierced openwork jaali net drape in fine honeycomb bands.",
+  "description": "Hand-carved from a single block of Kadamb (Burflower) wood, this standing elephant is defined by its crisp openwork jaali net — rows of clean round holes pierced completely through the wood in tiered honeycomb bands, so light passes right through the drape. A delicate scrollwork border frames the net panels, while a floral rosette on the ear, beaded anklet cuffs and finely incised detailing on the face and legs complete the ornamentation. Cutting this even, unbroken lattice from solid wood demands remarkable precision and patience, making each piece a true test of the artisan’s skill. Sealed with a soft matte polish that lets the warm honey grain glow, its light, airy presence makes it wonderfully versatile — equally at home as desk branding, in interior design and home decor, as a corporate gift, or as a showcase and exhibition centrepiece. As each one is individually carved, no two are ever exactly alike.",
+  "sizes": [
+    {
+      "label": "3 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    },
+    {
+      "label": "4 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    },
+    {
+      "label": "5 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    },
+    {
+      "label": "6 inch",
+      "price": 700,
+      "bulk": [
+        {
+          "minQty": 50,
+          "price": 500
+        }
+      ]
+    }
+  ],
+  "details": [
+    {
+      "label": "Material",
+      "value": "Kadamb wood (Burflower tree)"
+    },
+    {
+      "label": "Customisation",
+      "value": "Side customisation available"
+    },
+    {
+      "label": "Order options",
+      "value": "Single piece & bulk orders"
+    },
+    {
+      "label": "Use cases",
+      "value": "Desk branding, home & interior decor, corporate gifting, showcases, exhibitions"
+    },
+    {
+      "label": "Origin",
+      "value": "Jaipur, Rajasthan"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is this product handmade?",
+      "answer": "Yes. Each elephant is carved entirely by hand by skilled Jaipur artisans from a single block of wood, so every piece is unique."
+    },
+    {
+      "question": "What material is it made from?",
+      "answer": "It is carved from Kadamb wood, also known as the Burflower tree — a fine-grained wood prized for detailed hand-carving."
+    },
+    {
+      "question": "What is the jaali net design?",
+      "answer": "The drape is decorated with jaali — openwork carving in which rows of holes are pierced completely through the wood to form a delicate net or lattice. Keeping the bands even and unbroken while cutting through solid wood is one of the most skilled carving techniques."
+    },
+    {
+      "question": "What sizes are available?",
+      "answer": "Standard sizes are 3, 4, 5 and 6 inches. Larger pieces up to 12 inches can be made on demand."
+    },
+    {
+      "question": "Do you offer bulk pricing?",
+      "answer": "Yes. Single pieces are ₹700 each. For bulk orders with a minimum order quantity of 50, the price is ₹500 per piece."
+    },
+    {
+      "question": "Can the piece be customised?",
+      "answer": "Yes, side customisation is available, and we accept both single-piece and bulk orders."
+    },
+    {
+      "question": "How do I care for it?",
+      "answer": "Dust gently with a dry, soft cloth or a soft brush to reach the openwork holes, and keep it away from direct sunlight and moisture to preserve the natural grain."
+    }
+  ]
+}

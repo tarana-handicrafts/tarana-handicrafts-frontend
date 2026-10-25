@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "About Us - Our Heritage & Craftsmanship",
+  title: "About Us – Wooden Handicrafts Makers in Jaipur",
   description:
     "Discover Tarana Handicrafts - A Jaipur-based wooden handicrafts brand preserving Rajasthan's cultural heritage through premium handcrafted wooden sculptures and elephants.",
   keywords: [
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     description:
       "Preserving and sharing the cultural wooden art heritage of Rajasthan through premium handcrafted wooden sculptures.",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
   alternates: {
     canonical: "/about",
