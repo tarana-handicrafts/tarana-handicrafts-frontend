@@ -17,7 +17,7 @@ export function VideoSection() {
             onMouseLeave={() => setIsHovered(false)}
           >
             <Image
-              src="https://images.unsplash.com/photo-1544207240-8b1025eb7aeb?auto=format&fit=crop&q=80&w=1200"
+              src="/images/products/shikargah-jaali-elephant/1.jpg"
               alt="Artisan at work - Traditional wood carving craftsmanship"
               fill
               className={`object-cover transition-all duration-1000 ${

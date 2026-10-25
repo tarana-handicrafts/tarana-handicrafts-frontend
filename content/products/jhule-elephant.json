@@ -1,0 +1,52 @@
+{
+  "name": "Carved Jhule Elephant",
+  "category": "ornamental-elephants",
+  "material": "Seasoned Kadam wood",
+  "featured": true,
+  "images": [
+    {
+      "file": "1.jpg",
+      "alt": "Carved Jhule Elephant"
+    }
+  ],
+  "shortDescription": "Hand-carved Kadam wood elephant draped in an ornate ceremonial jhule.",
+  "description": "A timeless centrepiece carved from a single block of seasoned Kadam wood, this elephant carries the regal jhule (ceremonial blanket) of Rajasthani tradition. Every fold of the drape, each strand of the tasselled trim and the delicate jali (lattice) work is chiselled entirely by hand. The warm honey tones of the natural grain are finished with a soft matte polish that deepens beautifully with age.",
+  "sizes": [
+    {
+      "label": "6 in (H) × 5 in (W)",
+      "price": 2850
+    }
+  ],
+  "details": [
+    {
+      "label": "Material",
+      "value": "Seasoned Kadam wood"
+    },
+    {
+      "label": "Dimensions",
+      "value": "6 in (H) × 5 in (W)"
+    },
+    {
+      "label": "Finish",
+      "value": "Natural matte hand-polish"
+    },
+    {
+      "label": "Origin",
+      "value": "Jaipur, Rajasthan"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is this product handmade?",
+      "answer": "Yes. Each elephant is carved entirely by hand by skilled Jaipur artisans, so no two pieces are ever identical."
+    },
+    {
+      "question": "What material is used?",
+      "answer": "It is carved from a single block of seasoned Kadam wood and finished with a natural, food-safe matte polish."
+    },
+    {
+      "question": "How do I care for it?",
+      "answer": "Dust gently with a dry, soft cloth. Keep away from direct sunlight and moisture to preserve the natural grain."
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import { siteConfig } from "@/lib/constants";
+import { SEARCH_TOPICS, generateSiteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 // Primary font for body text - optimized for readability
@@ -22,33 +24,25 @@ const playfair = Playfair_Display({
   fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
+const defaultTitle = "Tarana Handicrafts Jaipur | Hand-Carved Wooden Elephants & Handicrafts";
+const defaultDescription =
+  "Tarana Handicrafts, Jaipur: hand-carved wooden elephants, jaali and shikargah carvings, figurines and home decor made by Rajasthani artisans. Retail, wholesale and corporate gifts, shipped worldwide.";
+
 // SEO Metadata Configuration
+// The share image comes from app/opengraph-image.tsx, which Next.js applies to every route.
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://www.taranahandicrafts.com"),
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Tarana Handicrafts - Authentic Handcrafted Art & Decor",
+    default: defaultTitle,
     template: "%s | Tarana Handicrafts",
   },
-  description:
-    "Discover exquisite handcrafted art, home decor, and traditional handicrafts. Shop authentic artisan-made products with worldwide shipping.",
-  applicationName: "Tarana Handicrafts",
-  generator: "Next.js",
-  keywords: [
-    "handicrafts",
-    "handmade",
-    "artisan",
-    "home decor",
-    "traditional art",
-    "handcrafted",
-    "Indian handicrafts",
-    "ethnic decor",
-    "wooden elephant",
-    "Jaipur crafts",
-    "Rajasthani art",
-  ],
-  authors: [{ name: "Tarana Handicrafts" }],
-  creator: "Tarana Handicrafts",
-  publisher: "Tarana Handicrafts",
+  description: defaultDescription,
+  applicationName: siteConfig.name,
+  keywords: SEARCH_TOPICS,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "shopping",
   formatDetection: {
     email: false,
     address: false,
@@ -56,27 +50,16 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "en_IN",
     url: "/",
-    siteName: "Tarana Handicrafts",
-    title: "Tarana Handicrafts - Authentic Handcrafted Art & Decor",
-    description:
-      "Discover exquisite handcrafted art, home decor, and traditional handicrafts. Shop authentic artisan-made products with worldwide shipping.",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Tarana Handicrafts - Handcrafted Art & Decor",
-      },
-    ],
+    siteName: siteConfig.name,
+    title: defaultTitle,
+    description: defaultDescription,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tarana Handicrafts - Authentic Handcrafted Art & Decor",
-    description:
-      "Discover exquisite handcrafted art, home decor, and traditional handicrafts.",
-    images: ["/og-image.jpg"],
+    title: defaultTitle,
+    description: defaultDescription,
   },
   robots: {
     index: true,
@@ -89,10 +72,21 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  // Google is verified via public/google*.html. Set these env vars to verify Bing and Yandex.
+  verification: {
+    other: {
+      ...(process.env.NEXT_PUBLIC_BING_VERIFICATION && { "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION }),
+      ...(process.env.NEXT_PUBLIC_YANDEX_VERIFICATION && { "yandex-verification": process.env.NEXT_PUBLIC_YANDEX_VERIFICATION }),
+    },
+  },
+  other: {
+    "geo.region": "IN-RJ",
+    "geo.placename": "Jaipur",
+    "geo.position": "27.021601;75.767587",
+    ICBM: "27.021601, 75.767587",
+  },
   icons: {
-    icon: [
-      { url: "/favicon.png", type: "image/png" },
-    ],
+    icon: [{ url: "/favicon.png", type: "image/png" }],
     apple: [{ url: "/favicon.png", sizes: "180x180" }],
     shortcut: ["/favicon.png"],
   },
@@ -110,106 +104,9 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-// JSON-LD Structured Data for SEO
-// WebSite schema is first - this is what Google uses for site name in breadcrumbs
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.taranahandicrafts.com";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": `${baseUrl}/#website`,
-      url: baseUrl,
-      name: "Tarana Handicrafts",
-      alternateName: ["Tarana", "Tarana Handicrafts India", "Tarana Jaipur"],
-      description: "Authentic handcrafted wooden art, home decor, and traditional Rajasthani handicrafts from Jaipur artisans.",
-      publisher: {
-        "@id": `${baseUrl}/#organization`,
-      },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: {
-          "@type": "EntryPoint",
-          urlTemplate: `${baseUrl}/products?search={search_term_string}`,
-        },
-        "query-input": "required name=search_term_string",
-      },
-      inLanguage: "en-IN",
-    },
-    {
-      "@type": "Organization",
-      "@id": `${baseUrl}/#organization`,
-      name: "Tarana Handicrafts",
-      legalName: "Tarana Handicrafts",
-      url: baseUrl,
-      logo: {
-        "@type": "ImageObject",
-        "@id": `${baseUrl}/#logo`,
-        url: `${baseUrl}/logo.png`,
-        contentUrl: `${baseUrl}/logo.png`,
-        caption: "Tarana Handicrafts Logo",
-        inLanguage: "en-IN",
-        width: 512,
-        height: 512,
-      },
-      image: {
-        "@id": `${baseUrl}/#logo`,
-      },
-      description: "Authentic handcrafted art, home decor, and traditional handicrafts from Jaipur, Rajasthan.",
-      sameAs: [
-        "https://facebook.com/taranahandicrafts",
-        "https://instagram.com/taranahandicrafts",
-      ],
-      contactPoint: {
-        "@type": "ContactPoint",
-        telephone: "+91-9509669135",
-        contactType: "customer service",
-        areaServed: ["IN", "US", "GB", "AE", "AU"],
-        availableLanguage: ["English", "Hindi"],
-      },
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "B81, North Avenue, Harmara Ghati, Sikar Road",
-        addressLocality: "Jaipur",
-        addressRegion: "Rajasthan",
-        postalCode: "302039",
-        addressCountry: "IN",
-      },
-    },
-    {
-      "@type": "LocalBusiness",
-      "@id": `${baseUrl}/#localbusiness`,
-      name: "Tarana Handicrafts",
-      image: `${baseUrl}/og-image.jpg`,
-      url: baseUrl,
-      telephone: "+91-9509669135",
-      email: "taranahandicrafts@gmail.com",
-      priceRange: "₹₹",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "B81, North Avenue, Harmara Ghati, Sikar Road",
-        addressLocality: "Jaipur",
-        addressRegion: "Rajasthan",
-        postalCode: "302039",
-        addressCountry: "IN",
-      },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: 27.021601,
-        longitude: 75.767587,
-      },
-      openingHoursSpecification: [
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-          opens: "10:00",
-          closes: "19:00",
-        },
-      ],
-    },
-  ],
-};
+// JSON-LD Structured Data: WebSite (site name in results), Organization (logo,
+// socials) and Store (Google Maps / local results)
+const jsonLd = generateSiteJsonLd();
 
 export default function RootLayout({
   children,
@@ -217,42 +114,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en-IN" suppressHydrationWarning>
       <head>
-        {/* Simple WebSite Schema for Google Site Name in Breadcrumbs */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "name": "Tarana Handicrafts",
-              "url": "https://www.taranahandicrafts.com/"
-            })
-          }}
-        />
-        {/* Full Structured Data for SEO */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        {/* Preconnect to external domains for faster loading */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        {/* DNS Prefetch for external resources */}
-        <link rel="dns-prefetch" href="https://images.unsplash.com" />
-        <link rel="dns-prefetch" href="https://wa.me" />
-        {/* Preload critical hero image for LCP optimization */}
-        <link
-          rel="preload"
-          href="/2.jpg"
-          as="image"
-          type="image/jpeg"
-          fetchPriority="high"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
       </head>
       <body

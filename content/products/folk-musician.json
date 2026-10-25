@@ -1,0 +1,51 @@
+{
+  "name": "Folk Musician Figurine",
+  "category": "folk-figurines",
+  "material": "Seasoned Kadam wood",
+  "images": [
+    {
+      "file": "1.jpg",
+      "alt": "Folk Musician Figurine"
+    }
+  ],
+  "shortDescription": "A seated Rajasthani musician playing a traditional stringed instrument.",
+  "description": "A charming folk figurine capturing a turbaned musician mid-performance, cross-legged with his stringed instrument. The turban wrap, embroidered jacket and instrument strings are all rendered by hand. Part of Tarana's celebrated village-life collection.",
+  "sizes": [
+    {
+      "label": "6 in (H) × 4 in (W)",
+      "price": 1650
+    }
+  ],
+  "details": [
+    {
+      "label": "Material",
+      "value": "Seasoned Kadam wood"
+    },
+    {
+      "label": "Dimensions",
+      "value": "6 in (H) × 4 in (W)"
+    },
+    {
+      "label": "Finish",
+      "value": "Natural matte hand-polish"
+    },
+    {
+      "label": "Origin",
+      "value": "Jaipur, Rajasthan"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is this part of a set?",
+      "answer": "It is sold individually, but pairs beautifully with other figurines from our village-life collection."
+    },
+    {
+      "question": "Is this product handmade?",
+      "answer": "Yes, it is hand-carved and hand-finished by artisans, so each expression and detail is unique."
+    },
+    {
+      "question": "Is it heavy?",
+      "answer": "No, it is compact and light enough for a shelf, desk or display cabinet."
+    }
+  ]
+}

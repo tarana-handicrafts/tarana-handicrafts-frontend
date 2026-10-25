@@ -2,106 +2,169 @@
  * SEO Utilities
  * Centralized SEO configuration for the application
  */
-import type { Metadata } from "next";
+import site from "@content/site.json";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.taranahandicrafts.com";
-const SITE_NAME = "Tarana Handicrafts";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || site.url;
+const SITE_NAME = site.name;
 
-// ─── Default Metadata Generator ───
-export function generateMetadata({
-  title,
-  description,
-  path = "",
-  image = "/og-image.jpg",
-  type = "website",
-  noIndex = false,
-}: {
-  title: string;
-  description: string;
-  path?: string;
-  image?: string;
-  type?: "website" | "article";
-  noIndex?: boolean;
-}): Metadata {
-  const url = `${BASE_URL}${path}`;
-  const fullTitle = `${title} | ${SITE_NAME}`;
+/**
+ * Brand share image (app/opengraph-image.tsx). A page that sets its own
+ * `openGraph` replaces the inherited one, so it must list this explicitly.
+ */
+export const DEFAULT_OG_IMAGE = { url: "/opengraph-image", width: 1200, height: 630, alt: `${SITE_NAME}, Jaipur` };
+
+/** Phrases people search for; used in page keywords and the business schema. */
+export const SEARCH_TOPICS = [
+  "Tarana Handicrafts",
+  "handicrafts in Jaipur",
+  "Jaipur handicrafts",
+  "wooden elephants",
+  "wooden elephants in Jaipur",
+  "hand-carved wooden elephant",
+  "jaali elephant",
+  "wooden handicrafts",
+  "Rajasthani handicrafts",
+  "wooden figurines",
+  "wooden home decor",
+  "corporate gifts Jaipur",
+  "wholesale handicrafts India",
+];
+
+// ─── Site-wide Schema (WebSite + Organization + Store) ───
+// Rendered once in the root layout. Pages reference these nodes by @id.
+export function generateSiteJsonLd() {
+  const address = {
+    "@type": "PostalAddress",
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  };
+  const sameAs = Object.values(site.socials).filter(Boolean);
 
   return {
-    title,
-    description,
-    alternates: {
-      canonical: url,
-    },
-    openGraph: {
-      title: fullTitle,
-      description,
-      url,
-      siteName: SITE_NAME,
-      type,
-      images: [
-        {
-          url: image.startsWith("http") ? image : `${BASE_URL}${image}`,
-          width: 1200,
-          height: 630,
-          alt: title,
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${BASE_URL}/#website`,
+        url: `${BASE_URL}/`,
+        name: SITE_NAME,
+        alternateName: ["Tarana", "Tarana Jaipur", "Tarana Handicrafts Jaipur"],
+        description: site.description,
+        publisher: { "@id": `${BASE_URL}/#organization` },
+        inLanguage: "en-IN",
+      },
+      {
+        "@type": "Organization",
+        "@id": `${BASE_URL}/#organization`,
+        name: SITE_NAME,
+        alternateName: "Tarana",
+        url: `${BASE_URL}/`,
+        logo: {
+          "@type": "ImageObject",
+          "@id": `${BASE_URL}/#logo`,
+          url: `${BASE_URL}/favicon.png`,
+          width: 180,
+          height: 180,
+          caption: `${SITE_NAME} logo`,
         },
-      ],
-      locale: "en_IN",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: fullTitle,
-      description,
-      images: [image.startsWith("http") ? image : `${BASE_URL}${image}`],
-    },
-    robots: noIndex
-      ? { index: false, follow: false }
-      : { index: true, follow: true },
+        image: { "@id": `${BASE_URL}/#logo` },
+        description: site.description,
+        email: site.email,
+        telephone: site.phone,
+        address,
+        sameAs,
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone: site.phone,
+          email: site.email,
+          contactType: "customer service",
+          areaServed: "Worldwide",
+          availableLanguage: ["English", "Hindi"],
+        },
+      },
+      {
+        "@type": "Store",
+        "@id": `${BASE_URL}/#localbusiness`,
+        name: SITE_NAME,
+        description: site.description,
+        url: `${BASE_URL}/`,
+        image: `${BASE_URL}/opengraph-image`,
+        logo: { "@id": `${BASE_URL}/#logo` },
+        telephone: site.phone,
+        email: site.email,
+        priceRange: "₹₹",
+        currenciesAccepted: site.currency,
+        address,
+        geo: { "@type": "GeoCoordinates", latitude: 27.021601, longitude: 75.767587 },
+        hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+          `${SITE_NAME}, ${site.address.street}, ${site.address.city}`
+        )}`,
+        areaServed: [
+          { "@type": "City", name: "Jaipur" },
+          { "@type": "State", name: "Rajasthan" },
+          { "@type": "Country", name: "India" },
+        ],
+        knowsAbout: SEARCH_TOPICS,
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            opens: "10:00",
+            closes: "19:00",
+          },
+        ],
+        parentOrganization: { "@id": `${BASE_URL}/#organization` },
+        sameAs,
+      },
+    ],
   };
 }
 
 // ─── Product Schema.org (JSON-LD) ───
 export function generateProductJsonLd(product: {
+  slug: string;
   name: string;
-  description?: string;
-  image?: string;
-  price: number;
-  originalPrice?: number;
-  sku?: string;
+  description: string;
+  images: string[];
+  /** Retail (1-piece) price of each size. */
+  prices: number[];
   category?: string;
-  inStock?: boolean;
-  rating?: number;
-  reviewCount?: number;
-  _id: string;
+  material?: string;
 }) {
+  const url = `${BASE_URL}/products/${product.slug}`;
+  const low = Math.min(...product.prices);
+  const high = Math.max(...product.prices);
+  const seller = { "@type": "Organization", name: SITE_NAME };
+  const availability = "https://schema.org/InStock";
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    description: product.description || `${product.name} - Handcrafted art from Tarana Handicrafts`,
-    image: product.image || `${BASE_URL}/og-image.jpg`,
-    sku: product.sku || product._id,
+    description: product.description,
+    image: product.images.map((src) => (src.startsWith("http") ? src : `${BASE_URL}${src}`)),
+    sku: product.slug,
     brand: {
       "@type": "Brand",
       name: SITE_NAME,
     },
     category: product.category,
-    offers: {
-      "@type": "Offer",
-      url: `${BASE_URL}/products/${product._id}`,
-      priceCurrency: "INR",
-      price: product.price,
-      ...(product.originalPrice && product.originalPrice > product.price && {
-        priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-      }),
-      availability: product.inStock !== false
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
-      seller: {
-        "@type": "Organization",
-        name: SITE_NAME,
-      },
-    },
+    material: product.material,
+    offers:
+      low === high
+        ? { "@type": "Offer", url, priceCurrency: "INR", price: low, availability, seller }
+        : {
+            "@type": "AggregateOffer",
+            url,
+            priceCurrency: "INR",
+            lowPrice: low,
+            highPrice: high,
+            offerCount: product.prices.length,
+            availability,
+            seller,
+          },
     // NOTE: aggregateRating intentionally omitted. Do NOT emit AggregateRating
     // schema until reviews come from real, verifiable customer data — fabricated
     // ratings violate Google's review snippet policy and risk manual penalties.
@@ -146,14 +209,15 @@ export function generateFAQJsonLd(
 export function generateCollectionJsonLd(
   name: string,
   description: string,
-  products: { name: string; url: string; image?: string; price: number }[]
+  products: { name: string; url: string; image?: string; price: number }[],
+  path = "/products"
 ) {
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name,
     description,
-    url: `${BASE_URL}/products`,
+    url: `${BASE_URL}${path}`,
     mainEntity: {
       "@type": "ItemList",
       numberOfItems: products.length,
@@ -166,44 +230,3 @@ export function generateCollectionJsonLd(
     },
   };
 }
-
-// ─── Local Business Schema (for contact page) ───
-export function generateLocalBusinessJsonLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": `${BASE_URL}/#localbusiness`,
-    name: SITE_NAME,
-    image: `${BASE_URL}/og-image.jpg`,
-    url: BASE_URL,
-    telephone: "+91-9509669135",
-    email: "taranahandicrafts@gmail.com",
-    priceRange: "₹₹",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "B81, North Avenue, Harmara Ghati, Sikar Road",
-      addressLocality: "Jaipur",
-      addressRegion: "Rajasthan",
-      postalCode: "302039",
-      addressCountry: "IN",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 27.021601,
-      longitude: 75.767587,
-    },
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        opens: "10:00",
-        closes: "19:00",
-      },
-    ],
-    sameAs: [
-      "https://facebook.com/taranahandicrafts",
-      "https://instagram.com/taranahandicrafts",
-    ],
-  };
-}
-

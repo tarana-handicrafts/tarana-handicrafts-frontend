@@ -1,49 +1,20 @@
 {
-  "name": "Tarana Handicrafts - Authentic Handcrafted Art",
+  "name": "Tarana Handicrafts – Wooden Elephants & Handicrafts from Jaipur",
   "short_name": "Tarana",
-  "description": "Discover authentic handcrafted wooden elephant sculptures, home decor, and traditional Rajasthani handicrafts from Jaipur artisans.",
+  "description": "Hand-carved wooden elephants, figurines and home decor made by artisan families in Jaipur, Rajasthan.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F9F8F6",
   "theme_color": "#C5A059",
-  "orientation": "portrait-primary",
   "scope": "/",
-  "lang": "en",
+  "lang": "en-IN",
   "icons": [
     {
       "src": "/favicon.png",
-      "sizes": "48x48",
-      "type": "image/png"
-    },
-    {
-      "src": "/favicon.png",
-      "sizes": "72x72",
-      "type": "image/png"
-    },
-    {
-      "src": "/favicon.png",
-      "sizes": "96x96",
-      "type": "image/png"
-    },
-    {
-      "src": "/favicon.png",
-      "sizes": "144x144",
-      "type": "image/png"
-    },
-    {
-      "src": "/favicon.png",
-      "sizes": "192x192",
+      "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
-    },
-    {
-      "src": "/favicon.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
     }
   ],
-  "categories": ["shopping", "lifestyle", "art"],
-  "screenshots": [],
-  "prefer_related_applications": false
+  "categories": ["shopping", "lifestyle"]
 }

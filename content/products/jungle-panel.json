@@ -1,0 +1,51 @@
+{
+  "name": "Jungle Story Wall Panel",
+  "category": "wall-art",
+  "material": "Seasoned Teak wood",
+  "images": [
+    {
+      "file": "1.jpg",
+      "alt": "Jungle Story Wall Panel"
+    }
+  ],
+  "shortDescription": "A deep-relief wall panel depicting a lush jungle scene of wildlife.",
+  "description": "A dramatic relief panel that tells a story in wood — elephants, deer, a leopard and a peacock gather beneath a spreading tree, carved in multiple layers of depth. Designed to hang as a striking piece of wall art, it brings a sense of narrative and craftsmanship to any room.",
+  "sizes": [
+    {
+      "label": "18 in × 18 in",
+      "price": 8900
+    }
+  ],
+  "details": [
+    {
+      "label": "Material",
+      "value": "Seasoned Teak wood"
+    },
+    {
+      "label": "Dimensions",
+      "value": "18 in × 18 in"
+    },
+    {
+      "label": "Technique",
+      "value": "Multi-layer deep relief"
+    },
+    {
+      "label": "Origin",
+      "value": "Jaipur, Rajasthan"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Can it be hung on a wall?",
+      "answer": "Yes, the panel is designed for wall mounting and includes a fixing point on the reverse."
+    },
+    {
+      "question": "How long does a panel like this take?",
+      "answer": "A deep-relief panel of this detail can take several weeks of carving by an experienced artisan."
+    },
+    {
+      "question": "Is the scene painted?",
+      "answer": "No. All depth and detail come from hand-carving; the finish is a natural matte polish."
+    }
+  ]
+}

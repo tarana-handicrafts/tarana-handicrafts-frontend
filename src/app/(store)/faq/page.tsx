@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { whatsappLink } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "FAQ | Tarana Handicrafts",
+  title: "FAQ – Wooden Handicrafts, Wholesale & Shipping",
   description:
     "Answers to common questions about Tarana Handicrafts' handcrafted wooden products, wholesale and export orders, customisation, shipping, and payments.",
   alternates: { canonical: "/faq" },
@@ -103,7 +104,7 @@ export default function FaqPage() {
                 Request a Quote
               </Link>
               <a
-                href="https://wa.me/919509669135"
+                href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-xl border-2 border-[#C5A059] px-6 py-3 font-medium text-[#C5A059] transition-colors hover:bg-[#C5A059] hover:text-white"

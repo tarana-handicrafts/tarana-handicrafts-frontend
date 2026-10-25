@@ -2,94 +2,59 @@
 
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 
+const STORAGE_KEY = "tarana_wishlist";
+const MAX_ITEMS = 100;
+
 interface WishlistContextType {
-  items: string[]; // product IDs
+  items: string[]; // product slugs
   count: number;
-  toggleWishlist: (productId: string) => Promise<void>;
-  isWishlisted: (productId: string) => boolean;
-  loading: boolean;
+  toggleWishlist: (slug: string) => void;
+  isWishlisted: (slug: string) => boolean;
 }
 
 const WishlistContext = createContext<WishlistContextType>({
   items: [],
   count: 0,
-  toggleWishlist: async () => {},
+  toggleWishlist: () => {},
   isWishlisted: () => false,
-  loading: false,
 });
 
-function getVisitorId(): string {
-  if (typeof window === "undefined") return "";
-  let id = localStorage.getItem("wishlist_visitor_id");
-  if (!id) {
-    id = `v_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
-    localStorage.setItem("wishlist_visitor_id", id);
+function load(): string[] {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return Array.isArray(parsed) ? parsed.filter((s) => typeof s === "string").slice(0, MAX_ITEMS) : [];
+  } catch {
+    return [];
   }
-  return id;
 }
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
-  // Load wishlist on mount
   useEffect(() => {
-    const visitorId = getVisitorId();
-    if (!visitorId) return;
-    setLoading(true);
-    fetch(`${API_URL}/api/wishlist?visitorId=${encodeURIComponent(visitorId)}`)
-      .then(res => res.json())
-      .then(data => {
-        const ids = (data.items || []).map((p: { _id: string }) => p._id);
-        setItems(ids);
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setItems(load());
+    setIsHydrated(true);
   }, []);
 
-  const toggleWishlist = useCallback(async (productId: string) => {
-    const visitorId = getVisitorId();
-    if (!visitorId) return;
-
-    const isCurrentlyWishlisted = items.includes(productId);
-
-    // Optimistic update
-    setItems(prev =>
-      isCurrentlyWishlisted
-        ? prev.filter(id => id !== productId)
-        : [...prev, productId]
-    );
-
+  useEffect(() => {
+    if (!isHydrated) return;
     try {
-      if (isCurrentlyWishlisted) {
-        await fetch(`${API_URL}/api/wishlist`, {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ visitorId, productId }),
-        });
-      } else {
-        await fetch(`${API_URL}/api/wishlist`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ visitorId, productId }),
-        });
-      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
     } catch {
-      // Revert on error
-      setItems(prev =>
-        isCurrentlyWishlisted
-          ? [...prev, productId]
-          : prev.filter(id => id !== productId)
-      );
+      // Ignore storage errors
     }
-  }, [items]);
+  }, [items, isHydrated]);
 
-  const isWishlisted = useCallback((productId: string) => items.includes(productId), [items]);
+  const toggleWishlist = useCallback((slug: string) => {
+    setItems((prev) => (prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug].slice(0, MAX_ITEMS)));
+  }, []);
+
+  const isWishlisted = useCallback((slug: string) => items.includes(slug), [items]);
 
   return (
-    <WishlistContext.Provider value={{ items, count: items.length, toggleWishlist, isWishlisted, loading }}>
+    <WishlistContext.Provider value={{ items, count: items.length, toggleWishlist, isWishlisted }}>
       {children}
     </WishlistContext.Provider>
   );

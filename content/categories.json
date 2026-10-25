@@ -1,0 +1,67 @@
+[
+  {
+    "slug": "elephants",
+    "name": "Wooden Elephants",
+    "description": "Hand-carved Kadamb wood elephants — jaali openwork, Shikargah hunting scenes and ornamental pieces.",
+    "image": "/images/products/jaali-net-elephant/1.jpg",
+    "children": [
+      {
+        "slug": "jaali-elephants",
+        "name": "Jaali Elephants",
+        "description": "Elephants with pierced openwork jaali drapes that let light pass through the wood."
+      },
+      {
+        "slug": "shikargah-elephants",
+        "name": "Shikargah Elephants",
+        "description": "Elephants carved with Rajput hunting-scene (shikargah) panels."
+      },
+      {
+        "slug": "ornamental-elephants",
+        "name": "Ornamental Elephants",
+        "description": "Jewel-carved and swing-decorated elephants for gifting and display."
+      }
+    ]
+  },
+  {
+    "slug": "figurines",
+    "name": "Wooden Figurines",
+    "description": "Animal and folk figurines carved in teak, kadam and sheesham.",
+    "image": "/images/products/royal-horse/1.jpg",
+    "children": [
+      {
+        "slug": "animal-figurines",
+        "name": "Wooden Animal Figurines",
+        "description": "Horses, camels and peacocks in the Rajasthani carving tradition."
+      },
+      {
+        "slug": "folk-figurines",
+        "name": "Folk Art Figurines",
+        "description": "Musicians and village figures from Rajasthani folk life."
+      }
+    ]
+  },
+  {
+    "slug": "spiritual",
+    "name": "Spiritual Sculptures",
+    "description": "Deity sculptures for home temples and meditation corners.",
+    "image": "/images/products/seated-deity/1.jpg"
+  },
+  {
+    "slug": "home-decor",
+    "name": "Wooden Home Decor",
+    "description": "Carved bowls, centrepieces and wall panels.",
+    "image": "/images/products/jungle-panel/1.jpg",
+    "children": [
+      {
+        "slug": "tableware",
+        "name": "Wooden Tableware",
+        "description": "Carved bowls and centrepieces."
+      },
+      {
+        "slug": "wall-art",
+        "name": "Carved Wooden Wall Art",
+        "description": "Carved relief panels for walls."
+      }
+    ]
+  }
+]

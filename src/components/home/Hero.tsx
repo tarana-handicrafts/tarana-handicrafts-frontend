@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 
@@ -43,16 +41,19 @@ export function Hero() {
             </div>
 
             <h1 className="font-serif text-5xl leading-[0.95] tracking-tight text-stone-900 md:text-7xl lg:text-[100px]">
-              Curated <br />
+              <span className="mb-6 block font-sans text-xs font-bold uppercase leading-normal tracking-[0.3em] text-[#B8934E] md:text-sm">
+                Tarana Handicrafts · Jaipur
+              </span>
+              Wooden <br />
               <span className="font-light italic text-stone-500">
-                Masterpieces
+                Elephants
               </span>
             </h1>
 
             <p className="mt-8 max-w-md text-base leading-relaxed text-stone-600 md:text-lg">
-              Experience the Jaipur Marketplace. From heritage sculptures to
-              bespoke home decor, discover hand-carved luxury direct from master
-              artisans.
+              Hand-carved wooden elephants, figurines and home decor made by
+              artisan families in Jaipur, Rajasthan. Factory-direct for homes,
+              gifting and wholesale.
             </p>
 
             {/* Marketplace Action Buttons */}

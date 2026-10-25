@@ -1,0 +1,51 @@
+{
+  "name": "Seated Deity Sculpture",
+  "category": "spiritual",
+  "material": "Seasoned Rosewood",
+  "images": [
+    {
+      "file": "1.jpg",
+      "alt": "Seated Deity Sculpture"
+    }
+  ],
+  "shortDescription": "A serene seated deity with detailed ornamentation and lotus base.",
+  "description": "Carved with devotional precision, this seated deity rests upon a lotus pedestal framed by ornate jewellery, crown and drapery. The calm expression and finely worked adornments make it a graceful addition to a home mandir, meditation corner or curated shelf.",
+  "sizes": [
+    {
+      "label": "12 in (H) × 7 in (W)",
+      "price": 6800
+    }
+  ],
+  "details": [
+    {
+      "label": "Material",
+      "value": "Seasoned Rosewood"
+    },
+    {
+      "label": "Dimensions",
+      "value": "12 in (H) × 7 in (W)"
+    },
+    {
+      "label": "Finish",
+      "value": "Natural matte hand-polish"
+    },
+    {
+      "label": "Origin",
+      "value": "Jaipur, Rajasthan"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is this suitable for a home temple?",
+      "answer": "Yes, its size and serene detailing make it well suited to a home mandir or meditation space."
+    },
+    {
+      "question": "What wood is used?",
+      "answer": "It is carved from seasoned rosewood, prized for its density and rich natural tone."
+    },
+    {
+      "question": "Is it hand-finished?",
+      "answer": "Every piece is hand-carved and hand-polished, so grain and detailing vary slightly between sculptures."
+    }
+  ]
+}

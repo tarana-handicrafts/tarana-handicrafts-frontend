@@ -1,0 +1,51 @@
+{
+  "name": "Jali Dancing Peacock",
+  "category": "animal-figurines",
+  "material": "Seasoned Kadam wood",
+  "images": [
+    {
+      "file": "1.jpg",
+      "alt": "Jali Dancing Peacock"
+    }
+  ],
+  "shortDescription": "An open-fan peacock showcasing masterful pierced jali feather work.",
+  "description": "The crowning example of Jaipur's pierced jali craft — the peacock's fanned tail is hand-drilled and carved into hundreds of delicate feather 'eyes', creating a lace-like screen that plays with light. The body is textured feather by feather, and the crest finished with fine detailing. A heritage showpiece for collectors of traditional Indian art.",
+  "sizes": [
+    {
+      "label": "10 in (H) × 9 in (W)",
+      "price": 5200
+    }
+  ],
+  "details": [
+    {
+      "label": "Material",
+      "value": "Seasoned Kadam wood"
+    },
+    {
+      "label": "Dimensions",
+      "value": "10 in (H) × 9 in (W)"
+    },
+    {
+      "label": "Technique",
+      "value": "Hand-pierced jali carving"
+    },
+    {
+      "label": "Origin",
+      "value": "Jaipur, Rajasthan"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "How is the fine lattice made?",
+      "answer": "The pierced 'jali' pattern is created entirely by hand using small chisels and drills — a specialised skill that can take several days per piece."
+    },
+    {
+      "question": "Is this product handmade?",
+      "answer": "Absolutely. The peacock is hand-carved by master artisans, and the delicate feather work is unique to each piece."
+    },
+    {
+      "question": "Is the jali work fragile?",
+      "answer": "The lattice is finely carved but robust for display. We recommend handling it by the base rather than the tail."
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { siteConfig, footerLinks } from "@/lib/constants";
+import { siteConfig, footerLinks, whatsappLink } from "@/lib/constants";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -20,7 +20,7 @@ export function Footer() {
 
     // Open WhatsApp with subscription message
     const message = `*Newsletter Subscription*\n\nEmail: ${email}\n\nI would like to join the Tarana Handicrafts newsletter for updates on new collections and exclusive offers.`;
-    const whatsappUrl = `https://wa.me/919509669135?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = whatsappLink(message);
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
 
     setIsSubscribed(true);
@@ -143,7 +143,7 @@ export function Footer() {
               </svg>
             </a>
             <a
-              href={`https://wa.me/919509669135`}
+              href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
               className="text-stone-300 transition-all hover:text-[#25D366]"
